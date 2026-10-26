@@ -1,0 +1,992 @@
+<!doctype html><html><head><meta name="robots" content="noindex"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>AllCells</title>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="chrome.css">
+<style>
+/* Layout: full-bleed film hero → product matrix → sticky chain-of-custody → donor rings → services → cleanroom (light) → voices → footer.
+   Single committed look: obsidian with an aubergine bias (brand plum), brand orange used as the one "enzymatic" accent. */
+:root{
+  --obsidian:#0D0B11;
+  --slate:#15121B;
+  --slate-2:#1D1925;
+  --ink:#F3F0F6;
+  --mute:#A29BAD;
+  --faint:#6E6779;
+  --line:rgba(255,255,255,.08);
+  --line-2:rgba(255,255,255,.14);
+  --glass:rgba(22,18,30,.42);
+  --amber:#FC7A24;
+  --amber-soft:rgba(252,122,36,.14);
+  --plum:#3E1152;
+  --plum-2:#5B2378;
+  --clean:#F2F3F5;
+  --clean-2:#E6E8EC;
+  --clean-ink:#16131C;
+  --clean-mute:#5E5868;
+  --clean-line:rgba(22,19,28,.12);
+  --f-display:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --f-head:"Inter", "Helvetica Neue", Arial, sans-serif;
+  --gutter:clamp(16px,4vw,56px);
+  --max:1320px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--obsidian);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;margin:0;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{display:block;max-width:100%}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;font-weight:600;letter-spacing:-.02em}
+p{margin:0}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:10px}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--amber);display:inline-block;box-shadow:0 0 12px var(--amber)}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ───────── Nav ───────── */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .4s var(--ease),border-color .4s var(--ease)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.nav.solid{background:rgba(13,11,17,.72);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border-bottom:1px solid var(--line)}
+.nav .logo img{height:30px;width:auto}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{text-decoration:none;font-size:14px;color:rgba(243,240,246,.8);transition:color .2s}
+.nav ul a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 20px;border-radius:999px;font:600 14px/1 var(--f-body);text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .35s var(--ease),background .25s,border-color .25s,color .25s;white-space:nowrap}
+.btn-primary{background:var(--amber);color:#1A0E05}
+.btn-primary:hover{background:#FF8C3D}
+.btn-ghost{background:rgba(255,255,255,.06);border-color:var(--line-2);color:var(--ink);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+.btn svg{width:14px;height:14px;flex:none}
+.nav .btn{height:38px;font-size:13px}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--line-2);color:var(--ink);border-radius:999px;height:38px;padding:0 14px;font:500 13px var(--f-body)}
+
+/* ───────── Hero ───────── */
+.hero{position:relative;min-height:clamp(640px,92vh,940px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate}
+.hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;
+  background:
+   linear-gradient(180deg,rgba(13,11,17,.55) 0%,rgba(13,11,17,0) 22%),
+   linear-gradient(90deg,rgba(13,11,17,.86) 0%,rgba(13,11,17,.55) 38%,rgba(13,11,17,0) 70%),
+   linear-gradient(0deg,rgba(13,11,17,1) 0%,rgba(13,11,17,.6) 24%,rgba(13,11,17,0) 52%)}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120% 80% at 85% 10%,rgba(62,17,82,.35),transparent 60%);mix-blend-mode:multiply;pointer-events:none}
+.hero-inner{padding-block:140px 40px;display:grid;gap:44px;width:100%}
+footer.sf{margin-top:0}
+.hero h1{font-size:clamp(44px,7.4vw,112px);line-height:.92;font-weight:600;font-stretch:82%;letter-spacing:-.035em;max-width:11.5ch}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .line span{display:block;animation:rise 1.1s var(--ease) both}
+.hero h1 .line:nth-child(2) span{animation-delay:.08s}
+.hero h1 .line:nth-child(3) span{animation-delay:.16s}
+.hero h1 em{font-style:normal;color:var(--amber)}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.hero-lede{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end}
+.hero-lede p{max-width:52ch;color:rgba(243,240,246,.82);font-size:clamp(16px,1.35vw,19px);animation:fade 1s .35s var(--ease) both}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;animation:fade 1s .45s var(--ease) both}
+.play-dot{width:22px;height:22px;border-radius:50%;background:var(--ink);display:grid;place-items:center;margin-left:-8px}
+.play-dot svg{width:8px;height:8px;fill:var(--obsidian);margin-left:1px}
+
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;animation:fade 1s .6s var(--ease) both}
+.metric{position:relative;padding:18px 20px 20px;border-radius:14px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);overflow:hidden;transition:border-color .3s,transform .5s var(--ease)}
+.metric::before{content:"";position:absolute;inset:0;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(252,122,36,.16),transparent 60%);opacity:0;transition:opacity .3s}
+.metric:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.metric:hover::before{opacity:1}
+.metric .val{font-family:var(--f-display);font-size:clamp(30px,3.2vw,46px);font-weight:600;font-stretch:85%;letter-spacing:-.03em;line-height:1;display:flex;align-items:baseline;gap:4px}
+.metric .val small{font-size:.42em;font-weight:500;color:var(--mute);letter-spacing:0}
+.metric .lbl{margin-top:10px;font-size:13px;color:var(--mute);line-height:1.35}
+.metric .src{position:absolute;top:14px;right:16px;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--faint)}
+
+.scene{display:flex;align-items:center;gap:16px;justify-content:space-between;padding-top:18px;border-top:1px solid var(--line);font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);animation:fade 1s .75s var(--ease) both}
+.scene .now{display:flex;gap:14px;align-items:center;min-width:0}
+.scene .now b{color:var(--ink);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scene .rec{width:7px;height:7px;border-radius:50%;background:var(--amber);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.ticks{display:flex;gap:4px;flex:1;max-width:420px}
+.ticks span{flex:1;height:2px;background:rgba(255,255,255,.14);position:relative;overflow:hidden;border-radius:2px}
+.ticks span i{position:absolute;inset:0;background:var(--amber);transform-origin:left;transform:scaleX(0)}
+.ticks span.done i{transform:scaleX(1);background:rgba(255,255,255,.5)}
+
+/* ───────── Section shells ───────── */
+section{position:relative}
+.sec{padding-block:clamp(88px,11vw,148px)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:48px}
+.sec-head h2{font-size:clamp(34px,4.4vw,64px);line-height:.98;font-stretch:85%;letter-spacing:-.03em;margin-top:18px}
+.sec-head p{color:var(--mute);max-width:52ch;font-size:17px}
+
+/* ───────── Product matrix ───────── */
+.matrix-bar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;padding:10px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.02)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;position:relative}
+.tab{position:relative;z-index:1;height:40px;padding:0 16px;border-radius:10px;border:0;background:none;color:var(--mute);font:500 14px var(--f-body);cursor:pointer;display:flex;align-items:center;gap:8px;transition:color .2s}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab .ct{font-family:var(--f-mono);font-size:11px;color:var(--faint)}
+.tab[aria-selected="true"] .ct{color:var(--amber)}
+.tab-pill{position:absolute;z-index:0;top:0;height:40px;border-radius:10px;background:var(--slate-2);border:1px solid var(--line-2);transition:transform .45s var(--ease),width .45s var(--ease)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line-2);background:none;color:var(--mute);font:500 13px var(--f-body);cursor:pointer;transition:all .2s}
+.chip[aria-pressed="true"]{border-color:var(--amber);color:var(--ink);background:var(--amber-soft)}
+.detail-toggle{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mute)}
+.switch{position:relative;width:42px;height:24px;border-radius:999px;background:var(--slate-2);border:1px solid var(--line-2);cursor:pointer;padding:0}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--mute);transition:transform .35s var(--ease),background .2s}
+.switch[aria-checked="true"]{background:var(--amber-soft);border-color:var(--amber)}
+.switch[aria-checked="true"]::after{transform:translateX(18px);background:var(--amber)}
+.sep{width:1px;height:22px;background:var(--line-2)}
+
+.table{margin-top:20px;border-top:1px solid var(--line)}
+.thead,.row-h{display:grid;grid-template-columns:minmax(0,2.3fr) 110px minmax(0,1.6fr) minmax(0,1.3fr) 44px;gap:20px;align-items:center}
+.thead{padding:14px 16px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--line)}
+.row{border-bottom:1px solid var(--line);transition:background .25s}
+.row:hover{background:rgba(255,255,255,.025)}
+.row.open{background:rgba(255,255,255,.035)}
+.row-h{padding:18px 16px;cursor:pointer;width:100%;background:none;border:0;color:inherit;text-align:left;font:inherit}
+.row-h .name{font-size:17px;font-weight:600;letter-spacing:-.01em;display:flex;flex-direction:column;gap:3px;min-width:0}
+.row-h .name small{font-weight:400;font-size:13px;color:var(--mute);letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row-h .cell{font-size:14px;color:rgba(243,240,246,.78);min-width:0}
+.badge{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;border:1px solid}
+.badge.ruo{color:#C9B6DA;border-color:rgba(201,182,218,.3);background:rgba(91,35,120,.22)}
+.badge.gmp{color:var(--amber);border-color:rgba(252,122,36,.4);background:var(--amber-soft)}
+.badge.iso{color:#BFD7E6;border-color:rgba(191,215,230,.28);background:rgba(191,215,230,.07)}
+.fmt{display:flex;gap:6px;flex-wrap:wrap}
+.fmt span{font-size:12px;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.05);color:var(--mute);white-space:nowrap}
+.plus{width:32px;height:32px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;transition:transform .45s var(--ease),background .25s,border-color .25s}
+.plus svg{width:12px;height:12px;stroke:var(--ink)}
+.row.open .plus{transform:rotate(45deg);background:var(--amber);border-color:var(--amber)}
+.row.open .plus svg{stroke:#1A0E05}
+.drawer{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.row.open .drawer{grid-template-rows:1fr}
+.drawer>div{overflow:hidden;min-height:0}
+.drawer-in{display:grid;grid-template-columns:260px minmax(0,1fr) minmax(0,1fr);gap:32px;padding:6px 16px 30px}
+.drawer p{color:rgba(243,240,246,.82);font-size:15px;max-width:58ch}
+.drawer dl{margin:0;display:grid;gap:0;font-size:14px}
+.drawer dl div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.drawer dt{color:var(--faint);font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding-top:2px}
+.drawer dd{margin:0;color:var(--ink)}
+.drawer .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.drawer .actions .btn{height:38px;font-size:13px}
+.tech{display:none}
+body.technical .tech{display:block}
+body.technical dl .tech{display:grid}
+.tech-block{margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.25)}
+.tech-block .mono{color:var(--amber);font-size:10.5px;margin-bottom:8px;display:block}
+.regimens{overflow-x:auto}
+.regimens table{border-collapse:collapse;font-size:13px;width:100%;min-width:420px}
+.regimens th,.regimens td{text-align:left;padding:7px 10px 7px 0;border-bottom:1px solid var(--line)}
+.regimens th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;color:var(--faint);font-weight:400;text-transform:uppercase}
+.regimens td:first-child{color:var(--amber);font-family:var(--f-mono);font-size:12px;white-space:nowrap}
+.empty{padding:40px 16px;color:var(--mute);display:none}
+
+/* Specimen label: shown when the product photo cannot load */
+.shot{position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:linear-gradient(160deg,#241C2E,#120F17);border:1px solid var(--line)}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:14px;background:#fff}
+.shot.noimg img{display:none}
+.tag{position:absolute;inset:18px;border-radius:10px;background:var(--clean);color:var(--clean-ink);padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 20px 40px rgba(0,0,0,.4);transform:rotate(-2.5deg)}
+.tag .t-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em}
+.tag .t-top img{height:14px;width:auto;position:static;padding:0;background:none;object-fit:initial;display:block}
+.tag .t-name{font-family:var(--f-display);font-weight:600;font-size:22px;line-height:1.02;letter-spacing:-.02em;font-stretch:85%}
+.tag .t-meta{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;color:var(--clean-mute);display:grid;gap:3px;margin-top:auto}
+.tag .bars{height:30px;background:repeating-linear-gradient(90deg,var(--clean-ink) 0 2px,transparent 2px 4px,var(--clean-ink) 4px 5px,transparent 5px 8px,var(--clean-ink) 8px 11px,transparent 11px 12px)}
+.tag .grade{position:absolute;right:12px;bottom:52px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.06em;border:1.5px solid currentColor}
+.tag .grade.gmp{color:var(--amber)} .tag .grade.ruo{color:var(--plum-2)} .tag .grade.iso{color:#2A6E92}
+
+/* ───────── Chain of custody (sticky scrollytelling) ───────── */
+.chain{background:linear-gradient(180deg,var(--obsidian),var(--slate) 30%,var(--slate) 70%,var(--obsidian))}
+.chain-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(32px,5vw,80px)}
+.stage{position:sticky;top:calc(96px + env(safe-area-inset-top,0px));height:min(72vh,640px);border-radius:20px;overflow:hidden;border:1px solid var(--line)}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .9s var(--ease),transform 2.4s var(--ease)}
+.stage img.on{opacity:1;transform:scale(1)}
+.stage::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,11,17,.85),rgba(13,11,17,0) 45%)}
+.stage .hud{position:absolute;z-index:2;inset:auto 20px 20px 20px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.stage .hud .step-no{font-family:var(--f-display);font-size:clamp(56px,6vw,96px);line-height:.8;font-weight:600;font-stretch:80%;letter-spacing:-.04em}
+.stage .hud .step-no span{color:var(--faint)}
+.readout{padding:12px 14px;border-radius:12px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--mute);max-width:280px}
+.readout b{display:block;color:var(--ink);font-weight:500;font-size:12px;margin-top:4px;text-transform:none;letter-spacing:.02em}
+.rail{position:absolute;z-index:2;top:20px;left:20px;right:20px;display:flex;gap:6px}
+.rail span{flex:1;height:2px;background:rgba(255,255,255,.18);border-radius:2px;transition:background .4s}
+.rail span.on{background:var(--amber)}
+.steps{display:flex;flex-direction:column}
+.step{min-height:68vh;display:flex;flex-direction:column;justify-content:center;padding-block:40px;opacity:.32;transition:opacity .6s var(--ease)}
+.step.active{opacity:1}
+.step:first-child{min-height:56vh}
+.step .k{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;color:var(--amber);text-transform:uppercase}
+.step h3{font-size:clamp(28px,3.2vw,44px);line-height:1;font-stretch:85%;letter-spacing:-.03em;margin:14px 0 16px}
+.step p{color:rgba(243,240,246,.8);font-size:17px;max-width:46ch}
+.step ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:0;max-width:46ch}
+.step li{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;color:var(--mute)}
+.step li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--amber);margin-top:8px;flex:none}
+.step .inline-shot{display:none}
+
+/* ───────── Donor ecosystem ───────── */
+.donor-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:center}
+.rings{position:relative;aspect-ratio:1;max-width:560px;width:100%;margin-inline:auto}
+.rings svg{width:100%;height:100%;overflow:visible}
+.rings .orbit{transform-origin:280px 280px;animation:spin 60s linear infinite}
+.rings .orbit.r2{animation-duration:90s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.attr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:32px}
+.attr div{background:var(--obsidian);padding:18px 18px 20px}
+.attr .mono{color:var(--faint);font-size:10.5px}
+.attr b{display:block;font-weight:600;font-size:16px;margin-top:6px}
+.big-stat{display:flex;align-items:baseline;gap:18px;margin-top:28px;flex-wrap:wrap}
+.big-stat .n{font-family:var(--f-display);font-size:clamp(64px,8vw,120px);font-weight:600;font-stretch:78%;line-height:.85;letter-spacing:-.05em;color:var(--amber)}
+.big-stat .n sup{font-size:.4em;vertical-align:top;margin-left:2px}
+.big-stat p{color:var(--mute);max-width:30ch;font-size:15px}
+
+/* ───────── Services ───────── */
+.svc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.svc{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);min-height:420px;display:flex;flex-direction:column;justify-content:flex-end;text-decoration:none;isolation:isolate}
+.svc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.2s var(--ease),filter .6s}
+.svc::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(13,11,17,.97) 0%,rgba(13,11,17,.82) 45%,rgba(13,11,17,.25) 78%,rgba(13,11,17,.1))}
+.svc:hover img{transform:scale(1.05)}
+.svc .body{padding:28px;display:grid;gap:12px}
+.svc .mono{color:var(--amber);font-size:11px}
+.svc h3{font-size:clamp(24px,2.4vw,34px);line-height:1.02;font-stretch:85%;letter-spacing:-.025em}
+.svc p{color:rgba(243,240,246,.78);font-size:15px;max-width:44ch}
+.svc .more{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;margin-top:6px}
+.svc .more svg{width:14px;height:14px;transition:transform .35s var(--ease)}
+.svc:hover .more svg{transform:translateX(4px)}
+.svc .pts{display:flex;gap:6px;flex-wrap:wrap}
+.svc .pts span{font-size:12px;padding:4px 9px;border-radius:999px;border:1px solid var(--line-2);color:rgba(243,240,246,.8);background:rgba(13,11,17,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+/* ───────── Cleanroom (light) ───────── */
+.clean{background:var(--clean);color:var(--clean-ink)}
+.clean .eyebrow{color:var(--clean-mute)}
+.clean .sec-head p{color:var(--clean-mute)}
+.q-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:start}
+.q-media{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5}
+.q-media img{width:100%;height:100%;object-fit:cover}
+.q-media .cap{position:absolute;left:16px;bottom:16px;right:16px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.q-media .cap span{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;padding:7px 10px;border-radius:8px;background:rgba(242,243,245,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.6);color:var(--clean-ink)}
+.creds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cred{border:1px solid var(--clean-line);border-radius:14px;padding:16px;background:#fff}
+.cred b{display:block;font-family:var(--f-display);font-size:20px;font-weight:600;letter-spacing:-.02em;font-stretch:88%}
+.cred span{font-size:13px;color:var(--clean-mute)}
+.qlist{margin-top:28px;border-top:1px solid var(--clean-line)}
+.qlist div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;padding:16px 0;border-bottom:1px solid var(--clean-line);font-size:15px}
+.qlist dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--clean-mute);padding-top:3px}
+.qlist dd{margin:0}
+.panel{margin-top:28px;border:1px solid var(--clean-line);border-radius:16px;background:#fff;overflow:hidden}
+.panel summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;font-weight:600}
+.panel summary::-webkit-details-marker{display:none}
+.panel summary .plus{border-color:var(--clean-line)}
+.panel summary .plus svg{stroke:var(--clean-ink)}
+.panel[open] summary .plus{transform:rotate(45deg);background:var(--clean-ink)}
+.panel[open] summary .plus svg{stroke:var(--clean)}
+.panel .tbl{overflow-x:auto;padding:0 20px 18px}
+.panel table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px}
+.panel th,.panel td{text-align:left;padding:10px 12px 10px 0;border-top:1px solid var(--clean-line)}
+.panel th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--clean-mute);font-weight:400}
+.panel td:last-child{font-family:var(--f-mono);font-size:12px;color:var(--clean-mute)}
+.panel .note{font-size:13px;color:var(--clean-mute);padding-top:12px}
+
+/* ───────── Logistics strip ───────── */
+.ship{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.ship div{background:var(--obsidian);padding:26px 24px 28px;display:grid;gap:10px;align-content:start}
+.ship .mono{color:var(--faint);font-size:10.5px}
+.ship b{font-family:var(--f-display);font-size:clamp(28px,2.6vw,38px);font-weight:600;font-stretch:82%;letter-spacing:-.03em;line-height:1}
+.ship p{font-size:14px;color:var(--mute)}
+
+/* ───────── Voices ───────── */
+.voices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.voice{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/10;isolation:isolate;cursor:pointer;background:none;padding:0;color:inherit;text-align:left;font:inherit;display:block;width:100%}
+.voice img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:grayscale(.35);transition:filter .6s,transform 1.2s var(--ease)}
+.voice::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(13,11,17,.92),rgba(13,11,17,0) 55%)}
+.voice:hover img{filter:none;transform:scale(1.03)}
+.voice .who{position:absolute;left:24px;right:24px;bottom:22px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.voice h3{font-size:24px;letter-spacing:-.02em;font-stretch:88%}
+.voice .role{font-size:14px;color:var(--mute);margin-top:4px}
+.voice .ts{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--ink);display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--glass);border:1px solid var(--line-2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap}
+.voice .ts svg{width:9px;height:9px;fill:var(--amber)}
+
+/* ───────── CTA + footer ───────── */
+.cta{border-radius:28px;overflow:hidden;position:relative;isolation:isolate;padding:clamp(40px,6vw,88px);display:grid;grid-template-columns:minmax(0,1.3fr) auto;gap:32px;align-items:end;border:1px solid var(--line)}
+.cta img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.cta::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(100deg,rgba(62,17,82,.95),rgba(30,10,40,.82) 50%,rgba(13,11,17,.5))}
+.cta h2{font-size:clamp(34px,4.6vw,68px);line-height:.96;font-stretch:82%;letter-spacing:-.035em}
+.cta p{margin-top:18px;color:rgba(243,240,246,.8);max-width:46ch}
+footer{padding-block:72px 40px;border-top:1px solid var(--line);margin-top:clamp(80px,10vw,140px)}
+.foot{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(4,minmax(0,1fr));gap:32px}
+.foot img{height:34px;width:auto}
+.foot h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:400;margin:0 0 14px}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.foot a{text-decoration:none;font-size:14px;color:rgba(243,240,246,.75)}
+.foot a:hover{color:var(--ink)}
+.foot .tagline{margin-top:18px;color:var(--mute);font-size:14px;max-width:34ch}
+.legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--faint)}
+
+/* ───────── Film modal ───────── */
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:rgba(8,6,10,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+.modal.open{opacity:1;pointer-events:auto}
+.modal .box{width:min(1200px,100%);transform:scale(.96);transition:transform .5s var(--ease)}
+.modal.open .box{transform:none}
+.modal video{width:100%;aspect-ratio:16/9;border-radius:14px;background:#000;display:block}
+.modal .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:12px}
+.modal .close{background:none;border:1px solid var(--line-2);color:var(--ink);height:36px;padding:0 14px;border-radius:999px;cursor:pointer;font:500 13px var(--f-body)}
+.chapters{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chapters button{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--mute);height:32px;padding:0 12px;border-radius:999px;font:500 12px var(--f-body);cursor:pointer}
+.chapters button:hover{color:var(--ink);border-color:var(--line-2)}
+.chapters button b{font-family:var(--f-mono);font-weight:400;color:var(--amber);margin-right:6px}
+
+/* ───────── Responsive ───────── */
+@media (max-width:1080px){
+  .nav ul{display:none}
+  .menu-btn{display:inline-flex;align-items:center}
+  .nav .btn{display:none}
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .thead{display:none}
+  .row-h{grid-template-columns:minmax(0,1fr) auto 44px;gap:14px}
+  .row-h .c-src,.row-h .c-fmt{display:none}
+  .drawer-in{grid-template-columns:200px minmax(0,1fr)}
+  .drawer-in .d-specs{grid-column:2}
+  .ship{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .foot{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .foot>div:first-child{grid-column:1/-1}
+}
+@media (max-width:860px){
+  .sec-head,.hero-lede,.donor-grid,.q-grid,.cta{grid-template-columns:minmax(0,1fr)}
+  .chain-grid{grid-template-columns:minmax(0,1fr)}
+  .stage{display:none}
+  .step{min-height:auto;opacity:1;padding-block:28px;border-top:1px solid var(--line)}
+  .step:first-child{min-height:auto}
+  .step .inline-shot{display:block;border-radius:14px;aspect-ratio:16/10;object-fit:cover;width:100%;margin-bottom:22px}
+  .svc-grid,.voices{grid-template-columns:minmax(0,1fr)}
+  .svc{min-height:360px}
+  .creds{grid-template-columns:minmax(0,1fr)}
+  .drawer-in{grid-template-columns:minmax(0,1fr)}
+  .drawer-in .d-specs{grid-column:auto}
+  .drawer-in .shot{max-width:240px}
+  .qlist div{grid-template-columns:minmax(0,1fr);gap:4px}
+}
+@media (max-width:520px){
+  .metrics{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .metric{padding:14px}
+  .metric .src{display:none}
+  .ship{grid-template-columns:minmax(0,1fr)}
+  .attr{grid-template-columns:minmax(0,1fr)}
+  .scene .ticks{display:none}
+  .foot{grid-template-columns:minmax(0,1fr)}
+  .row-h .badge{display:none}
+  .row-h{grid-template-columns:minmax(0,1fr) 44px}
+  .voice{aspect-ratio:4/5}
+  .voice .who{flex-direction:column;align-items:flex-start}
+}
+.mobile-menu{position:fixed;inset:0;z-index:60;background:rgba(13,11,17,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:calc(90px + env(safe-area-inset-top,0px)) var(--gutter) 40px;display:flex;flex-direction:column;gap:6px}
+.mobile-menu a{font-family:var(--f-display);font-size:34px;font-weight:600;font-stretch:85%;letter-spacing:-.02em;text-decoration:none;padding:8px 0;border-bottom:1px solid var(--line)}
+.mobile-menu .btn{margin-top:24px;align-self:flex-start;font-size:15px}
+/* Headlines: Inter Bold everywhere */
+h1,h2,h3{font-family:var(--f-head)!important;font-weight:700!important;font-stretch:normal!important}
+/* Metric numbers: Inter Bold */
+.metric .val,.big-stat .n,.ship b{font-family:var(--f-head);font-weight:700;font-stretch:normal}
+.metric .val small{font-family:var(--f-body);font-weight:500}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<!-- ───────── NAV ───────── -->
+<header class="sh">
+  <div class="sh-bar">
+    <a class="sh-logo" href="./" aria-label="AllCells home"><img src="media/logo-white.png" alt="AllCells"></a>
+    <ul class="sh-nav">
+      <li><button type="button" data-mega="mega-products" aria-expanded="false" aria-controls="mega-products">Products <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button></li>
+      <li><button type="button" data-mega="mega-services" aria-expanded="false" aria-controls="mega-services">Services <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button></li>
+      <li><button type="button" data-mega="mega-about" aria-expanded="false" aria-controls="mega-about">About <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button></li>
+      <li><button type="button" data-mega="mega-resources" aria-expanded="false" aria-controls="mega-resources">Resources <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button></li>
+    </ul>
+    <div class="sh-cta"><a class="btn btn-ghost btn-sm" href="https://allcells.com/allcells-webstore/" target="_blank" rel="noopener">Webstore</a><a class="btn btn-primary btn-sm" href="quote.html">Request a quote</a></div>
+    <button class="sh-burger" type="button" aria-expanded="false" aria-controls="drawerNav">Menu</button>
+  </div>
+  <div class="mega" id="mega-products" style="--cols:3"><div class="mega-in">
+    <div><h5><a href="ruo.html">Research use (RUO)</a></h5><ul><li><a href="leukopak.html">Leukopak</a></li><li><a href="cryopreserved-leukopak.html">Cryopreserved Leukopak</a></li><li><a href="guaranteed-cell-count-leukopak.html">Guaranteed-Cell-Count Leukopak</a></li><li><a href="mobilized-leukopak.html">Mobilized Leukopak</a></li><li><a href="bone-marrow.html">Bone Marrow</a></li><li><a href="cord-blood.html">Cord Blood</a></li><li><a href="whole-blood.html">Whole Blood</a></li><li><a href="https://dls.com/biospecimens/" target="_blank" rel="noopener">Other Biospecimens</a></li></ul></div>
+    <div><h5><a href="gmp.html">GMP</a></h5><ul><li><a href="gmp-fresh-leukopak.html">GMP Fresh Leukopak</a></li><li><a href="gmp-cryopreserved-leukopak.html">GMP Cryopreserved Leukopak</a></li><li><a href="gmp-mobilized-leukopak.html">GMP Mobilized Leukopak</a></li><li><a href="gmp-bone-marrow.html">GMP Bone Marrow</a></li><li><a href="gmp-cryopreserved-pbmcs.html">GMP Cryopreserved PBMCs</a></li></ul></div>
+    <div><h5><a href="isolated-cells.html">Isolated cells</a></h5><ul><li><a href="cd34-hspcs.html">CD34+ HSPCs</a></li><li><a href="t-cells.html">T Cells</a></li><li><a href="nk-cells.html">NK Cells</a></li><li><a href="monocytes.html">Monocytes</a></li><li><a href="b-cells.html">B Cells</a></li><li><a href="pbmcs.html">PBMCs</a></li></ul></div>
+    <a class="mega-feature" href="mobilized-leukopak.html"><img src="media/nurse.jpg" alt=""><span class="mono" style="color:var(--amber)">Featured</span><b>Mobilized Leukopak</b><span>High single-donor CD34+ yield with the shortest lead time on the market.</span></a>
+  </div></div>
+  <div class="mega" id="mega-services" style="--cols:1"><div class="mega-in" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr)">
+    <div><h5><a href="services.html">Services</a></h5><ul>
+      <li><a href="custom-cell-isolation.html">Custom Cell Isolation<small>Bulk and sequential isolations to your protocol</small></a></li>
+      <li><a href="made-to-order.html">Made-to-Order<small>Prospective collections to your specification</small></a></li></ul></div>
+    <div><h5>&nbsp;</h5><ul>
+      <li><a href="donor-management.html">Donor Management<small>Recruit, screen, monitor and retain donors</small></a></li>
+      <li><a href="pre-characterized-donors.html">Pre-Characterized Donor Selection<small>HLA, KIR and immunophenotype data up front</small></a></li></ul></div>
+    <a class="mega-feature" href="custom-cell-isolation.html"><img src="media/centrifuge.jpg" alt=""><b>Sequential isolation</b><span>Two populations from one donor's collection.</span></a>
+  </div></div>
+  <div class="mega" id="mega-about" style="--cols:2"><div class="mega-in" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr)">
+    <div><h5>About AllCells</h5><ul><li><a href="donor-difference.html">The Donor Difference</a></li><li><a href="customers.html">Our Customers</a></li><li><a href="shipping.html">Shipping &amp; Delivery</a></li></ul></div>
+    <div><h5>&nbsp;</h5><ul><li><a href="quality-systems.html">Quality Systems</a></li><li><a href="https://www.dls.com/careers" target="_blank" rel="noopener">Careers</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="https://dls.com/about-us/" target="_blank" rel="noopener">Discovery Life Sciences</a></li></ul></div>
+    <a class="mega-feature" href="donor-difference.html"><img src="media/donor-chair.jpg" alt=""><b>The Donor Difference</b><span>Thousands of qualified, recallable donors on two coasts.</span></a>
+  </div></div>
+  <div class="mega" id="mega-resources" style="--cols:2"><div class="mega-in" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr)">
+    <div><h5><a href="resources.html">Resources</a></h5><ul><li><a href="product-info.html">Product Info</a></li><li><a href="webinars.html">Webinars</a></li><li><a href="blog.html">Blog</a></li><li><a href="https://dls.com/news-and-events/" target="_blank" rel="noopener">News &amp; Events</a></li><li><a href="https://dls.com/publications/" target="_blank" rel="noopener">Publications</a></li><li><a href="protocols.html">Protocols</a></li></ul></div>
+    <div><h5><a href="protocols.html">Protocols</a></h5><ul><li><a href="protocol-counting.html">Counting Cells</a></li><li><a href="protocol-cryo-leukopak-thawing.html">Cryo Leukopak Thawing</a></li><li><a href="protocol-storage-thawing.html">Storage &amp; Thawing</a></li></ul></div>
+    <a class="mega-feature" href="protocol-counting.html"><img src="media/pipette.jpg" alt=""><b>Counting protocol</b><span>With a built-in hemacytometer calculator.</span></a>
+  </div></div>
+</header>
+<nav class="drawer-nav" id="drawerNav" hidden>
+  <details><summary>Products</summary><div class="grp">
+    <h6><a href="ruo.html">Research use</a></h6><a href="leukopak.html">Leukopak</a><a href="cryopreserved-leukopak.html">Cryopreserved Leukopak</a><a href="guaranteed-cell-count-leukopak.html">Guaranteed-Cell-Count Leukopak</a><a href="mobilized-leukopak.html">Mobilized Leukopak</a><a href="bone-marrow.html">Bone Marrow</a><a href="cord-blood.html">Cord Blood</a><a href="whole-blood.html">Whole Blood</a><a href="https://dls.com/biospecimens/" target="_blank" rel="noopener">Other Biospecimens</a>
+    <h6><a href="gmp.html">GMP</a></h6><a href="gmp-fresh-leukopak.html">GMP Fresh Leukopak</a><a href="gmp-cryopreserved-leukopak.html">GMP Cryopreserved Leukopak</a><a href="gmp-mobilized-leukopak.html">GMP Mobilized Leukopak</a><a href="gmp-bone-marrow.html">GMP Bone Marrow</a><a href="gmp-cryopreserved-pbmcs.html">GMP Cryopreserved PBMCs</a>
+    <h6><a href="isolated-cells.html">Isolated cells</a></h6><a href="cd34-hspcs.html">CD34+ HSPCs</a><a href="t-cells.html">T Cells</a><a href="nk-cells.html">NK Cells</a><a href="monocytes.html">Monocytes</a><a href="b-cells.html">B Cells</a><a href="pbmcs.html">PBMCs</a>
+  </div></details>
+  <details><summary>Services</summary><div class="grp"><a href="services.html">All services</a><a href="custom-cell-isolation.html">Custom Cell Isolation</a><a href="made-to-order.html">Made-to-Order</a><a href="donor-management.html">Donor Management</a><a href="pre-characterized-donors.html">Pre-Characterized Donor Selection</a></div></details>
+  <details><summary>About</summary><div class="grp"><a href="donor-difference.html">The Donor Difference</a><a href="customers.html">Our Customers</a><a href="shipping.html">Shipping &amp; Delivery</a><a href="quality-systems.html">Quality Systems</a><a href="https://www.dls.com/careers" target="_blank" rel="noopener">Careers</a><a href="contact.html">Contact Us</a></div></details>
+  <details><summary>Resources</summary><div class="grp"><a href="resources.html">Resource center</a><a href="product-info.html">Product Info</a><a href="webinars.html">Webinars</a><a href="blog.html">Blog</a><a href="https://dls.com/news-and-events/" target="_blank" rel="noopener">News &amp; Events</a><a href="https://dls.com/publications/" target="_blank" rel="noopener">Publications</a><a href="protocols.html">Protocols</a><a href="protocol-counting.html">Counting Cells</a><a href="protocol-cryo-leukopak-thawing.html">Cryo Leukopak Thawing</a><a href="protocol-storage-thawing.html">Storage &amp; Thawing</a></div></details>
+  <a class="btn btn-primary" href="quote.html">Request a quote</a>
+</nav>
+
+<main id="top">
+<!-- ───────── HERO ───────── -->
+<section class="hero" aria-label="Introduction">
+  <img class="poster" src="media/hero-poster.jpg" alt="">
+  <video id="heroVideo" muted loop playsinline autoplay preload="auto" poster="media/hero-poster.jpg" aria-hidden="true"></video>
+  <div class="wrap hero-inner">
+    <div class="eyebrow"><i></i>Human primary cells · RUO to GMP</div>
+    <h1><span class="line"><span>Advance complex</span></span><span class="line"><span>CGT programs</span></span><span class="line"><span>from <em>RUO</em> to <em>GMP</em>.</span></span></h1>
+    <div class="hero-lede">
+      <p>Leukopaks, bone marrow, cord blood and isolated immune and stem cells, collected from our own donor network and processed in-house. Starting material that moves with your program from first experiment to commercial manufacture.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#products">Explore products <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <button class="btn btn-ghost" data-film="0"><span class="play-dot"><svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg></span>Watch the film · 2:26</button>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metric"><span class="src">RUO</span><div class="val tnum" data-count="98">98<small>%</small></div><div class="lbl">Collection deliverability</div></div>
+      <div class="metric"><span class="src">GMP</span><div class="val tnum" data-count="99">99<small>%</small></div><div class="lbl">GMP collections deliverability</div></div>
+      <div class="metric"><span class="src">Standard</span><div class="val tnum">3<small>business days</small></div><div class="lbl">Lead time on standard orders</div></div>
+      <div class="metric"><span class="src">Est.</span><div class="val tnum">1998</div><div class="lbl">Making tailored cell products</div></div>
+    </div>
+    <div class="scene" aria-hidden="true">
+      <div class="now"><span class="rec"></span><span id="sceneTc" class="tnum">00:00</span><b id="sceneLbl">Cell culture</b></div>
+      <div class="ticks" id="ticks"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── PRODUCT MATRIX ───────── -->
+<section class="sec" id="products">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow"><i></i>Product matrix</div><h2>Every starting material, one grade path.</h2></div>
+      <p>Filter by grade and format. Switch on technical detail to see mobilization regimens, isolation methods and donor testing in each drawer.</p>
+    </div>
+
+    <div class="matrix-bar">
+      <div class="tabs" role="tablist" id="tabs">
+        <span class="tab-pill" id="tabPill" aria-hidden="true"></span>
+        <button class="tab" role="tab" aria-selected="true" data-grade="all">All <span class="ct" data-ct="all"></span></button>
+        <button class="tab" role="tab" aria-selected="false" data-grade="ruo">Research use <span class="ct" data-ct="ruo"></span></button>
+        <button class="tab" role="tab" aria-selected="false" data-grade="gmp">GMP <span class="ct" data-ct="gmp"></span></button>
+        <button class="tab" role="tab" aria-selected="false" data-grade="iso">Isolated cells <span class="ct" data-ct="iso"></span></button>
+      </div>
+      <div class="filters">
+        <button class="chip" aria-pressed="false" data-fmt="Fresh">Fresh</button>
+        <button class="chip" aria-pressed="false" data-fmt="Cryopreserved">Cryopreserved</button>
+        <span class="sep" aria-hidden="true"></span>
+        <label class="detail-toggle" for="techSwitch">Technical detail <button id="techSwitch" class="switch" role="switch" aria-checked="false" aria-label="Show technical detail"></button></label>
+      </div>
+    </div>
+
+    <div class="table" id="table">
+      <div class="thead"><span>Product</span><span>Grade</span><span>Source</span><span>Formats</span><span></span></div>
+      <div id="rows"></div>
+      <div class="empty" id="empty">No products match these filters. Clear the format filter to see everything in this grade.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── CHAIN OF CUSTODY ───────── -->
+<section class="sec chain" id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow"><i></i>Chain of custody</div><h2>Donor to dock, under one roof.</h2></div>
+      <p>Collection, processing and pack-out happen on-site, so material reaches you fresh and with a complete record. Scroll through the five handoffs.</p>
+    </div>
+    <div class="chain-grid">
+      <div class="stage" id="stage" aria-hidden="true">
+        <div class="rail" id="rail"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+        <img src="media/screening.jpg" alt="" class="on">
+        <img src="media/apheresis.jpg" alt="">
+        <img src="media/hood.jpg" alt="">
+        <img src="media/ln2.jpg" alt="">
+        <img src="media/dryice.jpg" alt="">
+        <div class="hud">
+          <div class="step-no tnum" id="stepNo">01<span>/05</span></div>
+          <div class="readout" id="readout">Checkpoint<b>Physical exam + health questionnaire</b></div>
+        </div>
+      </div>
+      <div class="steps" id="steps">
+        <article class="step active" data-read="Physical exam + health questionnaire">
+          <img class="inline-shot" src="media/screening.jpg" alt="A clinician checks a donor's blood pressure">
+          <span class="k">01 · Qualify</span>
+          <h3>Every donor is screened before collection.</h3>
+          <p>Donors complete a physical exam and a health questionnaire. Consent is IRB-approved for both research and commercial use.</p>
+          <ul><li>Infectious disease screening at multiple time points</li><li>Backup and parallel donors held for critical orders</li></ul>
+        </article>
+        <article class="step" data-read="Spectra Optia apheresis">
+          <img class="inline-shot" src="media/apheresis.jpg" alt="A donor reclines in an apheresis chair in the collection center">
+          <span class="k">02 · Collect</span>
+          <h3>Leukapheresis at our own centers.</h3>
+          <p>Mononuclear cells are collected on the Spectra Optia Apheresis System by qualified clinicians. Mobilized collections follow G-CSF, plerixafor or dual regimens.</p>
+          <ul><li>Leukopaks sized by volume or total nucleated cell count</li><li>Bone marrow aspirates of 10, 25, 50 and 100 mL</li></ul>
+        </article>
+        <article class="step" data-read="Positive or negative selection">
+          <img class="inline-shot" src="media/hood.jpg" alt="A technician works inside a biosafety cabinet">
+          <span class="k">03 · Isolate</span>
+          <h3>Target cells separated within hours.</h3>
+          <p>Integrated labs run immunomagnetic separation soon after collection. Sequential isolation recovers a second population from the same donor's unlabeled fraction.</p>
+          <ul><li>CD34+, T, NK, B cells, monocytes and PBMCs</li><li>Viable CD34+ counts by ISHAGE flow protocol on request</li></ul>
+        </article>
+        <article class="step" data-read="Liquid nitrogen banking">
+          <img class="inline-shot" src="media/ln2.jpg" alt="A technician lifts a rack from a liquid nitrogen tank">
+          <span class="k">04 · Cryopreserve</span>
+          <h3>Banked for comparable lots.</h3>
+          <p>Single-donor isolations can be cryopreserved and banked, so later experiments draw on the same consistent cell source.</p>
+          <ul><li>GMP cryopreserved leukopaks made in an ISO 7 cleanroom</li><li>Made-to-stock and custom cryopreservation</li></ul>
+        </article>
+        <article class="step" data-read="ISTA-validated, logger in every box">
+          <img class="inline-shot" src="media/dryice.jpg" alt="Gloved hands scoop dry ice into a shipper">
+          <span class="k">05 · Ship</span>
+          <h3>Packed to arrive on your schedule.</h3>
+          <p>Temperature-controlled AeroSafe Global packaging, validated to ISTA standards, with a temperature logger in every shipment.</p>
+          <ul><li>Same-day, next-day or specific-date pickup</li><li>Shipping guidance ahead of severe weather</li></ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── DONOR ECOSYSTEM ───────── -->
+<section class="sec" id="donors">
+  <div class="wrap donor-grid">
+    <div class="rings" aria-label="Donor ecosystem: prospective donors feed annual donors, who feed a core of repeat donors">
+      <svg viewBox="0 0 560 560" role="img">
+        <defs>
+          <radialGradient id="core" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#5B2378"/><stop offset="1" stop-color="#3E1152"/></radialGradient>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FC7A24" stop-opacity=".35"/><stop offset="1" stop-color="#FC7A24" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="280" cy="280" r="270" fill="rgba(91,35,120,.10)" stroke="rgba(255,255,255,.08)"/>
+        <circle cx="280" cy="280" r="190" fill="rgba(91,35,120,.18)" stroke="rgba(255,255,255,.10)"/>
+        <circle cx="280" cy="280" r="150" fill="url(#glow)"/>
+        <circle cx="280" cy="280" r="104" fill="url(#core)" stroke="rgba(252,122,36,.6)"/>
+        <g class="orbit"><circle cx="280" cy="10" r="7" fill="#FC7A24"/><circle cx="550" cy="280" r="4" fill="#FC7A24" opacity=".7"/><circle cx="90" cy="420" r="5" fill="#FC7A24" opacity=".8"/></g>
+        <g class="orbit r2"><circle cx="280" cy="90" r="5" fill="#F3F0F6" opacity=".8"/><circle cx="114" cy="190" r="3.5" fill="#F3F0F6" opacity=".6"/><circle cx="440" cy="390" r="4" fill="#F3F0F6" opacity=".7"/></g>
+        <text x="280" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1.6" fill="#A29BAD">PROSPECTIVE DONORS</text>
+        <text x="280" y="128" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1.6" fill="#C9B6DA">ANNUAL DONORS</text>
+        <text x="280" y="272" text-anchor="middle" font-family="Instrument Sans, Arial, sans-serif" font-size="30" font-weight="600" fill="#F3F0F6">Core</text>
+        <text x="280" y="302" text-anchor="middle" font-family="Instrument Sans, Arial, sans-serif" font-size="30" font-weight="600" fill="#F3F0F6">donors</text>
+      </svg>
+    </div>
+    <div>
+      <div class="eyebrow"><i></i>Donor ecosystem</div>
+      <h2 style="font-size:clamp(34px,4.4vw,64px);line-height:.98;font-stretch:85%;letter-spacing:-.03em;margin-top:18px">A deep bench of repeat donors.</h2>
+      <p style="color:var(--mute);font-size:17px;max-width:50ch;margin-top:18px">Proprietary donor management software tracks a pool that widens from prospective donors to a core who return again and again. That depth is how we keep scheduled collections on the calendar and recall a donor you've already characterized.</p>
+      <div class="big-stat"><span class="n tnum">98<sup>%</sup></span><p>Collection deliverability, from our donor management system and optimized processes.</p></div>
+      <div class="attr">
+        <div><span class="mono">Immunogenetics</span><b>HLA & KIR typing</b></div>
+        <div><span class="mono">Serology</span><b>CMV status</b></div>
+        <div><span class="mono">Hematology</span><b>Blood type</b></div>
+        <div><span class="mono">Profile</span><b>Demographics & lifestyle</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── SERVICES ───────── -->
+<section class="sec" id="services" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow"><i></i>Services</div><h2>When the catalog isn't enough.</h2></div>
+      <p>Our scientists, clinicians, quality and logistics teams work with you on project definition, design and management.</p>
+    </div>
+    <div class="svc-grid">
+      <a class="svc" href="custom-cell-isolation.html">
+        <img src="media/centrifuge.jpg" alt="A technician loads a centrifuge">
+        <div class="body"><span class="mono">Custom cell isolation</span><h3>Bulk isolations to your protocol.</h3><p>Single-donor bulk isolation from leukapheresis material, by positive or negative selection, standard or sequential.</p><div class="pts"><span>CD34+</span><span>T</span><span>NK</span><span>B</span><span>Monocytes</span><span>PBMCs</span></div><span class="more">Explore isolation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+      </a>
+      <a class="svc" href="made-to-order.html">
+        <img src="media/pipette.jpg" alt="A gloved hand pipettes media into a culture flask">
+        <div class="body"><span class="mono">Made-to-order collections</span><h3>Prospective donors, scheduled for you.</h3><p>Specific cell counts or volumes, custom media and reagents, matched samples and your own infectious disease timepoints.</p><div class="pts"><span>Donor reservation</span><span>Custom testing</span><span>Matched samples</span></div><span class="more">Plan a collection <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+      </a>
+      <a class="svc" href="donor-management.html">
+        <img src="media/donor.jpg" alt="A donor and a coordinator review paperwork">
+        <div class="body"><span class="mono">Donor management</span><h3>A donor network that shows up.</h3><p>Recruitment, scheduling and recall run on proprietary software, with donor safety and comfort first.</p><div class="pts"><span>Recall</span><span>Backup donors</span><span>Parallel donors</span></div><span class="more">How donors are managed <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+      </a>
+      <a class="svc" href="pre-characterized-donors.html">
+        <img src="media/cryo.jpg" alt="Gloved hands place vials into a cryo staging box">
+        <div class="body"><span class="mono">Pre-characterized donor selection</span><h3>Pick the donor, then pick again.</h3><p>Source repeat donors with pre-screened markers, so follow-on studies use the same biology.</p><div class="pts"><span>HLA</span><span>KIR</span><span>CMV</span><span>Blood type</span></div><span class="more">Find a donor <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── QUALITY (cleanroom) ───────── -->
+<section class="sec clean" id="quality">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Quality systems</div><h2>Built for the audit you haven't scheduled yet.</h2></div>
+      <p>GMP products are manufactured for further manufacturing use, under a quality management system with batch records, equipment and product validation, and stability studies.</p>
+    </div>
+    <div class="q-grid">
+      <div class="q-media">
+        <img src="media/cleanroom.jpg" alt="A gowned operator adjusts goggles before entering the cleanroom">
+        <div class="cap"><span>ISO 7 cleanroom</span><span>Grade A + B zones</span></div>
+      </div>
+      <div>
+        <div class="creds">
+          <div class="cred"><b>FDA</b><span>Registered facilities</span></div>
+          <div class="cred"><b>IRB</b><span>Approved donor consent</span></div>
+          <div class="cred"><b>AABB</b><span>Compliant processes</span></div>
+        </div>
+        <dl class="qlist">
+          <div><dt>Regulation</dt><dd>21 CFR 1271 Subparts A–C, plus the Subpart D provisions applicable under §1271.150(c)</dd></div>
+          <div><dt>Donor eligibility</dt><dd>Physical exam, health questionnaire and infectious disease testing per 21 CFR 1271, CDC and AABB recommendations</dd></div>
+          <div><dt>Packaging</dt><dd>Validated to ISTA standards, temperature logger included</dd></div>
+          <div><dt>RUO documentation</dt><dd>GMP-like facilities, commercial-grade packaging, e-documentation with certificates of analysis</dd></div>
+        </dl>
+        <details class="panel">
+          <summary>GMP donor infectious disease panel <span class="plus"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.6"><path d="M6 1v10M1 6h10"/></svg></span></summary>
+          <div class="tbl">
+            <table>
+              <thead><tr><th>Agent</th><th>Marker</th></tr></thead>
+              <tbody>
+                <tr><td>HIV-1 / HIV-2</td><td>Antibodies + RNA</td></tr>
+                <tr><td>Hepatitis B</td><td>Antibodies + DNA</td></tr>
+                <tr><td>Hepatitis C</td><td>Antibodies + RNA</td></tr>
+                <tr><td>HTLV I / II</td><td>Antibodies</td></tr>
+                <tr><td>CMV</td><td>Antibodies</td></tr>
+                <tr><td>West Nile virus</td><td>RNA</td></tr>
+                <tr><td><i>Trypanosoma cruzi</i> (Chagas)</td><td>Antibodies</td></tr>
+                <tr><td><i>Treponema pallidum</i> (syphilis)</td><td>Antibodies</td></tr>
+              </tbody>
+            </table>
+            <p class="note">GMP-eligible donors must test negative for every agent above.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── LOGISTICS ───────── -->
+<section class="sec" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow"><i></i>Shipping & delivery</div><h2>Time-sensitive by default.</h2></div>
+      <p>Primary cells lose value by the hour. Lead times and pickup windows are set around your lab's calendar, not ours.</p>
+    </div>
+    <div class="ship">
+      <div><span class="mono">Lead time</span><b class="tnum">3 days</b><p>Industry-leading lead time on standard orders, in business days.</p></div>
+      <div><span class="mono">Pickup</span><b>Same day</b><p>Or next-day, or a specific date you schedule in advance.</p></div>
+      <div><span class="mono">Packaging</span><b>ISTA</b><p>AeroSafe Global temperature-controlled shippers, reusable and recyclable parts.</p></div>
+      <div><span class="mono">Experience</span><b class="tnum">25+ yrs</b><p>Of cell isolation for the CGT industry.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── VOICES ───────── -->
+<section class="sec" id="team">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow"><i></i>From the floor</div><h2>The people behind the pack-out.</h2></div>
+      <p>Hear from the teams who run collections and shape the product line. Each card opens the film at their segment.</p>
+    </div>
+    <div class="voices">
+      <button class="voice" data-film="46">
+        <img src="media/erin.jpg" alt="Erin Douglas speaking in an office">
+        <div class="who"><div><h3>Erin Douglas</h3><div class="role">Associate Director, Operations</div></div><span class="ts"><svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg>Play from 0:46</span></div>
+      </button>
+      <button class="voice" data-film="69.9">
+        <img src="media/yuki.jpg" alt="Yuki Kato Maves speaking in an office">
+        <div class="who"><div><h3>Yuki Kato Maves</h3><div class="role">Associate Director, Product Management</div></div><span class="ts"><svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg>Play from 1:10</span></div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── CTA ───────── -->
+<section class="wrap">
+  <div class="cta">
+    <img src="media/cleanroom-wide.jpg" alt="">
+    <div>
+      <div class="eyebrow" style="color:rgba(243,240,246,.7)"><i></i>Start a project</div>
+      <h2 style="margin-top:18px">Tell us the cells, the donor and the date.</h2>
+      <p>Our team scopes the collection, isolation and shipping plan, then schedules it.</p>
+    </div>
+    <div class="ctas"><a class="btn btn-primary" href="#quote">Request a quote</a><a class="btn btn-ghost" href="https://allcells.com/allcells-webstore/" target="_blank" rel="noopener">Visit the webstore</a></div>
+  </div>
+</section>
+</main>
+
+<section class="quote" id="quote"><div class="wrap quote-grid">
+  <div>
+    <div class="eyebrow"><i></i>Request a quote</div>
+    <h2>Request a quote</h2>
+    <p class="intro">Tell us what you need. A CGT specialist replies within one business day with pricing, lead time and donor availability.</p>
+    <ul class="assure">
+      <li>Standard leukopak orders ship in as little as 3 business days</li>
+      <li>Same-day fresh delivery in the San Francisco Bay and Boston metro areas</li>
+      <li>Every order ships with a certificate of analysis</li>
+    </ul>
+    <p class="intro" style="font-size:14px">Prefer email? <b style="color:var(--ink)">support@dls.com</b></p>
+  </div>
+  <form class="qf" id="qfHome" novalidate data-product="" data-grade="">
+    <fieldset><legend>01 · Contact</legend>
+      <label><span>First name <span class="req">*</span></span><input name="firstName" id="qfHome-fn" autocomplete="given-name" required><span class="err"></span></label>
+      <label><span>Last name <span class="req">*</span></span><input name="lastName" id="qfHome-ln" autocomplete="family-name" required><span class="err"></span></label>
+      <label><span>Work email <span class="req">*</span></span><input name="email" id="qfHome-em" type="email" autocomplete="email" required><span class="err"></span></label>
+      <label><span>Organization <span class="req">*</span></span><input name="organization" id="qfHome-org" autocomplete="organization" required><span class="err"></span></label>
+      <label><span>Country <span class="req">*</span></span><select name="country" id="qfHome-co" required><option value="">Select</option><option>United States</option><option>Canada</option><option>United Kingdom</option><option>Germany</option><option>France</option><option>Switzerland</option><option>Netherlands</option><option>Japan</option><option>China</option><option>South Korea</option><option>Singapore</option><option>Australia</option><option>Other</option></select><span class="err"></span></label>
+      <label>Phone<input name="phone" id="qfHome-ph" type="tel" autocomplete="tel"></label>
+    </fieldset>
+    <fieldset><legend>02 · Material</legend>
+      <label class="full"><span>Product <span class="req">*</span></span><select name="product" id="qfHome-pr" required><option value="">Select a product</option><optgroup label="Research use (RUO)"><option>Leukopak</option><option>Cryopreserved Leukopak</option><option>Guaranteed-Cell-Count Leukopak</option><option>Mobilized Leukopak</option><option>Bone Marrow</option><option>Cord Blood</option><option>Whole Blood</option></optgroup><optgroup label="GMP"><option>GMP Fresh Leukopak</option><option>GMP Cryopreserved Leukopak</option><option>GMP Mobilized Leukopak</option><option>GMP Bone Marrow</option><option>GMP Cryopreserved PBMCs</option></optgroup><optgroup label="Isolated cells"><option>CD34+ HSPCs</option><option>T Cells</option><option>NK Cells</option><option>Monocytes</option><option>B Cells</option><option>PBMCs</option></optgroup><optgroup label="Services"><option>Custom Cell Isolation</option><option>Made-to-Order Collection</option><option>Donor Management</option><option>Pre-Characterized Donor Selection</option></optgroup><optgroup label="Other"><option>Not sure yet / multiple products</option></optgroup></select><span class="err"></span></label>
+      <div class="full"><label style="margin-bottom:8px">Grade</label><div class="seg">
+        <label><input type="radio" name="grade" value="RUO">Research use</label><label><input type="radio" name="grade" value="GMP">GMP</label><label><input type="radio" name="grade" value="Not sure">Not sure</label></div></div>
+      <div class="full"><label style="margin-bottom:8px">Format</label><div class="seg">
+        <label><input type="radio" name="format" value="Fresh">Fresh</label><label><input type="radio" name="format" value="Cryopreserved">Cryopreserved</label><label><input type="radio" name="format" value="Either">Either</label></div></div>
+      <label>Quantity or cell count<input name="quantity" id="qfHome-q" placeholder="e.g. 2 × Full Pak, 25M CD34+"></label>
+      <label>Needed by<input name="neededBy" id="qfHome-d" type="date"></label>
+    </fieldset>
+    <fieldset><legend>03 · Donor requirements</legend>
+      <div class="full seg"><label><input type="checkbox" name="donor" value="HLA typing">HLA typing</label><label><input type="checkbox" name="donor" value="KIR typing">KIR typing</label><label><input type="checkbox" name="donor" value="CMV status">CMV status</label><label><input type="checkbox" name="donor" value="Blood type">Blood type</label><label><input type="checkbox" name="donor" value="Age / sex">Age / sex</label><label><input type="checkbox" name="donor" value="BMI range">BMI range</label><label><input type="checkbox" name="donor" value="GMP-eligible donor">GMP-eligible donor</label><label><input type="checkbox" name="donor" value="Repeat / recallable donor">Repeat / recallable donor</label></div>
+      <label class="full">Project details<textarea name="details" id="qfHome-det" placeholder="Application, downstream process, anticoagulant or media preferences, shipping destination, recurring schedule…"></textarea></label>
+      <label class="consent"><input type="checkbox" name="consent" id="qfHome-cs" required><span>I agree to be contacted about this request by Discovery Life Sciences. <span class="err"></span></span></label>
+    </fieldset>
+    <div class="actions"><small>Required fields are marked *. We never share your details.</small><button class="btn btn-primary" type="submit">Send request <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+  </form>
+</div></section>
+<footer class="sf"><div class="wrap">
+  <div class="sf-grid">
+    <div><img src="media/logo-white.png" alt="AllCells"><p class="tagline">AllCells® is a brand of Discovery Life Sciences. Science at your Service.™</p>
+      <p class="tagline" style="margin-top:12px">support@dls.com</p></div>
+    <div><h4>Research use</h4><ul><li><a href="leukopak.html">Leukopak</a></li><li><a href="cryopreserved-leukopak.html">Cryopreserved Leukopak</a></li><li><a href="guaranteed-cell-count-leukopak.html">Guaranteed-Cell-Count Leukopak</a></li><li><a href="mobilized-leukopak.html">Mobilized Leukopak</a></li><li><a href="bone-marrow.html">Bone Marrow</a></li><li><a href="cord-blood.html">Cord Blood</a></li><li><a href="whole-blood.html">Whole Blood</a></li><li><a href="https://dls.com/biospecimens/" target="_blank" rel="noopener">Other Biospecimens</a></li></ul></div>
+    <div><h4>GMP</h4><ul><li><a href="gmp-fresh-leukopak.html">GMP Fresh Leukopak</a></li><li><a href="gmp-cryopreserved-leukopak.html">GMP Cryopreserved Leukopak</a></li><li><a href="gmp-mobilized-leukopak.html">GMP Mobilized Leukopak</a></li><li><a href="gmp-bone-marrow.html">GMP Bone Marrow</a></li><li><a href="gmp-cryopreserved-pbmcs.html">GMP Cryopreserved PBMCs</a></li></ul></div>
+    <div><h4>Isolated cells</h4><ul><li><a href="cd34-hspcs.html">CD34+ HSPCs</a></li><li><a href="t-cells.html">T Cells</a></li><li><a href="nk-cells.html">NK Cells</a></li><li><a href="monocytes.html">Monocytes</a></li><li><a href="b-cells.html">B Cells</a></li><li><a href="pbmcs.html">PBMCs</a></li></ul></div>
+    <div><h4>Services</h4><ul><li><a href="custom-cell-isolation.html">Custom Cell Isolation</a></li><li><a href="made-to-order.html">Made-to-Order</a></li><li><a href="donor-management.html">Donor Management</a></li><li><a href="pre-characterized-donors.html">Pre-Characterized Donor Selection</a></li></ul><h4 style="margin-top:22px">About</h4><ul><li><a href="donor-difference.html">The Donor Difference</a></li><li><a href="customers.html">Our Customers</a></li><li><a href="shipping.html">Shipping &amp; Delivery</a></li><li><a href="quality-systems.html">Quality Systems</a></li><li><a href="https://www.dls.com/careers" target="_blank" rel="noopener">Careers</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+    <div><h4>Resources</h4><ul><li><a href="product-info.html">Product Info</a></li><li><a href="webinars.html">Webinars</a></li><li><a href="blog.html">Blog</a></li><li><a href="https://dls.com/news-and-events/" target="_blank" rel="noopener">News &amp; Events</a></li><li><a href="https://dls.com/publications/" target="_blank" rel="noopener">Publications</a></li><li><a href="protocols.html">Protocols</a></li><li><a href="protocol-counting.html">Counting Cells</a></li><li><a href="protocol-cryo-leukopak-thawing.html">Cryo Leukopak Thawing</a></li><li><a href="protocol-storage-thawing.html">Storage &amp; Thawing</a></li></ul></div>
+  </div>
+  <div class="legal"><span>© 2026 Discovery Life Sciences. RUO products are for research use only. GMP products are for further manufacturing use; not for direct human use.</span><span><a href="https://www.linkedin.com/company/allcells-llc/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://www.facebook.com/AllCells" target="_blank" rel="noopener">Facebook</a> · <a href="https://twitter.com/allcells_bio" target="_blank" rel="noopener">X</a></span></div>
+</div></footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Discovery CGT film" hidden>
+  <div class="box">
+    <div class="bar"><span class="eyebrow"><i></i>Discovery · Cell & gene therapy</span><button class="close" id="closeModal">Close</button></div>
+    <video id="film" controls playsinline preload="none" poster="media/hero-poster.jpg"><source src="media/film-720.mp4" type="video/mp4"></video>
+    <div class="chapters">
+      <button data-seek="0"><b>0:00</b>Opening</button>
+      <button data-seek="16"><b>0:16</b>Lab</button>
+      <button data-seek="46"><b>0:46</b>Operations</button>
+      <button data-seek="52.7"><b>0:52</b>Donor ecosystem</button>
+      <button data-seek="69.9"><b>1:10</b>Product</button>
+      <button data-seek="90.8"><b>1:31</b>Processing</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Hero video: pick resolution, sync scene labels ── */
+  const v = document.getElementById('heroVideo');
+  v.src = innerWidth < 900 ? 'media/hero-720.mp4' : 'media/hero-1080.mp4';
+  if (reduce) { v.removeAttribute('autoplay'); v.pause(); } else { v.play().catch(()=>{}); }
+  const scenes = [[0,'Cell culture'],[1.55,'Cryo staging'],[3.15,'ISO 7 gowning'],[4.45,'Biosafety cabinet'],[7.05,'Centrifugation'],[9.35,'LN₂ storage'],[11.05,'Cryo racking'],[12.4,'Dry-ice pack-out']];
+  const END = 13.47;
+  const ticks = document.getElementById('ticks');
+  scenes.forEach(()=>{ const s=document.createElement('span'); s.appendChild(document.createElement('i')); ticks.appendChild(s); });
+  const tickEls=[...ticks.children], lbl=document.getElementById('sceneLbl'), tc=document.getElementById('sceneTc');
+  let last=-1;
+  function loop(){
+    const t=v.currentTime||0; let i=0;
+    for(let k=0;k<scenes.length;k++) if(t>=scenes[k][0]) i=k;
+    if(i!==last){ lbl.textContent=scenes[i][1]; tickEls.forEach((el,k)=>el.classList.toggle('done',k<i)); last=i; }
+    const st=scenes[i][0], en=(scenes[i+1]||[END])[0];
+    tickEls[i].firstChild.style.transform='scaleX('+Math.min(1,(t-st)/(en-st))+')';
+    tickEls.forEach((el,k)=>{ if(k>i) el.firstChild.style.transform='scaleX(0)'; });
+    tc.textContent='00:'+String(Math.floor(t)).padStart(2,'0');
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  /* ── Metric card spotlight ── */
+  document.querySelectorAll('.metric').forEach(m=>m.addEventListener('pointermove',e=>{ const r=m.getBoundingClientRect(); m.style.setProperty('--mx',(e.clientX-r.left)+'px'); m.style.setProperty('--my',(e.clientY-r.top)+'px'); }));
+
+  /* ── Magnetic primary buttons (fine pointers only) ── */
+  if (matchMedia('(pointer:fine)').matches && !reduce) {
+    document.querySelectorAll('.btn').forEach(b=>{
+      b.addEventListener('pointermove',e=>{ const r=b.getBoundingClientRect(); const x=(e.clientX-r.left-r.width/2)*.18, y=(e.clientY-r.top-r.height/2)*.28; b.style.transform=`translate(${x}px,${y}px)`; });
+      b.addEventListener('pointerleave',()=>{ b.style.transform=''; });
+    });
+  }
+
+  /* ── Product data (from allcells.com) ── */
+  const IMG='https://allcells.com/wp-content/uploads/';
+  const P=[
+    {g:'ruo',name:'Mobilized Leukopak',short:'mLP',sub:'High single-donor CD34+ yield',src:'Mobilized peripheral blood',fmt:['Fresh','Cryopreserved'],img:IMG+'2024/11/ruo-mobilized-leukopak-1-no-background-1.png',url:'mobilized-leukopak.html',
+     d:'Collected by leukapheresis from healthy donors given FDA-approved drugs that mobilize CD34+ hematopoietic stem cells into the blood. The shortest lead time on the market for mobilized material.',
+     specs:[['Collection','Spectra Optia apheresis'],['Fresh','1 or 2 bags by regimen'],['Cryo CD34+','0.5M – 25M cells']],
+     tech:'regimens'},
+    {g:'ruo',name:'Leukopak',short:'LP',sub:'Large-scale mononuclear cells',src:'Peripheral blood',fmt:['Fresh','Cryopreserved'],img:IMG+'2024/07/IMG_1148-1536x1024.jpg',url:'leukopak.html',
+     d:'Leukapheresis collection rich in lymphocytes and monocytes. Order by volume or by total nucleated cell count, fresh, cryopreserved or with a guaranteed cell count.',
+     specs:[['Sizing','Volume or TNC count'],['Options','Guaranteed cell count'],['Lead time','3 business days, standard']],
+     techTxt:'Sub-types: cryopreserved, guaranteed-cell-count and mobilized leukopaks. Single-donor material for bulk isolation of T, NK, B cells, monocytes and PBMCs.'},
+    {g:'ruo',name:'Bone Marrow',short:'BM',sub:'Fresh aspirate and isolated CD34+',src:'Bone marrow aspirate',fmt:['Fresh','Cryopreserved'],img:'',url:'bone-marrow.html',
+     d:'Fresh aspirates and isolated CD34+ hematopoietic stem cells, from single donors.',
+     specs:[['Aspirate','10, 25, 50, 100 mL'],['Fractions','Isolated CD34+ HSPCs']],
+     techTxt:'CD34+ HSPCs isolated by positive immunomagnetic selection. Bone marrow is also a source for MSCs in GMP grade.'},
+    {g:'ruo',name:'Cord Blood',short:'CB',sub:'CD34+ HSPCs',src:'Umbilical cord blood',fmt:['Cryopreserved'],img:'',url:'cord-blood.html',
+     d:'CD34+ hematopoietic stem and progenitor cells from single or multiple donors.',
+     specs:[['Donors','Single or pooled'],['Target','CD34+ HSPCs']],
+     techTxt:'Viable CD34+ counts available by ISHAGE four-parameter flow cytometry protocol.'},
+    {g:'ruo',name:'Whole Blood',short:'WB',sub:'Customer-selected anticoagulants',src:'Peripheral blood',fmt:['Fresh'],img:'',url:'whole-blood.html',
+     d:'Whole blood in a range of volumes, drawn into the anticoagulant your assay needs.',
+     specs:[['Volume','Various'],['Anticoagulant','Customer-selected']],
+     techTxt:'Matched draws from the same donor available through made-to-order collections.'},
+    {g:'ruo',name:'Other Biospecimens',short:'BIO',sub:'hyper-annotated® specimens',src:'Diseased and healthy donors',fmt:['Fresh','Cryopreserved'],img:'',url:'https://dls.com/biospecimens/',
+     d:'Hyper-annotated® biospecimens from diseased patients and healthy donors, from the Discovery Life Sciences network.',
+     specs:[['Annotation','hyper-annotated®'],['Cohorts','Diseased + healthy']],
+     techTxt:'Donor characterization can include HLA and KIR typing, CMV status, blood type, demographics and lifestyle.'},
+
+    {g:'gmp',name:'GMP Fresh Leukopak',short:'GMP-LP',sub:'For further manufacturing',src:'Peripheral blood',fmt:['Fresh'],img:IMG+'2024/07/gmp-fresh-leukopak-1.jpg',url:'gmp-fresh-leukopak.html',
+     d:'High concentration of lymphocyte populations: T cells, B cells, NK cells and monocytes. GMP-compliant for further manufacturing.',
+     specs:[['Standard','21 CFR 1271'],['Deliverability','99% GMP collections']],tech:'panel'},
+    {g:'gmp',name:'GMP Cryopreserved Leukopak',short:'GMP-cLP',sub:'Made-to-stock or custom',src:'Peripheral blood',fmt:['Cryopreserved'],img:IMG+'2024/07/GMP-Compliant-Cryopreserved-Leukopak.jpg',url:'gmp-cryopreserved-leukopak.html',
+     d:'Made-to-stock and custom options, manufactured in an ISO 7 cleanroom with Grade A and B zones.',
+     specs:[['Facility','ISO 7, Grade A/B'],['Packaging','ISTA-validated + logger']],tech:'panel'},
+    {g:'gmp',name:'GMP Mobilized Leukopak',short:'GMP-mLP',sub:'Large-scale CD34+',src:'Mobilized peripheral blood',fmt:['Fresh','Cryopreserved'],img:IMG+'2024/07/GMP-Compliant-Mobilized-Leukopak.jpg',url:'gmp-mobilized-leukopak.html',
+     d:'Large-scale collections of CD34+ hematopoietic stem and progenitor cells for clinical and commercial manufacturing.',
+     specs:[['Target','CD34+ HSPCs'],['Risk plan','Backup + parallel donors']],tech:'panel'},
+    {g:'gmp',name:'GMP Bone Marrow',short:'GMP-BM',sub:'HSCs and MSCs',src:'Bone marrow aspirate',fmt:['Fresh'],img:IMG+'2024/07/gmp-fresh-bone-marrow-updated-label-040522.png',url:'gmp-bone-marrow.html',
+     d:'Enriched in hematopoietic and mesenchymal stem cells capable of multi-lineage differentiation.',
+     specs:[['Cells','HSCs + MSCs'],['Consent','IRB, research + commercial']],tech:'panel'},
+    {g:'gmp',name:'GMP Cryopreserved PBMCs',short:'GMP-PBMC',sub:'Coming soon',src:'Enriched from leukopaks',fmt:['Cryopreserved'],img:'',url:'gmp-cryopreserved-pbmcs.html',
+     d:'Peripheral blood mononuclear cells enriched from GMP leukopaks. Contact us to join the early-access list.',
+     specs:[['Status','Coming soon'],['Source','GMP leukopak']],tech:'panel'},
+
+    {g:'iso',name:'CD34+ HSPCs',short:'CD34+',sub:'Hematopoietic stem and progenitor cells',src:'Mobilized LP · BM · cord blood',fmt:['Cryopreserved'],img:IMG+'2024/06/link-CD34.jpg',url:'cd34-hspcs.html',
+     d:'Self-renewing cells that develop into multiple mature blood cell types.',
+     specs:[['Selection','Positive immunomagnetic'],['QC','ISHAGE flow on request']],techTxt:'CD34+ beads bind target cells and unwanted cells are washed away. Viable counts quantified by the ISHAGE four-parameter protocol.'},
+    {g:'iso',name:'T Cells',short:'CD3+',sub:'Cytotoxic, helper and regulatory',src:'Leukopak · mobilized LP',fmt:['Fresh','Cryopreserved'],img:IMG+'2024/06/link-t-cells.jpg',url:'t-cells.html',
+     d:'Core effector cells of the adaptive immune system, identified by their T cell receptor.',
+     specs:[['Selection','Positive or negative'],['Mode','Standard or sequential']],techTxt:'Sequential isolation: e.g. CD8+ T cells first, then a second population from the unlabeled fraction of the same donor.'},
+    {g:'iso',name:'NK Cells',short:'CD56+',sub:'Innate cytotoxic effectors',src:'Leukopak',fmt:['Fresh','Cryopreserved'],img:IMG+'2024/06/link-nk-cells.jpg',url:'nk-cells.html',
+     d:'Respond rapidly to pathogens and tumor cells. Primary CD56+ cells isolated from leukopaks.',
+     specs:[['Marker','CD56+'],['Selection','Positive or negative']],techTxt:'Pair with KIR-typed, pre-characterized donors for allogeneic NK programs.'},
+    {g:'iso',name:'B Cells',short:'CD19+',sub:'Humoral immunity',src:'Leukopak',fmt:['Fresh','Cryopreserved'],img:IMG+'2024/06/link-b-cells.jpg',url:'b-cells.html',
+     d:'Produce antibodies, present antigen and secrete immunomodulatory cytokines.',
+     specs:[['Marker','CD19+'],['Selection','Positive or negative']],techTxt:'Available as part of matched immune cell subsets: ready-to-use, cryopreserved, same donor.'},
+    {g:'iso',name:'Monocytes',short:'CD14+',sub:'Myeloid leukocytes',src:'Leukopak',fmt:['Fresh','Cryopreserved'],img:IMG+'2024/06/link-monocytes.jpg',url:'monocytes.html',
+     d:'Take part in inflammatory and anti-inflammatory responses; differentiate into macrophages and dendritic cells.',
+     specs:[['Marker','CD14+'],['Use','Macrophage + DC derivation']],techTxt:'Isolated from leukopak or mobilized leukopak by immunomagnetic separation.'},
+    {g:'iso',name:'PBMCs',short:'PBMC',sub:'Lymphocytes, monocytes, DCs',src:'Leukopak · mobilized LP',fmt:['Fresh','Cryopreserved'],img:IMG+'2024/06/link-PBMCs.jpg',url:'pbmcs.html',
+     d:'Mononuclear cells from peripheral blood. Isolated from leukopaks when you need large numbers from one donor.',
+     specs:[['Scale','Leukopak-derived'],['Donors','Single donor']],techTxt:'GMP cryopreserved PBMCs are in development; see the GMP tab.'}
+  ];
+  const GRADE={ruo:'RUO',gmp:'GMP',iso:'ISO'}, GLONG={ruo:'Research use',gmp:'GMP',iso:'Isolated'};
+  const regimenTbl=`<div class="regimens"><table><thead><tr><th>Regimen</th><th>Mobilization</th><th>Apheresis</th></tr></thead><tbody>
+    <tr><td>Reg F</td><td>G-CSF 10 µg/kg/day × 5 days</td><td>Days 5 + 6</td></tr>
+    <tr><td>Reg H</td><td>G-CSF × 5 days + plerixafor 240 µg/kg/day × 2</td><td>Days 5 + 6</td></tr>
+    <tr><td>Reg A</td><td>Plerixafor 240 µg/kg × 1 day</td><td>Day 2</td></tr>
+    <tr><td>Reg B</td><td>Plerixafor 240 µg/kg/day × 2 days</td><td>Days 2 + 3</td></tr></tbody></table></div>`;
+  const panelTxt='Donors test negative for HIV-1/2, HBV, HCV, HTLV I/II, CMV, West Nile virus, T. cruzi and T. pallidum. Manufactured under 21 CFR 1271 Subparts A–C, QMS with batch records and stability studies.';
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const arrow='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+
+  const rowsEl=document.getElementById('rows');
+  rowsEl.innerHTML=P.map((p,i)=>{
+    const tech = p.tech==='regimens'?regimenTbl : p.tech==='panel'?`<p>${panelTxt}</p>` : `<p>${esc(p.techTxt)}</p>`;
+    return `<div class="row" data-g="${p.g}" data-f="${p.fmt.join(',')}">
+      <button class="row-h" aria-expanded="false" aria-controls="dr${i}">
+        <span class="name">${esc(p.name)}<small>${esc(p.sub)}</small></span>
+        <span class="cell"><span class="badge ${p.g}">${GRADE[p.g]}</span></span>
+        <span class="cell c-src">${esc(p.src)}</span>
+        <span class="cell c-fmt"><span class="fmt">${p.fmt.map(f=>`<span>${f}</span>`).join('')}</span></span>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.6"><path d="M6 1v10M1 6h10"/></svg></span>
+      </button>
+      <div class="drawer" id="dr${i}" role="region"><div><div class="drawer-in">
+        <div class="shot ${p.img?'':'noimg'}">
+          ${p.img?`<img src="${p.img}" alt="${esc(p.name)} product" loading="lazy" onerror="this.parentNode.classList.add('noimg')">`:''}
+          <div class="tag">
+            <div class="t-top"><img src="media/logo-color.png" alt=""><span>${GRADE[p.g]}</span></div>
+            <div class="t-name">${esc(p.name)}</div>
+            <div class="t-meta"><span>REF ${esc(p.short)}</span><span>${esc(p.src)}</span><span>${p.fmt.join(' / ')}</span></div>
+            <div class="bars"></div>
+            <span class="grade ${p.g}">${GRADE[p.g]}</span>
+          </div>
+        </div>
+        <div><p>${esc(p.d)}</p>
+          <div class="tech tech-block"><span class="mono">Technical detail</span>${tech}</div>
+          <div class="actions"><a class="btn btn-primary" href="#quote">Request a quote</a><a class="btn btn-ghost" href="${p.url}"${p.url.startsWith('http')?' target="_blank" rel="noopener"':''}>Product page ${arrow}</a></div>
+        </div>
+        <dl class="d-specs"><div><dt>Grade</dt><dd>${GLONG[p.g]}</dd></div><div><dt>Source</dt><dd>${esc(p.src)}</dd></div><div><dt>Formats</dt><dd>${p.fmt.join(', ')}</dd></div>${p.specs.map(s=>`<div><dt>${esc(s[0])}</dt><dd>${esc(s[1])}</dd></div>`).join('')}</dl>
+      </div></div></div>
+    </div>`;}).join('');
+
+  const rowEls=[...rowsEl.children];
+  rowEls.forEach(r=>{ const h=r.querySelector('.row-h'); h.addEventListener('click',()=>{ const o=!r.classList.contains('open'); r.classList.toggle('open',o); h.setAttribute('aria-expanded',o); }); });
+  rowEls[0].classList.add('open'); rowEls[0].querySelector('.row-h').setAttribute('aria-expanded','true');
+
+  let grade='all'; const fmts=new Set();
+  const counts={all:P.length,ruo:0,gmp:0,iso:0}; P.forEach(p=>counts[p.g]++);
+  document.querySelectorAll('[data-ct]').forEach(e=>e.textContent=String(counts[e.dataset.ct]).padStart(2,'0'));
+  function apply(){
+    let n=0;
+    rowEls.forEach(r=>{ const ok=(grade==='all'||r.dataset.g===grade)&&(fmts.size===0||[...fmts].some(f=>r.dataset.f.includes(f))); r.hidden=!ok; if(ok)n++; });
+    document.getElementById('empty').style.display=n?'none':'block';
+  }
+  const tabs=[...document.querySelectorAll('.tab')], pill=document.getElementById('tabPill');
+  function movePill(t){ pill.style.width=t.offsetWidth+'px'; pill.style.transform=`translate(${t.offsetLeft}px,${t.offsetTop}px)`; }
+  tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.setAttribute('aria-selected',x===t)); grade=t.dataset.grade; movePill(t); apply(); }));
+  addEventListener('resize',()=>movePill(document.querySelector('.tab[aria-selected="true"]')));
+  requestAnimationFrame(()=>movePill(tabs[0]));
+  if(document.fonts) document.fonts.ready.then(()=>movePill(document.querySelector('.tab[aria-selected="true"]')));
+  document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{ const on=c.getAttribute('aria-pressed')!=='true'; c.setAttribute('aria-pressed',on); on?fmts.add(c.dataset.fmt):fmts.delete(c.dataset.fmt); apply(); }));
+  const sw=document.getElementById('techSwitch');
+  sw.addEventListener('click',e=>{ e.preventDefault(); const on=sw.getAttribute('aria-checked')!=='true'; sw.setAttribute('aria-checked',on); document.body.classList.toggle('technical',on); try{localStorage.setItem('ac-tech',on?'1':'0')}catch(_){} });
+  try{ if(localStorage.getItem('ac-tech')==='1'){ sw.setAttribute('aria-checked','true'); document.body.classList.add('technical'); } }catch(_){}
+
+  /* ── Scrollytelling ── */
+  const steps=[...document.querySelectorAll('.step')], imgs=[...document.querySelectorAll('#stage img')], rail=[...document.querySelectorAll('#rail span')];
+  const stepNo=document.getElementById('stepNo'), readout=document.getElementById('readout');
+  function setStep(i){
+    steps.forEach((s,k)=>s.classList.toggle('active',k===i));
+    imgs.forEach((im,k)=>im.classList.toggle('on',k===i));
+    rail.forEach((r,k)=>r.classList.toggle('on',k<=i));
+    stepNo.innerHTML=String(i+1).padStart(2,'0')+'<span>/05</span>';
+    readout.innerHTML='Checkpoint<b>'+steps[i].dataset.read+'</b>';
+  }
+  const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting) setStep(steps.indexOf(e.target)); }); },{rootMargin:'-45% 0px -45% 0px'});
+  steps.forEach(s=>io.observe(s));
+
+  /* ── Film modal ── */
+  const modal=document.getElementById('modal'), film=document.getElementById('film');
+  function openFilm(t){ modal.hidden=false; requestAnimationFrame(()=>modal.classList.add('open')); v.pause(); const go=()=>{ film.currentTime=t; film.play().catch(()=>{}); }; if(film.readyState>=1) go(); else { film.load(); film.addEventListener('loadedmetadata',go,{once:true}); } document.getElementById('closeModal').focus(); }
+  function closeFilm(){ modal.classList.remove('open'); film.pause(); setTimeout(()=>modal.hidden=true,400); if(!reduce) v.play().catch(()=>{}); }
+  document.querySelectorAll('[data-film]').forEach(b=>b.addEventListener('click',()=>openFilm(parseFloat(b.dataset.film))));
+  document.querySelectorAll('[data-seek]').forEach(b=>b.addEventListener('click',()=>{ film.currentTime=parseFloat(b.dataset.seek); film.play().catch(()=>{}); }));
+  document.getElementById('closeModal').addEventListener('click',closeFilm);
+  modal.addEventListener('click',e=>{ if(e.target===modal) closeFilm(); });
+  addEventListener('keydown',e=>{ if(e.key==='Escape'&&!modal.hidden) closeFilm(); });
+})();
+</script>
+<script>document.body.classList.add('home')</script>
+<script src="site.js"></script>
+
+
+<a href="../" data-sv-concept aria-label="Concept redesign by studiovektor, not affiliated with AllCells. Back to the portfolio"
+  style="position:fixed;left:16px;bottom:16px;z-index:2147483000;display:flex;align-items:center;gap:10px;
+  max-width:calc(100vw - 32px);padding:9px 14px 9px 12px;border-radius:999px;background:rgba(8,11,13,.9);
+  border:1px solid rgba(177,242,244,.3);box-shadow:0 10px 30px -10px rgba(0,0,0,.6);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);color:#eaf4f4;text-decoration:none;font:500 12.5px/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+  <span style="width:8px;height:8px;border-radius:50%;background:#b1f2f4;flex:none"></span>
+  <span><b style="font-weight:700">Concept redesign</b> by studiovektor <span style="color:#9daeb0">· not affiliated with AllCells</span></span>
+</a>
+</body></html>

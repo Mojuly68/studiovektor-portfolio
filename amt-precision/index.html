@@ -1,0 +1,1275 @@
+<!doctype html><html><head><meta name="robots" content="noindex"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<title>AMT Precision</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Cross-border contract manufacturing: CNC machining, sheet metal, laser and waterjet cutting, finishing and assembly in Nogales, Sonora, shipped from Nogales, Arizona. ISO 9001:2015 and AS9100:2016.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Geist+Mono:wght@400;500&display=swap">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"AMT Precision, S.A. de C.V.","alternateName":["AMT Precision","AMT Mfg"],"url":"https://amt-mfg.com/","email":"cclark@amt-mfg.com","telephone":"+1-520-850-7048","sameAs":["https://www.linkedin.com/company/amt-precision-llc/","https://www.youtube.com/@amtprecision"],"location":[{"@type":"Place","name":"AMT Precision production plant","address":{"@type":"PostalAddress","streetAddress":"Calle Bustamante 41-H, Col. Granjas","addressLocality":"Nogales","addressRegion":"Sonora","postalCode":"84065","addressCountry":"MX"}},{"@type":"Place","name":"AMT Precision US warehouse","address":{"@type":"PostalAddress","streetAddress":"71 N Freeport Dr, WHS 11-A","addressLocality":"Nogales","addressRegion":"AZ","postalCode":"85621","addressCountry":"US"}}],"knowsAbout":["CNC milling","CNC turning","Swiss turning","Fiber laser cutting","Waterjet cutting","Press brake forming","MIG and TIG welding","Powder coating","EDM","Reverse engineering"]}
+</script>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/* Layout: PMC instrument-panel grid carried over (12 col, 1440 max, technical grid ground). Recolored for AMT: navy-biased steel neutrals, AMT red = the one action, cobalt = the "measured / located" signal. Display set wide (Archivo expanded) to echo the AMT wordmark. Single deliberate dark look. */
+:root{
+  --g950:#090D12; --g900:#0E141B; --s800:#151D27; --s700:#1F2A36; --s600:#2F3D4D;
+  --ti100:#EAF0F6; --ti200:#D2DAE3; --ti300:#A9B5C3; --ti400:#8593A3; --ti500:#667486;
+  --red:#DB2A23; --red6:#B71E18; --cobalt:#4D9BFF; --ok:#34C77B; --caution:#F5A524; --crit:#EF4444;
+  --glass:rgba(14,20,27,.66); --glass-line:rgba(169,181,195,.2);
+  --display:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --sans:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.2,0,0,1); --ease-io:cubic-bezier(.65,0,.35,1);
+  --max:1440px; --gut:clamp(16px,4.4vw,64px);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:110px;background:var(--g950)}
+body{margin:0;background:var(--g950);color:var(--ti200);font:400 16px/1.6 var(--sans);font-stretch:100%;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px;border-radius:2px}
+h1,h2,h3,h4{color:var(--ti100);font-family:var(--display);font-weight:700;margin:0;text-wrap:balance}
+p{margin:0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums slashed-zero;font-feature-settings:"tnum","zero"}
+.label{font:500 12px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400)}
+.wrap{max-width:var(--max);margin-inline:auto;padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wide{font-stretch:118%}
+
+.grid-bg{background-image:
+  linear-gradient(rgba(102,116,134,.09) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(102,116,134,.09) 1px,transparent 1px),
+  linear-gradient(rgba(102,116,134,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(102,116,134,.035) 1px,transparent 1px);
+  background-size:64px 64px,64px 64px,8px 8px,8px 8px;background-position:-1px -1px}
+.xhair{position:absolute;width:12px;height:12px;pointer-events:none;z-index:3}
+.xhair::before,.xhair::after{content:"";position:absolute;background:var(--ti500)}
+.xhair::before{left:5.5px;top:0;width:1px;height:12px}.xhair::after{top:5.5px;left:0;height:1px;width:12px}
+.verify{font:500 10.5px/1 var(--mono);color:var(--caution);border:1px solid rgba(245,165,36,.5);padding:3px 5px;border-radius:2px;letter-spacing:.06em;margin-left:6px;vertical-align:2px;white-space:nowrap}
+
+/* buttons */
+.btn{--h:48px;display:inline-flex;align-items:center;gap:10px;height:var(--h);padding:0 22px;border:0;cursor:pointer;font:700 15px/1 var(--sans);text-decoration:none;transition:background .12s var(--ease),color .12s var(--ease),box-shadow .12s var(--ease),transform .12s var(--ease);white-space:nowrap}
+.btn-primary{background:var(--red);color:#fff;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+.btn-primary:hover{background:var(--red6)}
+.btn-primary:active{transform:translateY(1px)}
+.btn-ghost{background:transparent;color:var(--ti100);box-shadow:inset 0 0 0 1px var(--s600);border-radius:2px}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1px var(--ti400)}
+.btn-sm{--h:38px;padding:0 14px;font-size:14px}
+.btn svg{width:16px;height:16px;flex:none}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+/* utility bar */
+.util{background:var(--g950);border-bottom:1px solid var(--s800);font:500 11.5px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ti400)}
+.util .wrap{display:flex;align-items:center;gap:18px;min-height:36px;justify-content:space-between}
+.util-list{display:flex;align-items:center;flex-wrap:wrap;min-width:0}
+.util-list span{padding:0 14px;border-left:1px solid var(--s700)}
+.util-list span:first-child{padding-left:0;border:0}
+.util-actions{display:flex;gap:16px;align-items:center;flex:none}
+.util button{all:unset;cursor:pointer;color:var(--ti200);display:inline-flex;gap:6px;align-items:center}
+.util button:hover{color:var(--cobalt)}
+.util button:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
+.util-phone{color:var(--ti300);user-select:all}
+@media (max-width:1100px){.util-list span:nth-child(n+4){display:none}}
+@media (max-width:640px){.util-list{flex-wrap:nowrap;white-space:nowrap}.util-list span:nth-child(n+3){display:none}.util-phone{display:none}}
+@media (max-width:420px){.util-list span:nth-child(n+2){display:none}}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(9,13,18,.74);backdrop-filter:blur(14px) saturate(120%);-webkit-backdrop-filter:blur(14px) saturate(120%);border-bottom:1px solid transparent;transition:border-color .2s var(--ease),background .2s var(--ease)}
+.nav.scrolled{background:rgba(14,20,27,.95);border-bottom-color:var(--s700)}
+.nav .wrap{display:flex;align-items:center;gap:24px;height:80px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ti100);flex:none}
+.logo-mark{width:40px;height:34px;flex:none}
+.logo-word{display:flex;flex-direction:column;line-height:1}
+.logo-word b{font:800 27px/1 var(--display);font-stretch:125%;letter-spacing:-.01em}
+.logo-word b i{font-style:normal;color:var(--red)}
+.logo-word small{font:500 9.5px/1.2 var(--mono);letter-spacing:.1em;color:var(--ti300);margin-top:6px;text-transform:uppercase;max-width:30ch}
+@media (max-width:480px){.nav .wrap{height:68px}.logo-mark{width:32px;height:28px}.logo-word b{font-size:22px}.logo-word small{font-size:8.5px}}
+.nav-links{display:flex;gap:2px;margin-left:auto;list-style:none;padding:0;margin-block:0}
+.nav-links a{display:block;padding:8px 11px;text-decoration:none;font-size:14.5px;color:var(--ti300);border-radius:2px;transition:color .12s var(--ease)}
+.nav-links a:hover{color:var(--ti100)}
+.nav-cta{display:flex;gap:8px;align-items:center;position:relative}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--s600);color:var(--ti100);height:36px;padding:0 12px;font:500 13px var(--mono);letter-spacing:.06em;cursor:pointer;border-radius:2px}
+@media (max-width:1180px){.nav-links{display:none}.menu-btn{display:inline-flex;align-items:center}.nav-cta{display:none}}
+.sheet{position:fixed;inset:0;z-index:60;background:rgba(9,13,18,.97);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 20px) max(24px,env(safe-area-inset-right,0px)) 24px max(24px,env(safe-area-inset-left,0px));overflow-y:auto}
+.sheet a{display:block;padding:16px 0;border-bottom:1px solid var(--s700);text-decoration:none;font-size:22px;color:var(--ti100)}
+.sheet .close{align-self:flex-end;background:none;border:1px solid var(--s600);color:var(--ti100);height:36px;padding:0 12px;font:500 13px var(--mono);cursor:pointer}
+.sheet-contacts{margin-top:24px;display:grid;gap:10px}
+
+/* contact popover */
+.pop{position:absolute;top:calc(100% + 12px);right:0;width:min(380px,92vw);background:var(--s700);border:1px solid var(--s600);border-radius:4px;box-shadow:0 24px 48px rgba(0,0,0,.45);padding:16px;z-index:50;transform-origin:top right;animation:pop .18s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(-4px) scale(.98)}}
+.pop h4{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400);margin-bottom:10px}
+.rep{display:grid;gap:6px;padding:12px 0;border-top:1px solid var(--s600)}
+.rep:first-of-type{border-top:0;padding-top:0}
+.rep b{color:var(--ti100);font-weight:700}
+.rep small{color:var(--ti400);font-size:12.5px}
+.line{display:flex;justify-content:space-between;align-items:center;gap:10px;font:450 13.5px/1.3 var(--mono);color:var(--ti200)}
+.line span:first-child{color:var(--ti400);font-size:11px;letter-spacing:.06em;width:28px;flex:none}
+.line a,.line .v{text-decoration:none;user-select:all;flex:1;min-width:0;overflow-wrap:anywhere}
+.copybtn{background:none;border:1px solid var(--s600);color:var(--ti200);font:500 11.5px var(--mono);height:28px;padding:0 9px;border-radius:2px;cursor:pointer;flex:none}
+.copybtn:hover{border-color:var(--ti400)}
+
+/* mobile bottom bar */
+.bottom-cta{display:none}
+@media (max-width:1180px){
+  .bottom-cta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:45;gap:8px;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(14,20,27,.96);border-top:1px solid var(--s700)}
+  .bottom-cta .btn{flex:1;justify-content:center}
+  body{padding-bottom:72px}
+}
+
+/* hero */
+.hero{position:relative;border-bottom:1px solid var(--s800)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,64px);align-items:center;padding-block:clamp(40px,6vw,88px) 32px}
+.hero-copy{display:flex;flex-direction:column;gap:24px;min-width:0}
+.hero h1{font-size:clamp(40px,5vw,70px);line-height:.98;letter-spacing:-.03em;font-weight:800;font-stretch:112%}
+.hero h1 em{font-style:normal;color:var(--ti400);display:block}
+.hero .lead{font-size:clamp(17px,1.4vw,20px);line-height:1.5;color:var(--ti300);max-width:34em}
+.badges{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
+.badges li{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;border:1px solid var(--s600);border-radius:2px;font:500 12px/1 var(--mono);letter-spacing:.04em;color:var(--ti100);background:rgba(21,29,39,.6)}
+.badges li svg{width:14px;height:14px;color:var(--cobalt);flex:none}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.formats{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.formats .label{margin-right:4px}
+.formats span.f{font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--ti300);border:1px solid var(--s600);padding:5px 7px;border-radius:2px}
+
+.viewport{position:relative;aspect-ratio:7/6;min-height:340px;max-height:640px;width:100%;max-width:100%;border:1px solid var(--s700);background:var(--g900);overflow:hidden}
+.vp-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%;filter:saturate(.9) contrast(1.05)}
+.vp-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,13,18,.55),transparent 22%,transparent 70%,rgba(9,13,18,.8)),radial-gradient(ellipse 80% 70% at 62% 62%,transparent 40%,rgba(9,13,18,.45))}
+.vp-grid{position:absolute;inset:0;opacity:.5;mix-blend-mode:screen}
+.vp-head{position:absolute;left:28px;right:28px;top:18px;display:flex;justify-content:space-between;gap:12px;z-index:3;pointer-events:none}
+.vp-head .label{color:var(--ti200)}
+.vp-foot{position:absolute;left:28px;right:28px;bottom:16px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;z-index:3}
+.vp-foot .label{color:var(--ti300)}
+.callout{position:absolute;display:flex;align-items:flex-start;z-index:2}
+.callout .dot{width:10px;height:10px;border-radius:50%;background:var(--cobalt);box-shadow:0 0 0 4px rgba(77,155,255,.25);transform:translate(-50%,-50%);flex:none}
+.callout .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--cobalt);animation:ping 2.4s var(--ease) infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.9}80%,100%{transform:scale(2.6);opacity:0}}
+.callout .lead-line{width:30px;height:1px;background:var(--cobalt);opacity:.8;margin-top:-.5px;flex:none;transform-origin:left}
+.callout .card{margin-top:-15px;background:var(--glass);backdrop-filter:blur(12px) saturate(120%);-webkit-backdrop-filter:blur(12px) saturate(120%);border:1px solid var(--glass-line);padding:7px 10px 8px;border-radius:3px;font:500 12px/1.35 var(--mono);color:var(--ti100);white-space:nowrap}
+.callout .card small{display:block;font-size:10.5px;color:var(--ti400);letter-spacing:.06em;text-transform:uppercase}
+.callout.flip{flex-direction:row-reverse}
+.callout.flip .dot{transform:translate(50%,-50%)}
+.callout.flip .lead-line{transform-origin:right}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.callout .card,.nav,.pop{background:var(--s800)}}
+/* hero load sequence: photo settles, then callouts draw in one by one. End state is fully visible. */
+.vp-img{animation:settle 2.6s var(--ease) both}
+@keyframes settle{from{transform:scale(1.08)}}
+.callout .dot{animation:fadein .4s var(--ease) both}
+.callout .lead-line{animation:draw .35s var(--ease) both}
+.callout .card{animation:fadein .45s var(--ease) both}
+.callout[data-i="0"] .dot{animation-delay:.7s}.callout[data-i="0"] .lead-line{animation-delay:.85s}.callout[data-i="0"] .card{animation-delay:1s}
+.callout[data-i="1"] .dot{animation-delay:1.15s}.callout[data-i="1"] .lead-line{animation-delay:1.3s}.callout[data-i="1"] .card{animation-delay:1.45s}
+.callout[data-i="2"] .dot{animation-delay:1.6s}.callout[data-i="2"] .lead-line{animation-delay:1.75s}.callout[data-i="2"] .card{animation-delay:1.9s}
+@keyframes fadein{from{opacity:0}}
+@keyframes draw{from{transform:scaleX(0)}}
+@media (max-width:560px){.callout[data-i="2"]{display:none}.callout .card{font-size:11px}}
+
+.readout{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--s800)}
+.readout div{padding:16px 20px 18px;border-left:1px solid var(--s800);display:flex;flex-direction:column;gap:6px;min-width:0}
+.readout div:first-child{border-left:0;padding-left:0}
+.readout b{font:500 14px/1.3 var(--mono);color:var(--ti100);font-variant-numeric:tabular-nums}
+@media (max-width:980px){.hero-grid{grid-template-columns:1fr}.readout{grid-template-columns:repeat(2,minmax(0,1fr))}.readout div:nth-child(3){border-left:0;padding-left:0}.readout div:nth-child(n+3){border-top:1px solid var(--s800)}}
+@media (max-width:520px){.readout{grid-template-columns:1fr}.readout div{border-left:0;padding-left:0;border-top:1px solid var(--s800)}.readout div:first-child{border-top:0}.viewport{aspect-ratio:1/1;min-height:0}}
+
+/* sections */
+section{position:relative}
+.sec{padding-block:clamp(64px,9vw,128px)}
+.sec-head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(32px,4vw,56px)}
+.sec-head .eyebrow{margin-bottom:16px;display:block}
+.sec-head h2,.h2{font-size:clamp(30px,3.4vw,50px);line-height:1.04;letter-spacing:-.022em;font-stretch:112%;font-weight:800}
+.sec-head p{color:var(--ti300);font-size:17px;max-width:38em}
+@media (max-width:860px){.sec-head{grid-template-columns:1fr}}
+.band{background:var(--g900);border-block:1px solid var(--s800)}
+
+/* proof */
+.proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--s800)}
+.proof div{padding:28px 24px 30px;border-left:1px solid var(--s800);min-width:0}
+.proof div:first-child{border-left:0;padding-left:0}
+.proof b{display:block;font:500 clamp(36px,3.6vw,52px)/1 var(--mono);color:var(--ti100);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.proof b sub{font-size:.4em;vertical-align:baseline;color:var(--ti400);letter-spacing:0;margin-left:4px}
+.proof span{display:block;margin-top:12px;font-size:14px;color:var(--ti400);max-width:20em}
+@media (max-width:860px){.proof{grid-template-columns:repeat(2,minmax(0,1fr))}.proof div:nth-child(3){border-left:0;padding-left:0}.proof div:nth-child(n+3){border-top:1px solid var(--s800)}}
+
+/* capability cards */
+.caps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.cap{grid-column:span 2;position:relative;display:flex;flex-direction:column;background:var(--s800);border:1px solid var(--s600);border-radius:4px;text-decoration:none;min-width:0;transition:background .2s var(--ease)}
+.cap:nth-child(4),.cap:nth-child(5){grid-column:span 3}
+.cap-media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--g900);border-bottom:1px solid var(--s600)}
+.cap-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.cap-media svg{position:absolute;inset:0;width:100%;height:100%}
+.cap-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:12px;flex:1}
+.cap h3{font-size:22px;font-weight:700;letter-spacing:-.01em;font-stretch:110%}
+.cap p{font-size:15px;color:var(--ti300)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.tags li{font:500 11.5px/1 var(--mono);color:var(--ti200);border:1px solid var(--s600);padding:5px 7px;border-radius:2px;background:var(--g900)}
+.cap .spec{margin-top:auto;padding-top:14px;display:flex;align-items:center;flex-wrap:wrap;gap:10px;font:500 12.5px/1.3 var(--mono);color:var(--cobalt)}
+.cap .spec::before{content:"";width:22px;height:9px;flex:none;border-left:1px solid currentColor;border-right:1px solid currentColor;background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat;opacity:.8}
+.cap .cb{position:absolute;width:0;height:0;border:0 solid var(--red);transition:width .16s var(--ease),height .16s var(--ease);pointer-events:none;z-index:2}
+.cap .cb.tl{top:-1px;left:-1px;border-top-width:1.5px;border-left-width:1.5px}
+.cap .cb.tr{top:-1px;right:-1px;border-top-width:1.5px;border-right-width:1.5px}
+.cap .cb.bl{bottom:-1px;left:-1px;border-bottom-width:1.5px;border-left-width:1.5px}
+.cap .cb.br{bottom:-1px;right:-1px;border-bottom-width:1.5px;border-right-width:1.5px}
+@media (hover:hover){.cap:hover{background:var(--s700)}.cap:hover .cb{width:14px;height:14px}.cap:hover .cap-media img{transform:scale(1.035)}}
+.cap:focus-visible .cb{width:14px;height:14px}
+@media (max-width:980px){.caps{grid-template-columns:repeat(2,minmax(0,1fr))}.cap,.cap:nth-child(4),.cap:nth-child(5){grid-column:span 1}.cap:nth-child(5){grid-column:1/-1}}
+@media (max-width:600px){.caps{grid-template-columns:1fr}.cap:nth-child(5){grid-column:auto}}
+
+/* plant tour video */
+.tour-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,4vw,64px);align-items:center}
+.tour-copy{display:flex;flex-direction:column;gap:20px}
+.tour-copy p{color:var(--ti300);font-size:17px;max-width:30em}
+.tour-frame{position:relative;border:1px solid var(--s600);padding:10px;background:var(--g950)}
+.tour-frame .xhair.a{top:-6px;left:-6px}.tour-frame .xhair.b{top:-6px;right:-6px}.tour-frame .xhair.c{bottom:-6px;left:-6px}.tour-frame .xhair.d{bottom:-6px;right:-6px}
+.tour{position:relative;display:block;aspect-ratio:16/9;max-width:100%;overflow:hidden;background:#000;text-decoration:none;color:var(--ti100)}
+.tour img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease),filter .4s var(--ease);filter:brightness(.72)}
+.tour iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tour .play{position:absolute;left:50%;top:50%;width:88px;height:88px;transform:translate(-50%,-50%);display:grid;place-items:center;background:var(--red);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%);transition:transform .2s var(--ease),background .2s var(--ease)}
+.tour .play svg{width:30px;height:30px;margin-left:4px}
+.tour .tc{position:absolute;left:18px;right:18px;bottom:14px;display:flex;justify-content:space-between;gap:12px;font:500 12px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ti200)}
+.tour .tc b{font-weight:500;color:var(--ti100);text-transform:none;letter-spacing:0;font-size:13.5px;max-width:42ch}
+@media (hover:hover){.tour:hover img{transform:scale(1.03);filter:brightness(.82)}.tour:hover .play{transform:translate(-50%,-50%) scale(1.06);background:var(--red6)}}
+.tour-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.tour-strip button{padding:0;border:1px solid var(--s700);background:none;cursor:pointer;aspect-ratio:16/9;overflow:hidden}
+.tour-strip img{width:100%;height:100%;object-fit:cover;filter:grayscale(.4) brightness(.8);transition:filter .3s var(--ease)}
+.tour-strip button:hover img,.tour-strip button:focus-visible img{filter:none}
+@media (max-width:900px){.tour-grid{grid-template-columns:1fr}}
+@media (max-width:520px){.tour .play{width:64px;height:64px}.tour .tc b{display:none}}
+
+/* nearshore corridor */
+.ns{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:16px}
+.map{position:relative;border:1px solid var(--s600);border-radius:4px;background:var(--g950);overflow:hidden;min-width:0}
+.map svg{display:block;width:100%;height:auto}
+.map-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;padding:14px 18px;border-bottom:1px solid var(--s700);background:var(--g900)}
+.map-read{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--s600);background:var(--g900)}
+.map-read div{padding:14px 16px;border-left:1px solid var(--s700);display:flex;flex-direction:column;gap:5px;min-width:0}
+.map-read div:first-child{border-left:0}
+.map-read b{font:500 14px/1.3 var(--mono);color:var(--ti100)}
+@media (max-width:700px){.map-read{grid-template-columns:repeat(2,minmax(0,1fr))}.map-read div:nth-child(3){border-left:0}.map-read div:nth-child(n+3){border-top:1px solid var(--s700)}}
+.sites{display:flex;flex-direction:column;gap:16px;min-width:0}
+.site{border:1px solid var(--s600);border-radius:4px;background:var(--s800);padding:22px 22px 20px;display:flex;flex-direction:column;gap:12px}
+.site-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.flagchip{font:600 11px/1 var(--mono);letter-spacing:.08em;padding:5px 7px;border-radius:2px;border:1px solid var(--cobalt);color:var(--cobalt)}
+.site h3{font-size:20px;font-stretch:110%}
+.site address{font-style:normal;font:450 14px/1.55 var(--mono);color:var(--ti200);user-select:all}
+.site ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.site li{font-size:13px;color:var(--ti300);border:1px solid var(--s600);padding:4px 8px;border-radius:2px}
+.feats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:16px;border:1px solid var(--s600);border-radius:4px;overflow:hidden}
+.feat{padding:22px;border-left:1px solid var(--s700);background:var(--s800);display:flex;flex-direction:column;gap:10px;min-width:0}
+.feat:first-child{border-left:0}
+.feat svg{width:22px;height:22px;color:var(--cobalt)}
+.feat h3{font-size:16.5px;font-stretch:108%}
+.feat p{font-size:14.5px;color:var(--ti300)}
+@media (max-width:1000px){.ns{grid-template-columns:1fr}.feats{grid-template-columns:repeat(2,minmax(0,1fr))}.feat:nth-child(3){border-left:0}.feat:nth-child(n+3){border-top:1px solid var(--s700)}}
+@media (max-width:560px){.feats{grid-template-columns:1fr}.feat{border-left:0!important}.feat+.feat{border-top:1px solid var(--s700)}}
+#route{stroke-dasharray:var(--len);stroke-dashoffset:0}
+.map.pre #route{stroke-dashoffset:var(--len)}
+.map.go #route{transition:stroke-dashoffset 2.2s var(--ease-io)}
+
+/* process */
+.seq{position:relative}
+.seq-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.seq-track{position:absolute;left:0;right:0;top:27px;height:2px;pointer-events:none}
+.seq-track svg{width:100%;height:12px;overflow:visible;position:absolute;top:-5px}
+.seq-track path{stroke:var(--cobalt);stroke-width:1.5;fill:none;stroke-dasharray:1;stroke-dashoffset:0}
+.seq.pre .seq-track path{stroke-dashoffset:1}
+.seq.go .seq-track path{transition:stroke-dashoffset 1.2s var(--ease)}
+.step{position:relative;padding:0 18px 0 0;min-width:0}
+.step-node{position:relative;width:56px;height:56px;border:1px solid var(--cobalt);background:var(--g900);display:grid;place-items:center;font:500 13px var(--mono);color:var(--ti100);z-index:1;transition:border-color .3s var(--ease)}
+.step-node.border{border-color:var(--red)}
+.seq.pre .step-node{border-color:var(--s600)}
+.step h3{margin-top:22px;font-size:18px;font-stretch:108%}
+.step p{margin-top:8px;font-size:14.5px;color:var(--ti300)}
+.step .artifact{margin-top:14px;display:inline-block;font:500 11.5px/1.35 var(--mono);color:var(--cobalt);border-top:1px solid var(--s600);padding-top:10px;letter-spacing:.02em}
+.step .where{display:block;margin-top:6px;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti500)}
+@media (max-width:1100px){.seq-list{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:48px}.seq-track{display:none}}
+@media (max-width:640px){.seq-list{grid-template-columns:1fr;row-gap:32px}.step{display:grid;grid-template-columns:56px 1fr;column-gap:18px;padding:0}.step h3{margin-top:4px}.step-node{grid-row:span 4}}
+
+/* fleet */
+.fleet-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 32px;align-items:end;margin-bottom:20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:transparent;border:1px solid var(--s600);color:var(--ti300);height:34px;padding:0 13px;border-radius:2px;font:500 13.5px var(--sans);cursor:pointer;transition:all .12s var(--ease)}
+.chip:hover{color:var(--ti100);border-color:var(--ti500)}
+.chip[aria-pressed="true"]{background:rgba(77,155,255,.12);border-color:var(--cobalt);color:var(--ti100)}
+.chip .n{font-family:var(--mono);color:var(--ti400);margin-left:6px;font-size:12px}
+.fitbox{display:flex;flex-wrap:wrap;align-items:end;gap:10px;padding:14px 16px;background:var(--s800);border:1px solid var(--s600);border-radius:4px}
+.fitbox .label{width:100%;margin-bottom:2px;display:flex;justify-content:space-between;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400)}
+.num{width:84px;height:38px;background:var(--g950);border:1px solid var(--s600);color:var(--ti100);font:500 15px var(--mono);padding:0 10px;border-radius:2px;font-variant-numeric:tabular-nums}
+.num:focus{outline:none;border-color:var(--cobalt)}
+.unit-toggle{display:flex;border:1px solid var(--s600);border-radius:2px;height:38px}
+.unit-toggle button{background:none;border:0;color:var(--ti400);font:500 12px var(--mono);padding:0 10px;cursor:pointer;letter-spacing:.06em}
+.unit-toggle button[aria-pressed="true"]{background:var(--s700);color:var(--ti100)}
+@media (max-width:980px){.fleet-tools{grid-template-columns:1fr}}
+.table-wrap{overflow-x:auto;border:1px solid var(--s600);border-radius:4px;background:var(--s800)}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--s700);vertical-align:middle}
+th{font:500 11.5px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400);background:var(--g900)}
+td{font-size:15px;color:var(--ti200)}
+td.mono{font:450 14px/1.3 var(--mono);color:var(--ti100)}
+tbody tr{transition:background .12s var(--ease)}
+tbody tr:hover{background:var(--s700)}
+tbody tr.grp td{background:var(--g900);font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cobalt);padding:10px 16px}
+tbody tr:last-child td{border-bottom:0}
+.m-name b{display:block;color:var(--ti100);font-weight:600}
+.m-name small{color:var(--ti400);font-size:13px}
+.qty{font:500 12px/1 var(--mono);color:var(--ti400);margin-left:6px}
+.axes{display:inline-block;font:500 12px/1 var(--mono);padding:5px 7px;border:1px solid var(--s600);border-radius:2px;color:var(--ti200);white-space:nowrap}
+.fit{display:inline-flex;align-items:center;gap:8px;font:500 13px/1.3 var(--mono)}
+.fit i{width:8px;height:8px;border-radius:50%;flex:none}
+.fit.ok{color:var(--ok)}.fit.ok i{background:var(--ok)}
+.fit.no{color:var(--crit)}.fit.no i{background:var(--crit)}
+.fit.na{color:var(--ti400)}.fit.na i{background:var(--ti500)}
+.fleet-note{margin-top:14px;font-size:13.5px;color:var(--ti400);max-width:64em}
+
+/* industries */
+.ind{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,4vw,64px);align-items:start}
+.bars{border:1px solid var(--s600);border-radius:4px;background:var(--s800);padding:22px 22px 16px;min-width:0}
+.bars-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.bar-rows{position:relative;display:grid;gap:10px}
+.bar-row{display:grid;grid-template-columns:140px minmax(0,1fr) 54px;gap:14px;align-items:center}
+.bar-row span{font-size:14.5px;color:var(--ti200)}
+.bar-row b{font:500 14px/1 var(--mono);color:var(--ti100);text-align:right;font-variant-numeric:tabular-nums}
+.track{position:relative;height:18px;background:repeating-linear-gradient(90deg,var(--s600) 0 1px,transparent 1px 20%) 0 0/100% 100%;}
+.track i{position:absolute;left:0;top:3px;bottom:3px;width:var(--w);background:var(--cobalt);transform-origin:left}
+.bar-row.top .track i{background:var(--red)}
+.bars.pre .track i{transform:scaleX(0)}
+.bars.go .track i{transition:transform .9s var(--ease);transition-delay:calc(var(--d) * 70ms)}
+.axis{display:grid;grid-template-columns:140px minmax(0,1fr) 54px;gap:14px;margin-top:8px}
+.axis div{display:flex;justify-content:space-between;font:500 11px/1 var(--mono);color:var(--ti500)}
+.ind-side{display:flex;flex-direction:column;gap:22px}
+.ind-side p{color:var(--ti300)}
+.clients{display:flex;flex-wrap:wrap;gap:8px 10px;list-style:none;margin:0;padding:0}
+.clients li{font:500 13.5px/1 var(--sans);color:var(--ti200);padding:9px 11px;border:1px solid var(--s600);border-radius:2px;background:var(--g900)}
+@media (max-width:900px){.ind{grid-template-columns:1fr}}
+@media (max-width:520px){.bar-row,.axis{grid-template-columns:96px minmax(0,1fr) 46px;gap:10px}.bar-row span{font-size:13px}}
+
+/* quality */
+.metro{position:relative;overflow:hidden;border-block:1px solid var(--s800)}
+.metro-bg{position:absolute;inset:0;background:url(assets/photos/vision-measure.jpg) right center/cover no-repeat}
+.metro-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--g950) 0%,rgba(9,13,18,.93) 40%,rgba(9,13,18,.6) 72%,rgba(9,13,18,.45) 100%)}
+.metro .wrap{position:relative;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(24px,4vw,64px);align-items:center}
+.mcopy{display:flex;flex-direction:column;gap:22px}
+.mcopy p{color:var(--ti300);font-size:17px;max-width:36em}
+.equip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--s600);border:1px solid var(--s600);border-radius:4px;overflow:hidden}
+.equip div{background:var(--g900);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.equip b{font:500 14px/1.3 var(--mono);color:var(--ti100)}
+.equip span{font-size:13px;color:var(--ti400)}
+.certcard{background:var(--glass);backdrop-filter:blur(14px) saturate(120%);-webkit-backdrop-filter:blur(14px) saturate(120%);border:1px solid var(--glass-line);border-radius:4px;padding:20px;display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;align-items:start;min-width:0}
+.certcard img{width:150px;height:auto;border:1px solid var(--s600);background:#fff}
+.certcard dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 14px;margin:12px 0 0;font-size:14px}
+.certcard dt{font:500 11px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ti400)}
+.certcard dd{margin:0;color:var(--ti100)}
+.certcard h3{font-size:19px;font-stretch:108%}
+@media (max-width:980px){.metro .wrap{grid-template-columns:1fr}.metro-bg::after{background:linear-gradient(180deg,rgba(9,13,18,.78),var(--g950) 70%)}}
+@media (max-width:520px){.certcard{grid-template-columns:1fr}.certcard img{width:120px}.equip{grid-template-columns:1fr}}
+
+/* gallery */
+.gal-tools{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(120px,14vw,210px);grid-auto-flow:dense;gap:8px}
+.gal button{position:relative;padding:0;border:1px solid var(--s700);background:var(--g900);cursor:zoom-in;overflow:hidden;min-width:0}
+.gal button.w2{grid-column:span 2}.gal button.h2{grid-row:span 2}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease),filter .3s var(--ease)}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;background:linear-gradient(transparent,rgba(9,13,18,.86));font:500 12px/1.35 var(--mono);color:var(--ti100);text-align:left;opacity:0;transform:translateY(6px);transition:opacity .2s var(--ease),transform .2s var(--ease)}
+.gal button:hover img{transform:scale(1.04)}
+.gal button:hover figcaption,.gal button:focus-visible figcaption{opacity:1;transform:none}
+@media (hover:none){.gal figcaption{opacity:1;transform:none}}
+@media (max-width:760px){.gal{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:150px}.gal button.h2{grid-row:span 1}}
+.lb{position:fixed;inset:0;z-index:80;background:rgba(5,7,10,.94);display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:calc(env(safe-area-inset-top,0px) + 16px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 16px) max(16px,env(safe-area-inset-left,0px));gap:12px}
+.lb-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lb img{width:100%;height:100%;object-fit:contain;min-height:0}
+.lb-nav{display:flex;justify-content:center;gap:10px}
+.lb button.ctl{background:none;border:1px solid var(--s600);color:var(--ti100);height:38px;padding:0 14px;font:500 13px var(--mono);cursor:pointer;border-radius:2px}
+.lb button.ctl:hover{border-color:var(--ti400)}
+
+/* RFQ */
+.rfq{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(24px,3vw,40px)}
+.rfq-main{display:flex;flex-direction:column;gap:20px;min-width:0}
+.q{border:1px solid var(--s600);border-radius:4px;background:var(--s800);padding:18px 20px;margin:0}
+.q legend{float:left;width:100%;padding:0;margin-bottom:12px;font:600 15px/1.4 var(--sans);color:var(--ti100)}
+.q legend small{display:block;color:var(--ti400);font-size:13.5px;font-weight:400;margin-top:2px}
+.checks{clear:both;display:flex;flex-wrap:wrap;gap:8px}
+.check{position:relative}
+.check input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.check span{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border:1px solid var(--s600);border-radius:2px;color:var(--ti300);font-size:14.5px;transition:all .12s var(--ease)}
+.check span::before{content:"";width:12px;height:12px;border-radius:2px;border:1px solid var(--ti500);flex:none}
+.check input[type=radio] + span::before{border-radius:50%}
+.check input:checked + span{border-color:var(--cobalt);color:var(--ti100);background:rgba(77,155,255,.1)}
+.check input:checked + span::before{border:4px solid var(--cobalt)}
+.check input:focus-visible + span{outline:2px solid var(--cobalt);outline-offset:2px}
+.drop{position:relative;border:1.5px dashed var(--s600);border-radius:4px;padding:clamp(28px,4vw,44px) 24px;text-align:center;background:repeating-linear-gradient(-45deg,transparent 0 10px,rgba(102,116,134,.035) 10px 11px),var(--g900);transition:border-color .15s var(--ease),background-color .15s var(--ease);display:flex;flex-direction:column;align-items:center;gap:14px}
+.drop.over{border-color:var(--cobalt);background-color:rgba(77,155,255,.05)}
+.drop svg.ico{width:40px;height:40px;color:var(--ti300)}
+.drop h3{font-size:22px;font-stretch:110%}
+.drop p{color:var(--ti400);font-size:14px}
+.files{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.files li{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--s600);background:var(--s800);border-radius:2px;font:450 13.5px/1.3 var(--mono)}
+.files li .ext{font-size:11px;padding:3px 6px;border:1px solid var(--cobalt);color:var(--cobalt);border-radius:2px}
+.files li .fname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ti100)}
+.files li .fsize{color:var(--ti400)}
+.files li.bad .ext{border-color:var(--crit);color:var(--crit)}
+.files li.bad .fsize{color:var(--crit)}
+.files li button{background:none;border:0;color:var(--ti400);cursor:pointer;font:500 18px/1 var(--mono);padding:2px 4px}
+.files li button:hover{color:var(--ti100)}
+.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.inp{display:flex;flex-direction:column;gap:6px;min-width:0}
+.inp label{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400)}
+.inp input,.inp select,.inp textarea{height:42px;background:var(--g950);border:1px solid var(--s600);color:var(--ti100);padding:0 12px;font:400 15px var(--sans);border-radius:2px;width:100%}
+.inp textarea{height:auto;min-height:84px;padding:10px 12px;resize:vertical}
+.inp input:focus,.inp select:focus,.inp textarea:focus{outline:none;border-color:var(--cobalt)}
+.inp .hint{font-size:12.5px;color:var(--caution)}
+@media (max-width:760px){.row3{grid-template-columns:1fr}}
+.seg{display:flex;border:1px solid var(--s600);border-radius:2px;height:42px}
+.seg button{flex:1;background:none;border:0;color:var(--ti400);font:500 13px var(--mono);cursor:pointer;letter-spacing:.04em}
+.seg button[aria-pressed="true"]{background:var(--s700);color:var(--ti100)}
+.rfq-side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.meter{border:1px solid var(--s600);border-radius:4px;padding:18px 20px;background:var(--s800)}
+.meter ol{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.meter li{display:flex;align-items:center;gap:10px;font:500 13px/1.3 var(--mono);color:var(--ti400)}
+.meter li i{width:14px;height:14px;border:1px solid var(--ti500);border-radius:2px;flex:none;display:grid;place-items:center;transition:background .2s var(--ease),border-color .2s var(--ease)}
+.meter li.done{color:var(--ti100)}
+.meter li.done i{border-color:var(--ok);background:var(--ok)}
+.meter li.done i::after{content:"";width:6px;height:3px;border-left:1.5px solid var(--g950);border-bottom:1.5px solid var(--g950);transform:rotate(-45deg) translate(1px,-1px)}
+.meter .verdict{margin-top:14px;padding-top:12px;border-top:1px solid var(--s600);font:500 13px/1.45 var(--mono);color:var(--ti200)}
+.meter .verdict b{color:var(--cobalt)}
+.contact{border:1px solid var(--s600);border-radius:4px;background:var(--g900);padding:18px;display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:start}
+.avatar{position:relative;width:72px;height:88px;border:1px solid var(--s600);padding:4px;background:var(--g950)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar .mono-init{width:100%;height:100%;display:grid;place-items:center;font:700 20px/1 var(--display);font-stretch:120%;color:var(--ti300);background:repeating-linear-gradient(-45deg,var(--s800) 0 6px,var(--g900) 6px 12px)}
+.contact b{display:block;color:var(--ti100);font-size:16px}
+.contact .role{display:block;font-size:13px;color:var(--ti400);margin:2px 0 10px}
+.contact .lines{display:grid;gap:6px}
+.status{padding:14px 16px;border-radius:2px;border:1px solid var(--s600);font-size:14px;color:var(--ti200);background:var(--g900)}
+.status.ok{border-color:rgba(52,199,123,.5)}
+.status.err{border-color:rgba(239,68,68,.6)}
+@media (max-width:980px){.rfq{grid-template-columns:1fr}}
+
+/* footer */
+footer{border-top:1px solid var(--s800);background:var(--g950);padding-block:56px 40px;font-size:14px;color:var(--ti400)}
+.foot{display:grid;grid-template-columns:minmax(0,4fr) repeat(3,minmax(0,2fr));gap:32px}
+.foot h4{font:500 11.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti300);margin-bottom:14px}
+.foot ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+.foot a{text-decoration:none}.foot a:hover{color:var(--ti100)}
+.foot address{font-style:normal;line-height:1.7}
+.foot-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.foot-badges span{font:600 11px/1 var(--mono);letter-spacing:.06em;color:var(--ti200);border:1px solid var(--s600);padding:7px 9px;border-radius:2px}
+.foot-base{margin-top:48px;padding-top:20px;border-top:1px solid var(--s800);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font:500 12px/1.4 var(--mono)}
+@media (max-width:860px){.foot{grid-template-columns:1fr 1fr}.foot > div:first-child{grid-column:1/-1}}
+
+/* cert drawer */
+.scrim{position:fixed;inset:0;background:rgba(5,7,10,.6);z-index:70;opacity:0;transition:opacity .32s var(--ease)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);z-index:71;background:var(--s700);border-left:1px solid var(--s600);box-shadow:0 24px 48px rgba(0,0,0,.5);transform:translateX(100%);transition:transform .32s var(--ease);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer.open{transform:none}.scrim.open{opacity:1}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--s600)}
+.drawer-head h2{font-size:20px;font-stretch:110%}
+.drawer-body{overflow-y:auto;padding:8px 24px calc(32px + env(safe-area-inset-bottom,0px));flex:1}
+.drawer h3{margin:24px 0 12px;font:500 11.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400)}
+.cert{border:1px solid var(--s600);background:var(--s800);border-radius:4px;padding:16px;margin-bottom:10px;display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px}
+.cert-mark{width:56px;height:56px;border:1px solid var(--s600);display:grid;place-items:center;font:600 11px/1.1 var(--mono);color:var(--ti200);text-align:center}
+.cert b{color:var(--ti100);display:block}
+.cert dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;margin:10px 0 0;font-size:13px}
+.cert dt{color:var(--ti400);font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;padding-top:1px}
+.cert dd{margin:0;color:var(--ti200)}
+.cert-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;font:500 12px/1 var(--mono);padding:5px 8px;border-radius:2px}
+.pill i{width:7px;height:7px;border-radius:50%}
+.pill.pending{color:var(--caution);border:1px solid rgba(245,165,36,.45)}.pill.pending i{background:var(--caution)}
+.doclink{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--s600);text-decoration:none;color:var(--ti100)}
+.doclink span{color:var(--ti400);font:500 12px var(--mono)}
+.doclink:hover{color:var(--cobalt)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important}html{scroll-behavior:auto}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2.2" height="5" fill="#fff"/></pattern>
+    <symbol id="amt-mark" viewBox="0 0 40 34"><rect x="16.5" y="1" width="7" height="20" fill="url(#hatch)" stroke="#fff" stroke-width="1.6"/><path d="M11 12l2 4M29 12l-2 4M8 16.5l3 1.8M32 16.5l-3 1.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><rect x="1.5" y="23" width="37" height="9.5" fill="url(#hatch)" stroke="#fff" stroke-width="1.6"/><rect x="16.5" y="21" width="7" height="3" fill="#fff"/></symbol>
+    <symbol id="i-check" viewBox="0 0 16 16"><path d="M8 1.5 13.5 4v4c0 3.4-2.3 5.8-5.5 6.5C4.8 13.8 2.5 11.4 2.5 8V4z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m5.5 8 1.8 1.8L10.7 6.4" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="i-border" viewBox="0 0 16 16"><path d="M1 8h14" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"/><circle cx="5" cy="12" r="2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="4" r="2" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="i-time" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 4v4l2.5 2" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="i-up" viewBox="0 0 16 16"><path d="M8 11V2.5M4.5 6 8 2.5 11.5 6M2.5 11v2.5h11V11" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 16 16"><path d="M3 1.8h3l1.2 3.2-1.8 1.2a8 8 0 0 0 4.4 4.4l1.2-1.8 3.2 1.2v3c0 .6-.5 1.1-1.1 1.1A12.3 12.3 0 0 1 1.9 2.9c0-.6.5-1.1 1.1-1.1z" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  </defs>
+</svg>
+
+<div class="util" role="region" aria-label="Certifications and locations">
+  <div class="wrap">
+    <div class="util-list">
+      <span>ISO 9001:2015</span><span>AS9100:2016</span><span>Plant &#xB7; Nogales, Sonora</span><span>Warehouse &#xB7; Nogales, AZ</span><span>English &#xB7; Espa&#xF1;ol</span>
+    </div>
+    <div class="util-actions">
+      <button type="button" data-open-certs><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5.5L12.5 4.5V14.5H4z"/><path d="M9.5 1.5v3h3M6 8h4.5M6 10.5h4.5"/></svg>Certificates</button>
+      <span class="util-phone">US +1 520 850 7048</span>
+    </div>
+  </div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="AMT Precision, home">
+      <svg class="logo-mark" aria-hidden="true"><use href="#amt-mark"/></svg>
+      <span class="logo-word"><b><i>A</i>MT</b><small>Sheet Metal &amp; CNC Machining Technologies</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#equipment">Capabilities &amp; Equipment</a></li>
+      <li><a href="#locations">About &amp; Locations</a></li>
+      <li><a href="#quality">Quality</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#rfq">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="btn btn-ghost btn-sm" type="button" id="callBtn" aria-expanded="false" aria-controls="callPop"><svg aria-hidden="true"><use href="#i-phone"/></svg>Call / Email</button>
+      <a class="btn btn-primary btn-sm" href="#rfq"><svg aria-hidden="true"><use href="#i-up"/></svg>Request a Quote</a>
+      <div class="pop" id="callPop" hidden role="dialog" aria-label="Call or email AMT">
+        <h4>Talk to business development</h4>
+        <div class="rep" data-rep>
+          <b>Cristian Clark</b><small>Business Development Director</small>
+          <div class="line"><span>US</span><a class="v" href="tel:+15208507048">+1 (520) 850 7048</a><button class="copybtn" type="button" data-copy="+1 520 850 7048">Copy</button></div>
+          <div class="line"><span>MX</span><a class="v" href="tel:+526311096969">+52 (631) 109 6969</a><button class="copybtn" type="button" data-copy="+52 631 109 6969">Copy</button></div>
+          <div class="line"><span>@</span><a class="v" href="mailto:cclark@amt-mfg.com">cclark@amt-mfg.com</a><button class="copybtn" type="button" data-copy="cclark@amt-mfg.com">Copy</button></div>
+        </div>
+        <div class="rep">
+          <b>Javier Sobarzo</b><small>Business Development &#xB7; Sheet metal operations</small>
+          <div class="line"><span>US</span><a class="v" href="tel:+15208504784">+1 (520) 850 4784</a><button class="copybtn" type="button" data-copy="+1 520 850 4784">Copy</button></div>
+          <div class="line"><span>MX</span><a class="v" href="tel:+526311260465">+52 (631) 126 0465</a><button class="copybtn" type="button" data-copy="+52 631 126 0465">Copy</button></div>
+          <div class="line"><span>@</span><a class="v" href="mailto:jsobarzo@amt-mfg.com">jsobarzo@amt-mfg.com</a><button class="copybtn" type="button" data-copy="jsobarzo@amt-mfg.com">Copy</button></div>
+        </div>
+      </div>
+    </div>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="sheet">MENU</button>
+  </div>
+</header>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-label="Site menu">
+  <button class="close" type="button" id="sheetClose">CLOSE</button>
+  <nav>
+    <a href="#services">Services</a><a href="#equipment">Capabilities &amp; Equipment</a><a href="#locations">About &amp; Locations</a><a href="#quality">Quality &amp; Certifications</a><a href="#gallery">Gallery</a><a href="#rfq">Contact / Request a Quote</a>
+  </nav>
+  <div class="sheet-contacts">
+    <span class="label">Call or email</span>
+    <div class="line"><span>US</span><span class="v">+1 (520) 850 7048</span><button class="copybtn" type="button" data-copy="+1 520 850 7048">Copy</button></div>
+    <div class="line"><span>MX</span><span class="v">+52 (631) 109 6969</span><button class="copybtn" type="button" data-copy="+52 631 109 6969">Copy</button></div>
+    <div class="line"><span>@</span><span class="v">cclark@amt-mfg.com</span><button class="copybtn" type="button" data-copy="cclark@amt-mfg.com">Copy</button></div>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero grid-bg" aria-labelledby="hero-h">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="label">Contract manufacturing &#xB7; Nogales, Sonora + Nogales, Arizona</span>
+        <h1 id="hero-h">Made in Sonora. <em>Shipped from Arizona.</em></h1>
+        <p class="lead">CNC machining, sheet metal, laser and waterjet cutting, finishing and assembly from a 53,000 sq ft plant 2.5 miles south of the US border. One supplier, one quality system, one point of contact on either side of the line.</p>
+        <ul class="badges" aria-label="Credentials">
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>ISO 9001:2015 certified</li>
+          <li><svg aria-hidden="true"><use href="#i-border"/></svg>Dual US&#x2013;Mexico footprint</li>
+          <li><svg aria-hidden="true"><use href="#i-time"/></svg>8+ years of excellence</li>
+        </ul>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#rfq"><svg aria-hidden="true"><use href="#i-up"/></svg>Request a Quote</a>
+          <a class="btn btn-ghost" href="#services">Explore capabilities</a>
+        </div>
+        <div class="formats" aria-label="Accepted file formats"><span class="label">We read</span><span class="f">STEP</span><span class="f">IGES</span><span class="f">SLDPRT</span><span class="f">X_T</span><span class="f">DXF</span><span class="f">PDF</span></div>
+      </div>
+
+      <div class="viewport" aria-label="Fiber laser cutting nested sheet metal blanks on the AMT floor, with equipment callouts">
+        <img class="vp-img" src="assets/photos/laser-head.jpg" alt="Fiber laser head cutting nested, part-marked stainless blanks at AMT Precision" width="1600" height="900">
+        <div class="vp-shade" aria-hidden="true"></div>
+        <div class="vp-grid grid-bg" aria-hidden="true"></div>
+        <span class="xhair" style="top:8px;left:8px"></span><span class="xhair" style="top:8px;right:8px"></span><span class="xhair" style="bottom:8px;left:8px"></span><span class="xhair" style="bottom:8px;right:8px"></span>
+        <div class="vp-head"><span class="label">Shop floor &#xB7; Nogales, SON</span><span class="label">Cell 03 &#xB7; Laser</span></div>
+        <div class="callout" data-i="0" style="left:63.5%;top:66%"><span class="dot"></span><span class="lead-line"></span><span class="card"><small>Fiber laser</small>1.5 kW + 3 kW &#xB7; FiberBlade</span></div>
+        <div class="callout flip" data-i="1" style="right:58%;top:83%"><span class="dot"></span><span class="lead-line"></span><span class="card"><small>Nested blanks</small>Part no. + rev etched on cut</span></div>
+        <div class="callout flip" data-i="2" style="right:24%;top:22%"><span class="dot"></span><span class="lead-line"></span><span class="card"><small>Cutting head</small>RayTools fiber head &#xB7; nested cut</span></div>
+        <div class="vp-foot"><span class="label">Photo &#xB7; AMT gallery</span><a class="btn btn-ghost btn-sm" href="#tour-sec" style="background:rgba(9,13,18,.6)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" fill="currentColor"/></svg>Watch the plant film</a></div>
+      </div>
+    </div>
+
+    <div class="readout" aria-label="Equipment highlights">
+      <div><span class="label">Largest mill</span><b>Haas GR510 &#xB7; 121 &#xD7; 61 &#xD7; 11 in</b></div>
+      <div><span class="label">Fiber laser</span><b>FiberBlade X3 &#xB7; 3,000 W</b></div>
+      <div><span class="label">Waterjet</span><b>72 &#xD7; 144 in &#xB7; to 6 in thick</b></div>
+      <div><span class="label">Swiss turning</span><b>Citizen A20 &#xB7; &#x2300;.750 in bar</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section aria-label="By the numbers">
+  <div class="wrap">
+    <div class="proof">
+      <div><b>2.5<sub>mi</sub></b><span>From our Sonora plant to the US border</span></div>
+      <div><b>41</b><span>Machines across milling, turning, cutting, forming and EDM</span></div>
+      <div><b>53,000<sub>sq ft</sub></b><span>Production floor in Nogales, Sonora</span></div>
+      <div><b>8<sub>+ yrs</sub></b><span>Shipping parts to aerospace, communications and research customers</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" id="services" aria-labelledby="svc-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">Services</span><h2 id="svc-h">From flat stock to finished assembly under one roof.</h2></div>
+      <p>Five process lines share one traveler and one inspection plan, so a welded, coated sub-assembly with machined inserts ships from a single purchase order.</p>
+    </div>
+    <div class="caps">
+      <a class="cap" href="#equipment" data-filter="mill">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media"><img src="assets/photos/mill-spindle.jpg" alt="Face mill in the spindle of a CNC vertical machining center" loading="lazy" width="1600" height="900" style="object-position:62% 40%"></div>
+        <div class="cap-body"><span class="label">01 &#xB7; Machining</span><h3>CNC machining</h3><p>3- and 4-axis milling, live-tool and Swiss turning, wire and sinker EDM. Prototypes through repeat production runs.</p>
+          <ul class="tags"><li>Milling</li><li>Turning</li><li>Swiss / screw</li><li>EDM</li><li>Production</li></ul>
+          <span class="spec">14 mills &#xB7; 10 lathes &#xB7; router to 121 &#xD7; 61 in</span></div>
+      </a>
+      <a class="cap" href="#equipment" data-filter="cut">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media"><img src="assets/photos/press-brake.jpg" alt="Segmented press brake tooling on the AMT sheet metal line" loading="lazy" width="1600" height="900"></div>
+        <div class="cap-body"><span class="label">02 &#xB7; Sheet metal</span><h3>Sheet metal fabrication &amp; cutting</h3><p>Fiber laser and waterjet cutting, turret punching, CNC press brake forming, MIG and TIG welding.</p>
+          <ul class="tags"><li>Laser</li><li>Waterjet</li><li>Plasma <span class="verify">CONFIRM</span></li><li>Press brake</li><li>Welding</li></ul>
+          <span class="spec">3 kW laser &#xB7; 72 &#xD7; 144 in waterjet &#xB7; 175 t brake</span></div>
+      </a>
+      <a class="cap" href="#equipment" data-filter="edm">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media">
+          <svg viewBox="0 0 480 270" fill="none" aria-hidden="true"><rect width="480" height="270" fill="#0E141B"/>
+            <g stroke="#2F3D4D"><path d="M0 54h480M0 108h480M0 162h480M0 216h480M96 0v270M192 0v270M288 0v270M384 0v270"/></g>
+            <g stroke="#4D9BFF" stroke-width="1.3"><path d="M150 180 240 135l90 45-90 45z" fill="#151D27"/><path d="M150 180v18l90 45 90-45v-18"/><path d="M205 162v-44l35-18 35 18v44" fill="#1F2A36"/><ellipse cx="240" cy="118" rx="22" ry="11" fill="#090D12"/></g>
+            <g fill="#4D9BFF"><circle cx="150" cy="180" r="3"/><circle cx="330" cy="180" r="3"/><circle cx="240" cy="225" r="3"/><circle cx="205" cy="118" r="3"/><circle cx="275" cy="118" r="3"/><circle cx="240" cy="100" r="3"/></g>
+            <g stroke="#A9B5C3" stroke-dasharray="3 3"><path d="M240 100 240 44M150 180 84 214M330 180 398 214"/></g>
+            <g fill="#8593A3" font-size="11" font-family="Geist Mono,monospace"><text x="248" y="52">SCAN PT 01</text><text x="30" y="232">PT 02</text><text x="404" y="232">PT 03</text><text x="20" y="28">REVERSE ENG &#xB7; POINT CLOUD &#x2192; CAD</text></g>
+          </svg>
+        </div>
+        <div class="cap-body"><span class="label">03 &#xB7; Engineering</span><h3>Tooling, molds &amp; engineering</h3><p>In-house design department: mold design and fabrication, 3D modeling, blueprints, and reverse engineering from scanned parts.</p>
+          <ul class="tags"><li>Mold design</li><li>3D CAD</li><li>Reverse eng.</li><li>Silicone molding 150&#x2013;250 t <span class="verify">CONFIRM</span></li></ul>
+          <span class="spec">Wire EDM 400 &#xD7; 300 mm &#xB7; portable CMM arm</span></div>
+      </a>
+      <a class="cap" href="#quality">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media">
+          <svg viewBox="0 0 640 270" fill="none" aria-hidden="true"><rect width="640" height="270" fill="#0E141B"/>
+            <g font-family="Geist Mono,monospace" font-size="11.5">
+              <rect x="60" y="176" width="360" height="54" fill="#36414E"/><text x="432" y="207" fill="#A9B5C3">SUBSTRATE &#xB7; AL / CRS / SS</text>
+              <rect x="60" y="164" width="360" height="12" fill="#C9A646" opacity=".85"/><text x="432" y="174" fill="#A9B5C3">CHEM FILM / CONVERSION</text>
+              <rect x="60" y="140" width="360" height="24" fill="#4D5C6E"/><text x="432" y="156" fill="#A9B5C3">PRIMER &#xB7; WET</text>
+              <rect x="60" y="92" width="360" height="48" fill="#DB2A23" opacity=".9"/><text x="432" y="120" fill="#EAF0F6">POWDER TOPCOAT</text>
+              <path d="M40 92v138M34 92h12M34 230h12" stroke="#4D9BFF"/><text x="18" y="84" fill="#4D9BFF">STACK</text>
+              <path d="M60 60h360" stroke="#2F3D4D" stroke-dasharray="4 4"/><text x="60" y="48" fill="#8593A3">FINISH STACK-UP &#xB7; CROSS SECTION (ILLUSTRATIVE)</text>
+            </g>
+          </svg>
+        </div>
+        <div class="cap-body"><span class="label">04 &#xB7; Finishing</span><h3>Finishing &amp; surface prep</h3><p>In-house powder coating, wet paint, chem film conversion coating and passivation, with manual and tumbler deburring. Plating, anodize and heat treat managed through qualified outside vendors.</p>
+          <ul class="tags"><li>Powder coat</li><li>Wet paint</li><li>Chem film</li><li>Passivate</li><li>Tumble deburr</li></ul>
+          <span class="spec">In-house 5 &#xB7; outsourced and managed 8</span></div>
+      </a>
+      <a class="cap" href="#gallery">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media"><img src="assets/photos/hardware-insertion.jpg" alt="Operator pressing hardware into a formed bracket on an insertion press" loading="lazy" width="1600" height="900"></div>
+        <div class="cap-body"><span class="label">05 &#xB7; Assembly</span><h3>Assembly &amp; automation</h3><p>Hardware insertion, welded and mechanical sub-assemblies, kitting, and custom fixtures and automation built by the same engineers who design your tooling.</p>
+          <ul class="tags"><li>PEM insertion</li><li>Sub-assembly</li><li>Kitting</li><li>Custom fixtures</li></ul>
+          <span class="spec">10 t insertion press &#xB7; 650 mm throat</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PLANT FILM -->
+<section class="sec band" id="tour-sec" aria-labelledby="tour-h">
+  <div class="wrap tour-grid">
+    <div class="tour-copy">
+      <span class="label">Plant film</span>
+      <h2 class="h2" id="tour-h">See the floor before you send a print.</h2>
+      <p>New suppliers are a risk because you can't see how they work. Watch the plant, then come walk it: Nogales, Sonora is a short drive from Tucson.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-ghost btn-sm" href="https://www.youtube.com/@amtprecision" target="_blank" rel="noopener">AMT on YouTube &#x2197;</a><a class="btn btn-ghost btn-sm" href="#rfq">Book a plant visit</a></div>
+    </div>
+    <div>
+      <div class="tour-frame">
+        <span class="xhair a"></span><span class="xhair b"></span><span class="xhair c"></span><span class="xhair d"></span>
+        <a class="tour" id="tour" href="https://www.youtube.com/watch?v=wkDMJgn-6JI" target="_blank" rel="noopener" data-yt="wkDMJgn-6JI" aria-label="Play the AMT Precision plant film on YouTube">
+          <img src="assets/photos/weld-tig.jpg" alt="" loading="lazy" width="1600" height="900">
+          <span class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4v16l14-8z" fill="#fff"/></svg></span>
+          <span class="tc"><b>AMT Precision &#xB7; Where precision meets experience</b><span>YouTube &#xB7; @amtprecision</span></span>
+        </a>
+      </div>
+      <div class="tour-strip" aria-label="Stills from the floor">
+        <button type="button" data-gal="lathe-turning"><img src="assets/photos/lathe-turning.jpg" alt="CNC lathe turning, open in gallery" loading="lazy" width="1600" height="900"></button>
+        <button type="button" data-gal="weld-spark"><img src="assets/photos/weld-spark.jpg" alt="Tack welding a frame, open in gallery" loading="lazy" width="1600" height="900"></button>
+        <button type="button" data-gal="vision-part"><img src="assets/photos/vision-part.jpg" alt="Part on the vision measuring stage, open in gallery" loading="lazy" width="1600" height="900"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEARSHORE -->
+<section class="sec" id="locations" aria-labelledby="loc-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">About &amp; locations</span><h2 id="loc-h">One supplier on both sides of the line.</h2></div>
+      <p>Parts are machined, formed and finished by a skilled Sonora workforce at Mexico cost, then staged at our Arizona warehouse and shipped from a US address. AMT is a team of machinists, designers and maintenance engineers who treat every order with urgency.</p>
+    </div>
+    <div class="ns">
+      <figure class="map" id="map" style="margin:0">
+        <div class="map-head"><span class="label">Nogales corridor &#xB7; schematic</span><span class="label" style="color:var(--cobalt)">&#x25CF; Shipment in transit</span></div>
+        <svg viewBox="0 0 640 440" role="img" aria-label="Schematic map: production plant in Nogales, Sonora, 2.5 miles south of the US border, with a route north through the port of entry to the warehouse in Nogales, Arizona">
+          <rect width="640" height="440" fill="#090D12"/>
+          <path d="M0 0H640V176L0 196Z" fill="rgba(77,155,255,.045)"/>
+          <g stroke="#1F2A36" stroke-width="1"><path d="M0 40h640M0 80h640M0 120h640M0 160h640M0 200h640M0 240h640M0 280h640M0 320h640M0 360h640M0 400h640M40 0v440M120 0v440M200 0v440M280 0v440M360 0v440M440 0v440M520 0v440M600 0v440"/></g>
+          <g stroke="#2F3D4D" stroke-width="1" fill="none" opacity=".8">
+            <path d="M20 400C110 360 200 420 290 380S460 320 620 352"/><path d="M40 430C150 392 230 440 330 412S500 372 640 392"/>
+            <path d="M0 270C90 250 170 300 250 262S400 236 480 262 600 250 640 236"/>
+            <path d="M10 70C110 46 190 104 290 64S470 30 630 58"/><path d="M0 128C100 104 160 142 240 116S420 92 640 112"/>
+          </g>
+          <path d="M0 196L640 176" stroke="#8593A3" stroke-width="1.5" stroke-dasharray="8 5"/>
+          <g font-family="Geist Mono,monospace" font-size="11" letter-spacing=".08em">
+            <text x="20" y="182" fill="#8593A3">UNITED STATES</text><text x="20" y="218" fill="#8593A3">M&#xC9;XICO</text>
+          </g>
+          <path d="M376 440C370 388 356 330 352 282S342 214 340 186S334 120 330 0" stroke="#1F2A36" stroke-width="10" fill="none"/>
+          <path d="M376 440C370 388 356 330 352 282S342 214 340 186S334 120 330 0" stroke="#2F3D4D" stroke-width="1" stroke-dasharray="6 6" fill="none"/>
+          <g font-family="Geist Mono,monospace" font-size="10.5" fill="#667486" letter-spacing=".06em"><text x="384" y="430">MEX 15</text><text x="338" y="20">I-19 N &#x2192; TUCSON</text></g>
+          <rect x="333" y="178" width="14" height="14" fill="#090D12" stroke="#EAF0F6" stroke-width="1.2" transform="rotate(45 340 185)"/>
+          <text x="358" y="206" font-family="Geist Mono,monospace" font-size="10.5" fill="#A9B5C3" letter-spacing=".06em">PORT OF ENTRY</text>
+          <!-- dimension: plant to border -->
+          <g stroke="#4D9BFF" stroke-width="1" fill="none">
+            <path d="M404 352H486M346 181H486" stroke-dasharray="2 3" opacity=".6"/>
+            <path d="M478 186V347"/><path d="M474 194l4-8 4 8M474 339l4 8 4-8"/>
+          </g>
+          <text x="492" y="272" font-family="Geist Mono,monospace" font-size="13" fill="#4D9BFF" letter-spacing=".04em">2.5 MI</text>
+          <text x="492" y="290" font-family="Geist Mono,monospace" font-size="10.5" fill="#667486">PLANT &#x2192; BORDER</text>
+          <!-- route -->
+          <path id="route" d="M392 352C380 330 356 312 352 282S342 214 340 186S330 150 302 132S252 112 232 104" stroke="#DB2A23" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle id="pkt" cx="232" cy="104" r="5" fill="#EAF0F6" stroke="#DB2A23" stroke-width="2"/>
+          <!-- pins -->
+          <g transform="translate(392 352)"><circle r="16" fill="rgba(219,42,35,.16)"/><circle r="7" fill="#DB2A23"/><circle r="2.5" fill="#fff"/></g>
+          <g transform="translate(232 104)"><circle r="16" fill="rgba(77,155,255,.16)"/><circle r="7" fill="#4D9BFF"/><circle r="2.5" fill="#fff"/></g>
+          <g font-family="Geist Mono,monospace">
+            <rect x="196" y="368" width="186" height="46" fill="#151D27" stroke="#2F3D4D"/>
+            <text x="206" y="386" font-size="10.5" fill="#DB2A23" letter-spacing=".08em">MX &#xB7; PRODUCTION PLANT</text>
+            <text x="206" y="404" font-size="12" fill="#EAF0F6">Bustamante #41-H</text>
+            <path d="M382 380L388 360" stroke="#2F3D4D"/>
+            <rect x="40" y="38" width="176" height="46" fill="#151D27" stroke="#2F3D4D"/>
+            <text x="50" y="56" font-size="10.5" fill="#4D9BFF" letter-spacing=".08em">US &#xB7; WAREHOUSE</text>
+            <text x="50" y="74" font-size="12" fill="#EAF0F6">71 N Freeport Dr</text>
+            <path d="M216 76L226 96" stroke="#2F3D4D"/>
+          </g>
+          <g transform="translate(596 60)" font-family="Geist Mono,monospace"><path d="M0 -22L7 6 0 1-7 6Z" fill="#A9B5C3"/><text x="-4" y="22" font-size="11" fill="#8593A3">N</text></g>
+          <text x="20" y="426" font-family="Geist Mono,monospace" font-size="10" fill="#667486" letter-spacing=".06em">SCHEMATIC &#xB7; NOT TO SCALE</text>
+        </svg>
+        <div class="map-read">
+          <div><span class="label">Plant &#x2192; border</span><b>2.5 mi</b></div>
+          <div><span class="label">Plant floor</span><b>53,000 sq ft</b></div>
+          <div><span class="label">Clock</span><b>MST both sides, all year</b></div>
+          <div><span class="label">Team</span><b>English &#xB7; Espa&#xF1;ol</b></div>
+        </div>
+      </figure>
+      <div class="sites">
+        <div class="site">
+          <div class="site-top"><div><span class="label">Production</span><h3>Nogales, Sonora plant</h3></div><span class="flagchip">MX</span></div>
+          <address>Calle Bustamante #41-H, Col. Granjas<br>Nogales, Sonora 84065, M&#xE9;xico</address>
+          <ul><li>CNC machining</li><li>Sheet metal &amp; welding</li><li>Finishing</li><li>Inspection</li><li>Engineering</li></ul>
+        </div>
+        <div class="site">
+          <div class="site-top"><div><span class="label">Logistics &amp; operations</span><h3>Nogales, Arizona warehouse</h3></div><span class="flagchip">US</span></div>
+          <address>71 N Freeport Dr, WHS 11-A<br>Nogales, AZ 85621, USA</address>
+          <ul><li>Receiving</li><li>Staging &amp; kitting</li><li>US domestic shipping</li><li>Customer pickups</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="feats">
+      <div class="feat"><svg aria-hidden="true"><use href="#i-check"/></svg><h3>Certified quality control</h3><p>ISO 9001:2015 and AS9100:2016 quality management covering CNC machining and sheet metal.</p></div>
+      <div class="feat"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h8v6H6l-3 2.5V9H2zM10 6h4v6h-1v2l-2.5-2H8" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><h3>Bilingual from quote to ship</h3><p>Engineers and program managers who work in English and Spanish, so nothing is lost between your print and our floor.</p></div>
+      <div class="feat"><svg aria-hidden="true"><use href="#i-time"/></svg><h3>Rapid turnaround</h3><p>Urgency is part of how we work. Sonora and Arizona keep the same clock year-round, so your day is our day.</p></div>
+      <div class="feat"><svg aria-hidden="true"><use href="#i-border"/></svg><h3>US shipping point</h3><p>Finished parts stage at our Nogales, AZ warehouse and ship domestically from a US address.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPMENT -->
+<section class="sec band" id="equipment" aria-labelledby="eq-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">Capabilities &amp; equipment</span><h2 id="eq-h">Check your part against 41 machines before you call.</h2></div>
+      <p>Enter your part's bounding box. Mills check X, Y and Z travel; lathes read the largest cross-section as diameter and L as length; laser and waterjet read L &#xD7; W as the sheet and H as thickness in steel.</p>
+    </div>
+    <div class="fleet-tools">
+      <div class="chips" role="group" aria-label="Filter by process" id="chips"></div>
+      <form class="fitbox" id="fitForm" aria-label="Part envelope">
+        <span class="label"><span>Part envelope</span><span id="fitEx" style="color:var(--ti500)">Example part</span></span>
+        <div class="field"><label for="pL">L</label><input class="num" id="pL" inputmode="decimal" value="18"></div>
+        <div class="field"><label for="pW">W</label><input class="num" id="pW" inputmode="decimal" value="12"></div>
+        <div class="field"><label for="pH">H</label><input class="num" id="pH" inputmode="decimal" value="6"></div>
+        <div class="unit-toggle" role="group" aria-label="Units"><button type="button" data-u="in" aria-pressed="true">IN</button><button type="button" data-u="mm" aria-pressed="false">MM</button></div>
+      </form>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Machine</th><th scope="col">Type</th><th scope="col">Capacity</th><th scope="col">Notes</th><th scope="col">Your part</th></tr></thead>
+        <tbody id="fleetBody"></tbody>
+      </table>
+    </div>
+    <p class="fleet-note">Capacities come from AMT's October 2025 equipment list. Travel is not the same as usable part size: tool length, workholding and fixtures take room, most of all in Z. A "fits" result means the part is inside travel; we confirm the real setup during DFM review, and oversize parts still get quoted.</p>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec" id="process" aria-labelledby="proc-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">From RFQ to your dock</span><h2 id="proc-h">Six stages, two countries, one traveler.</h2></div>
+      <p>Each stage produces a record you can ask for, and every handoff happens inside AMT, including the border crossing.</p>
+    </div>
+    <div class="seq" id="seq">
+      <div class="seq-track" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 100 12"><path pathLength="1" d="M0 6H100"/></svg></div>
+      <ol class="seq-list">
+        <li class="step"><span class="step-node">01</span><h3>Quote &amp; DFM</h3><span class="where">Engineering</span><p>We review the model and print against our equipment and flag risks before we price.</p><span class="artifact">Quote with DFM notes</span></li>
+        <li class="step"><span class="step-node">02</span><h3>Program &amp; fixture</h3><span class="where">Engineering</span><p>CAM, nests and bend sequences programmed; fixtures designed in-house when the part needs one.</p><span class="artifact">Program, setup sheet</span></li>
+        <li class="step"><span class="step-node">03</span><h3>Make</h3><span class="where">Sonora plant</span><p>Machined, cut, formed and welded on the line that fits the part, with in-process checks.</p><span class="artifact">Traveler, in-process checks</span></li>
+        <li class="step"><span class="step-node">04</span><h3>Finish</h3><span class="where">Sonora + vendors</span><p>Coating and conversion in-house; plating, anodize and heat treat through managed vendors.</p><span class="artifact">Finish certs</span></li>
+        <li class="step"><span class="step-node">05</span><h3>Inspect</h3><span class="where">Quality lab</span><p>Critical characteristics measured on vision, arm CMM and calibrated hand gauges.</p><span class="artifact">Inspection report, FAI on request</span></li>
+        <li class="step"><span class="step-node border">06</span><h3>Cross &amp; ship</h3><span class="where">Nogales, AZ</span><p>Parts cross 2.5 miles to our Arizona warehouse and ship from a US address.</p><span class="artifact">CoC &#xB7; packing list &#xB7; MTRs</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="sec band" id="industries" aria-labelledby="ind-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">Industries</span><h2 id="ind-h">Half of what we make flies.</h2></div>
+      <p>Aerospace work sets the bar for traceability and inspection on the floor, and every other program inherits it.</p>
+    </div>
+    <div class="ind">
+      <figure class="bars" id="bars" style="margin:0" aria-label="Share of work by industry">
+        <div class="bars-head"><span class="label">Share of work by industry</span><span class="label">Source &#xB7; AMT capabilities deck, Oct 2025</span></div>
+        <div class="bar-rows" id="barRows"></div>
+        <div class="axis" aria-hidden="true"><span></span><div><span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50%</span></div><span></span></div>
+      </figure>
+      <div class="ind-side">
+        <p>Our customers include aerospace interconnect makers, communications and antenna OEMs, research instrument companies, and security and ergonomic product brands.</p>
+        <div>
+          <span class="label" style="display:block;margin-bottom:12px">Customers we ship to <span class="verify">CONFIRM NAME USE</span></span>
+          <ul class="clients">
+            <li>Amphenol Aerospace</li><li>Amphenol Antenna Solutions</li><li>Belden</li><li>ITT</li><li>BD</li><li>Safran</li><li>MKS Newport</li><li>Master Lock</li><li>dormakaba</li><li>Humanscale</li><li>Precision Systems International</li><li>EZ Air</li><li>JetFx</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY -->
+<section class="metro sec" id="quality" aria-labelledby="q-h">
+  <div class="metro-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="mcopy">
+      <span class="label">Quality &amp; certifications</span>
+      <h2 class="h2" id="q-h">Measured on the stage, not assumed at the machine.</h2>
+      <p>One quality management system covers machining and sheet metal, certified to ISO 9001:2015 and AS9100:2016 by an ANAB-accredited registrar. Critical features are checked on vision measuring, a portable CMM arm and calibrated hand gauges.</p>
+      <div class="equip">
+        <div><b>Vision measuring</b><span>IM-series image dimension system</span></div>
+        <div><b>Portable CMM arm</b><span>Contact probing and 3D scanning</span></div>
+        <div><b>Mitutoyo gauges</b><span>Digital calipers and micrometers, calibration-labeled</span></div>
+        <div><b>Reports</b><span>Inspection &#xB7; FAI on request &#xB7; CoC &#xB7; MTR</span></div>
+      </div>
+      <div><button class="btn btn-ghost" type="button" data-open-certs>View certificates</button></div>
+    </div>
+    <figure class="certcard" style="margin:0">
+      <img src="assets/photos/deck-certificate.jpg" alt="ABS Quality Evaluations certificate of conformance for AMT Precision, S.A. de C.V." width="464" height="594" loading="lazy">
+      <div>
+        <span class="label">Certificate of conformance</span>
+        <h3 style="margin-top:8px">AS9100:2016 + ISO 9001:2015</h3>
+        <dl>
+          <dt>Registrar</dt><dd>ABS Quality Evaluations &#xB7; ANAB / IAF</dd>
+          <dt>Cert no.</dt><dd class="mono">65544</dd>
+          <dt>Scope</dt><dd>CNC machining &amp; sheet metal</dd>
+          <dt>Site</dt><dd>Bustamante 41-H, Nogales, Son.</dd>
+          <dt>Expires</dt><dd class="mono">24 May 2026 <span class="verify">RENEWAL?</span></dd>
+        </dl>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec" id="gallery" aria-labelledby="gal-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">Gallery</span><h2 id="gal-h">The floor, unstaged.</h2></div>
+      <p>Photographed on the AMT floor in Nogales, Sonora. Select any image to view it full size.</p>
+    </div>
+    <div class="gal-tools">
+      <div class="chips" role="group" aria-label="Filter gallery" id="galChips">
+        <button class="chip" type="button" data-g="all" aria-pressed="true">All<span class="n">12</span></button>
+        <button class="chip" type="button" data-g="mach" aria-pressed="false">Machining<span class="n">2</span></button>
+        <button class="chip" type="button" data-g="sheet" aria-pressed="false">Sheet metal &amp; welding<span class="n">6</span></button>
+        <button class="chip" type="button" data-g="qa" aria-pressed="false">Inspection<span class="n">4</span></button>
+      </div>
+    </div>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+
+<!-- RFQ -->
+<section class="sec band" id="rfq" aria-labelledby="rfq-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">Request a quote</span><h2 id="rfq-h">Send the print. Get a quote with DFM notes.</h2></div>
+      <p>Files and a work email are enough to start. Add the drawing, material and quantity for a firm quote instead of a budgetary one. We reply in English or Spanish.</p>
+    </div>
+    <form class="rfq" id="rfqForm" novalidate>
+      <div class="rfq-main">
+        <fieldset class="q">
+          <legend>What does the part need?<small>Pick every process you expect. Not sure? Leave it and we'll route it in DFM.</small></legend>
+          <div class="checks" id="procChecks">
+            <label class="check"><input type="checkbox" name="proc" id="pr-mill" value="CNC milling"><span>CNC milling</span></label>
+            <label class="check"><input type="checkbox" name="proc" id="pr-turn" value="Turning / Swiss"><span>Turning / Swiss</span></label>
+            <label class="check"><input type="checkbox" name="proc" id="pr-cut" value="Laser / waterjet"><span>Laser / waterjet</span></label>
+            <label class="check"><input type="checkbox" name="proc" id="pr-form" value="Forming"><span>Press brake forming</span></label>
+            <label class="check"><input type="checkbox" name="proc" id="pr-weld" value="Welding"><span>Welding</span></label>
+            <label class="check"><input type="checkbox" name="proc" id="pr-fin" value="Finishing"><span>Finishing</span></label>
+            <label class="check"><input type="checkbox" name="proc" id="pr-asm" value="Assembly"><span>Assembly</span></label>
+            <label class="check"><input type="checkbox" name="proc" id="pr-mold" value="Mold / tooling"><span>Mold / tooling</span></label>
+            <label class="check"><input type="checkbox" name="proc" id="pr-rev" value="Reverse engineering"><span>Reverse engineering</span></label>
+          </div>
+        </fieldset>
+
+        <div class="drop" id="drop">
+          <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M20 4 34 12v16L20 36 6 28V12z"/><path d="M6 12l14 8 14-8M20 20v16"/><path d="M20 4v6" stroke="#DB2A23"/></svg>
+          <h3>Drop CAD and drawings here</h3>
+          <p>STEP &#xB7; IGES &#xB7; SLDPRT &#xB7; X_T &#xB7; DXF &#xB7; PDF &#xB7; up to 20 files, 250 MB each</p>
+          <button class="btn btn-primary btn-sm" type="button" id="pick">Choose files</button>
+          <input type="file" id="fileInput" multiple hidden accept=".step,.stp,.iges,.igs,.sldprt,.sldasm,.x_t,.dxf,.dwg,.pdf">
+        </div>
+        <ul class="files" id="fileList" aria-live="polite"></ul>
+
+        <div class="row3">
+          <div class="inp"><label for="mat">Material</label><select id="mat"><option value="">Select or leave for DFM</option><option>Aluminum 6061-T6</option><option>Aluminum 5052-H32 (sheet)</option><option>Aluminum 7075-T6</option><option>Cold-rolled steel</option><option>Stainless 304</option><option>Stainless 316</option><option>Stainless 17-4 PH</option><option>Galvanized / galvannealed</option><option>Brass / copper</option><option>Plastics (Delrin, UHMW, PEEK)</option><option>Other, on drawing</option></select></div>
+          <div class="inp"><label for="fin">Finish</label><select id="fin"><option value="">None / per drawing</option><option>Powder coat</option><option>Wet paint</option><option>Chem film / conversion coat</option><option>Passivate</option><option>Anodize (managed vendor)</option><option>Zinc / nickel / chrome plate (managed vendor)</option></select></div>
+          <div class="inp"><label for="qty">Quantity</label><input id="qty" inputmode="numeric" placeholder="e.g. 25, 250, 2,500"></div>
+        </div>
+        <div class="row3">
+          <div class="inp"><label for="eau">Annual volume</label><input id="eau" inputmode="numeric" placeholder="Optional"></div>
+          <div class="inp"><label for="need">Need by</label><input id="need" type="date"></div>
+          <div class="inp"><label for="shipto">Ship to</label><div class="seg" role="group" aria-label="Ship to" id="shipto"><button type="button" aria-pressed="true" data-v="US">US</button><button type="button" aria-pressed="false" data-v="MX">Mexico</button><button type="button" aria-pressed="false" data-v="Other">Other</button></div></div>
+        </div>
+        <div class="row3">
+          <div class="inp"><label for="nm">Name</label><input id="nm" autocomplete="name"></div>
+          <div class="inp"><label for="em">Work email *</label><input id="em" type="email" autocomplete="email" required><span class="hint" id="emHint"></span></div>
+          <div class="inp"><label for="co">Company</label><input id="co" autocomplete="organization"></div>
+        </div>
+        <div class="inp"><label for="notes">Notes for engineering</label><textarea id="notes" placeholder="Critical tolerances, cosmetic sides, packaging, export classification (ITAR / EAR) if any"></textarea></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-primary" type="submit">Review request</button>
+          <span style="font-size:14px;color:var(--ti400)">Reply in <span class="seg" style="display:inline-flex;height:32px;vertical-align:middle;width:150px" role="group" aria-label="Reply language" id="lang"><button type="button" aria-pressed="true" data-v="EN">EN</button><button type="button" aria-pressed="false" data-v="ES">ES</button></span></span>
+        </div>
+        <div class="status" id="rfqStatus" hidden role="status"></div>
+      </div>
+
+      <aside class="rfq-side">
+        <div class="meter" aria-live="polite">
+          <span class="label">Quote readiness</span>
+          <ol id="meter">
+            <li data-k="model"><i></i>3D model or DXF</li>
+            <li data-k="draw"><i></i>Drawing (PDF)</li>
+            <li data-k="proc"><i></i>Processes</li>
+            <li data-k="mat"><i></i>Material</li>
+            <li data-k="qty"><i></i>Quantity</li>
+            <li data-k="em"><i></i>Work email</li>
+          </ol>
+          <p class="verdict" id="verdict">Add files to start.</p>
+        </div>
+        <div class="contact">
+          <div class="avatar"><span class="mono-init" aria-hidden="true">CC</span></div>
+          <div><b>Cristian Clark</b><span class="role">Business Development Director</span>
+            <div class="lines">
+              <div class="line"><span>US</span><span class="v">+1 (520) 850 7048</span><button class="copybtn" type="button" data-copy="+1 520 850 7048">Copy</button></div>
+              <div class="line"><span>MX</span><span class="v">+52 (631) 109 6969</span><button class="copybtn" type="button" data-copy="+52 631 109 6969">Copy</button></div>
+              <div class="line"><span>@</span><span class="v">cclark@amt-mfg.com</span><button class="copybtn" type="button" data-copy="cclark@amt-mfg.com">Copy</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="contact">
+          <div class="avatar"><img src="assets/photos/javier-sobarzo.jpg" alt="Javier Sobarzo" width="398" height="496" loading="lazy"></div>
+          <div><b>Javier Sobarzo</b><span class="role">Business Development &#xB7; Sheet metal operations</span>
+            <div class="lines">
+              <div class="line"><span>US</span><span class="v">+1 (520) 850 4784</span><button class="copybtn" type="button" data-copy="+1 520 850 4784">Copy</button></div>
+              <div class="line"><span>MX</span><span class="v">+52 (631) 126 0465</span><button class="copybtn" type="button" data-copy="+52 631 126 0465">Copy</button></div>
+              <div class="line"><span>@</span><span class="v">jsobarzo@amt-mfg.com</span><button class="copybtn" type="button" data-copy="jsobarzo@amt-mfg.com">Copy</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="site">
+          <div class="site-top"><span class="label">Mexico &#xB7; production</span><span class="flagchip">MX</span></div>
+          <address>Bustamante #41-H, Col. Granjas<br>Nogales, Sonora 84065</address>
+          <div class="site-top" style="margin-top:8px"><span class="label">USA &#xB7; warehouse</span><span class="flagchip">US</span></div>
+          <address>71 N Freeport Dr, WHS 11-A<br>Nogales, AZ 85621</address>
+        </div>
+      </aside>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="logo" href="#top" aria-label="AMT Precision, back to top"><svg class="logo-mark" aria-hidden="true"><use href="#amt-mark"/></svg><span class="logo-word"><b><i>A</i>MT</b><small>Sheet Metal &amp; CNC Machining Technologies</small></span></a>
+        <address style="margin-top:20px">AMT Precision, S.A. de C.V.<br>Bustamante #41-H, Nogales, Sonora 84065, M&#xE9;xico<br>71 N Freeport Dr, WHS 11-A, Nogales, AZ 85621, USA<br><span style="user-select:all;color:var(--ti200)">+1 (520) 850 7048</span> &#xB7; <span style="user-select:all;color:var(--ti200)">cclark@amt-mfg.com</span></address>
+        <div class="foot-badges"><span>ISO 9001:2015</span><span>AS9100:2016</span></div>
+      </div>
+      <div><h4>Services</h4><ul><li><a href="#services">CNC machining</a></li><li><a href="#services">Sheet metal &amp; cutting</a></li><li><a href="#services">Tooling &amp; engineering</a></li><li><a href="#services">Finishing</a></li><li><a href="#services">Assembly</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#locations">About &amp; locations</a></li><li><a href="#equipment">Equipment</a></li><li><a href="#quality">Quality</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#" data-open-certs>Certificates</a></li></ul></div>
+      <div><h4>Connect</h4><ul><li><a href="#rfq">Request a quote</a></li><li><a href="https://www.linkedin.com/company/amt-precision-llc/" target="_blank" rel="noopener">LinkedIn &#x2197;</a></li><li><a href="https://www.youtube.com/@amtprecision" target="_blank" rel="noopener">YouTube &#x2197;</a></li><li><a href="https://amt-mfg.com/Documents/AMT202510.pdf" target="_blank" rel="noopener">Capabilities deck (PDF) &#x2197;</a></li></ul></div>
+    </div>
+    <div class="foot-base"><span>&#xA9; 2026 AMT Precision, S.A. de C.V.</span><span>ISO 9001:2015 &#xB7; AS9100:2016 &#xB7; Nogales SON / Nogales AZ</span></div>
+  </div>
+</footer>
+
+<div class="bottom-cta"><a class="btn btn-primary" href="#rfq">Request a Quote</a><button class="btn btn-ghost" type="button" id="callBtn2">Call / Email</button></div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Gallery image">
+  <div class="lb-top"><span class="label" id="lbCap"></span><button class="ctl" type="button" id="lbClose">CLOSE</button></div>
+  <img id="lbImg" alt="">
+  <div class="lb-nav"><button class="ctl" type="button" id="lbPrev">&#x2190; PREV</button><span class="label" id="lbCount" style="align-self:center"></span><button class="ctl" type="button" id="lbNext">NEXT &#x2192;</button></div>
+</div>
+
+<!-- CERT DRAWER -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dr-h" hidden>
+  <div class="drawer-head"><h2 id="dr-h">Certificates &amp; documents</h2><button class="copybtn" type="button" id="drClose" style="height:32px">CLOSE</button></div>
+  <div class="drawer-body">
+    <h3>Quality management</h3>
+    <div class="cert">
+      <div class="cert-mark">AS<br>9100</div>
+      <div><b>AS9100:2016 &amp; ISO 9001:2015</b><span style="font-size:13px;color:var(--ti400)">Technically equivalent to EN 9100:2018 and JISQ 9100:2016</span>
+        <dl><dt>Registrar</dt><dd>ABS Quality Evaluations, Inc. &#xB7; ANAB, IAF</dd><dt>Cert no.</dt><dd class="mono">65544</dd><dt>Scope</dt><dd>Provision of services of CNC machining &amp; sheet metal</dd><dt>Effective</dt><dd class="mono">25 May 2023</dd><dt>Expires</dt><dd class="mono">24 May 2026</dd></dl></div>
+      <div class="cert-actions"><span class="pill pending"><i></i>Renewed certificate needed</span><a class="btn btn-ghost btn-sm" href="https://amt-mfg.com/certifications/" target="_blank" rel="noopener">Certificate page &#x2197;</a></div>
+    </div>
+    <h3>Documents</h3>
+    <a class="doclink" href="https://amt-mfg.com/Documents/AMT202510.pdf" target="_blank" rel="noopener">Capabilities deck &#xB7; Oct 2025<span>PDF &#x2197;</span></a>
+    <a class="doclink" href="https://www.youtube.com/watch?v=wkDMJgn-6JI" target="_blank" rel="noopener">Plant film<span>YouTube &#x2197;</span></a>
+    <h3>Company</h3>
+    <div class="doclink" style="cursor:default">Legal name<span style="color:var(--ti100);user-select:all">AMT Precision, S.A. de C.V.</span></div>
+    <div class="doclink" style="cursor:default">US entity<span>AMT Precision LLC <span class="verify">CONFIRM</span></span></div>
+    <p style="margin-top:24px;font-size:13.5px;color:var(--ti400)">W-9 or Mexican tax documents, certificate of insurance and supplier forms are sent on request to a verified work email.</p>
+  </div>
+</aside>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* nav */
+const nav=$('#nav');const onScroll=()=>nav.classList.toggle('scrolled',scrollY>80);addEventListener('scroll',onScroll,{passive:true});onScroll();
+const sheet=$('#sheet'),menuBtn=$('#menuBtn');
+const setSheet=o=>{sheet.hidden=!o;menuBtn.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';if(o)$('#sheetClose').focus();else menuBtn.focus()};
+menuBtn.onclick=()=>setSheet(true);$('#sheetClose').onclick=()=>setSheet(false);
+sheet.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>setSheet(false)));
+
+/* call popover */
+const callBtn=$('#callBtn'),callPop=$('#callPop');
+const setPop=o=>{callPop.hidden=!o;callBtn.setAttribute('aria-expanded',o)};
+callBtn.onclick=e=>{e.stopPropagation();setPop(callPop.hidden)};
+$('#callBtn2').onclick=()=>setSheet(true);
+document.addEventListener('click',e=>{if(!callPop.hidden&&!callPop.contains(e.target))setPop(false)});
+
+/* copy */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(!b)return;const t=b.dataset.copy;const done=()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1400)};
+  const sel=()=>{const v=b.parentElement.querySelector('.v');if(!v)return;const r=document.createRange();r.selectNodeContents(v);const s=getSelection();s.removeAllRanges();s.addRange(r)};
+  try{navigator.clipboard.writeText(t).then(done,sel)}catch(_){sel()}});
+
+/* cert drawer */
+const drawer=$('#drawer'),scrim=$('#scrim');let lastFocus=null;
+function openCerts(e){if(e)e.preventDefault();setPop(false);lastFocus=document.activeElement;drawer.hidden=false;scrim.hidden=false;requestAnimationFrame(()=>{drawer.classList.add('open');scrim.classList.add('open')});document.body.style.overflow='hidden';setTimeout(()=>$('#drClose').focus(),50)}
+function closeCerts(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';setTimeout(()=>{drawer.hidden=true;scrim.hidden=true},320);if(lastFocus)lastFocus.focus()}
+$$('[data-open-certs]').forEach(b=>b.addEventListener('click',openCerts));
+$('#drClose').onclick=closeCerts;scrim.onclick=closeCerts;
+function trap(root,e){if(e.key!=='Tab')return;const f=[...root.querySelectorAll('button:not([disabled]),a[href]')].filter(x=>x.offsetParent!==null);const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+drawer.addEventListener('keydown',e=>trap(drawer,e));
+
+/* reveal helper: only pre-hide things that start below the fold, so the first frame is complete */
+function reveal(el,cb){if(!el)return;const r=el.getBoundingClientRect();if(reduce||!('IntersectionObserver' in window)||r.top<innerHeight){cb&&cb(true);return}
+  el.classList.add('pre');new IntersectionObserver((en,o)=>{en.forEach(x=>{if(x.isIntersecting){el.classList.add('go');requestAnimationFrame(()=>el.classList.remove('pre'));cb&&cb(false);o.disconnect()}})},{threshold:.3}).observe(el)}
+
+/* process */
+reveal($('#seq'));
+
+/* plant film: inline embed on the real site; link out when framed (artifact previews block embeds) */
+$('#tour').addEventListener('click',e=>{if(window.top!==window.self)return;e.preventDefault();const a=e.currentTarget,id=a.dataset.yt;
+  const f=document.createElement('iframe');f.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;f.title='AMT Precision plant film';f.allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';f.allowFullscreen=true;
+  const box=document.createElement('div');box.className='tour';box.append(f);a.replaceWith(box)});
+
+/* corridor map */
+(function(){const map=$('#map'),route=$('#route'),pkt=$('#pkt');const L=route.getTotalLength();route.style.setProperty('--len',L);
+  const place=t=>{const p=route.getPointAtLength(t*L);pkt.setAttribute('cx',p.x);pkt.setAttribute('cy',p.y)};
+  if(reduce){place(1);return}
+  let vis=true,t0=performance.now();const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+  new IntersectionObserver(e=>{vis=e[0].isIntersecting},{threshold:0}).observe(map);
+  reveal(map,()=>{t0=performance.now()+400});
+  (function loop(now){requestAnimationFrame(loop);if(!vis)return;const cyc=5200,k=((now-t0)%cyc)/cyc;place(ease(Math.min(1,Math.max(0,k/.8))));pkt.style.opacity=k>.92?String((1-k)/.08):'1'})(performance.now());
+})();
+
+/* fleet */
+const FLEET=[
+ {g:'mill',name:'Haas VF-2',qty:4,type:'3-axis VMC',t:[30,16,14]},
+ {g:'mill',name:'Haas VF-2SS',qty:1,type:'3-axis VMC',t:[30,16,20],note:'Super-speed'},
+ {g:'mill',name:'Haas VF-3SS',qty:2,type:'3-axis VMC',t:[40,20,25],note:'Super-speed'},
+ {g:'mill',name:'Haas VF-4',qty:2,type:'3-axis VMC',t:[50,20,14]},
+ {g:'mill',name:'Haas VF-6',qty:1,type:'3-axis VMC',t:[64,32,14]},
+ {g:'mill',name:'Haas VF-7',qty:1,type:'3-axis VMC',t:[84,32,30]},
+ {g:'mill',name:'Doosan DNM 500',qty:1,type:'3-axis VMC',t:[40,21,20]},
+ {g:'mill',name:'Haas DM-2',qty:1,type:'Drill / mill',t:[28,16,15.5]},
+ {g:'mill',name:'Haas GR-510',qty:1,type:'Gantry router',t:[121,61,11],note:'Large plates, panels'},
+ {g:'turn',name:'Haas ST-30Y',qty:4,type:'Live-tool lathe',lathe:{bar:3,d:21,l:26},note:'Y-axis'},
+ {g:'turn',name:'Haas DS-30SSY',qty:1,type:'Live-tool lathe',lathe:{bar:2,d:18,l:23},note:'Dual spindle, Y-axis'},
+ {g:'turn',name:'Haas ST-20Y',qty:1,type:'Live-tool lathe',lathe:{bar:2,d:15,l:22},note:'Y-axis'},
+ {g:'turn',name:'Hardinge Cobra 42',qty:1,type:'CNC lathe',lathe:{bar:1.625,d:8,l:14}},
+ {g:'turn',name:'Tsugami TMU1',qty:1,type:'Swiss lathe',lathe:{bar:1.5,d:1.5,l:9.8}},
+ {g:'turn',name:'Citizen L16',qty:1,type:'Swiss lathe',lathe:{bar:.625,d:.625,l:7.8}},
+ {g:'turn',name:'Citizen A20',qty:1,type:'Swiss lathe',lathe:{bar:.75,d:.75,l:144},note:'Long-part bar work'},
+ {g:'cut',name:'FiberBlade X3',qty:1,type:'Fiber laser \u00B7 3,000 W',flat:{x:59,y:137,th:.75}},
+ {g:'cut',name:'FiberBlade X1',qty:1,type:'Fiber laser \u00B7 1,500 W',flat:{x:48,y:120,th:.375}},
+ {g:'cut',name:'Mitsubishi waterjet',qty:1,type:'Abrasive waterjet',flat:{x:72,y:144,th:6},note:'Any material'},
+ {g:'form',name:'Amada 557',qty:1,type:'Turret punch \u00B7 50 t',cap:'50 \u00D7 70 in sheet \u00B7 72 stations'},
+ {g:'form',name:'Dener PUMA XL',qty:1,type:'Press brake \u00B7 175 t',cap:'10 ft \u00B7 18 in opening',note:'7 CNC axes'},
+ {g:'form',name:'Amada Promecam',qty:1,type:'Press brake \u00B7 125 t',cap:'10 ft \u00B7 2.3 in width',note:'4 CNC axes'},
+ {g:'form',name:'Furnas',qty:1,type:'Mechanical brake',cap:'36 in length'},
+ {g:'form',name:'CYD shear',qty:1,type:'Shear',cap:'.375 in \u00D7 72 in'},
+ {g:'form',name:'Miller Millermatic 252',qty:2,type:'MIG welder',cap:'\u00BC in steel \u00B7 \u215C in aluminum'},
+ {g:'form',name:'Miller Syncrowave 210',qty:1,type:'TIG welder',cap:'\u00BC in steel \u00B7 \u00BC in aluminum'},
+ {g:'form',name:'Hardware insertion press',qty:2,type:'M-1025-MSP \u00B7 10 t',cap:'650 mm throat \u00B7 25 in ram'},
+ {g:'form',name:'Baileigh wide-belt sanders',qty:2,type:'WSB-3775 \u00B7 1018228',cap:'37 in width \u00B7 37 \u00D7 75 in platen'},
+ {g:'edm',name:'Wire EDM',qty:1,type:'Wire EDM',edm:{x:400,y:300}},
+ {g:'edm',name:'Sinker EDM',qty:1,type:'Sinker EDM',edm:{x:600,y:300}}
+];
+const GROUPS={mill:'Milling',turn:'Turning',cut:'Laser & waterjet',form:'Forming, welding & finishing',edm:'EDM'};
+let filt='all',unit='in';
+const count=g=>FLEET.filter(m=>g==='all'||m.g===g).reduce((a,m)=>a+m.qty,0);
+$('#chips').innerHTML=[['all','All machines'],...Object.entries(GROUPS)].map(([k,v])=>`<button class="chip" type="button" data-f="${k}" aria-pressed="${k==='all'}">${v.replace('&','&amp;')}<span class="n">${count(k)}</span></button>`).join('');
+const fmt=v=>unit==='in'?(+v.toFixed(3)).toString():(v*25.4).toFixed(0);
+const u=()=>unit==='in'?'in':'mm';
+function dims(){const k=unit==='in'?1:1/25.4;return['pL','pW','pH'].map(id=>parseFloat(document.getElementById(id).value)*k)}
+function fit(m,p){
+  if(m.cap)return{c:'na',txt:'Forming / joining: see capacity'};
+  if(p.some(v=>!(v>0)))return{c:'na',txt:'Enter L, W, H'};
+  const [L,W,H]=p;
+  const xyFit=(X,Y,a,b)=>Math.max(Math.min(X-a,Y-b),Math.min(X-b,Y-a));
+  if(m.t){const [X,Y,Z]=m.t;const xy=xyFit(X,Y,L,W),z=Z-H;
+    if(xy>=0&&z>=0)return{c:'ok',txt:`Fits \u00B7 ${fmt(Math.min(xy,z))} ${u()} min. clearance`};
+    const o=[];if(xy<0)o.push(`${fmt(-xy)} ${u()} in X/Y`);if(z<0)o.push(`${fmt(-z)} ${u()} in Z`);return{c:'no',txt:'Over by '+o.join(', ')}}
+  if(m.lathe){const d=Math.max(W,H);const {d:D,l:LL}=m.lathe;const dd=D-d,dl=LL-L;
+    if(dd>=0&&dl>=0)return{c:'ok',txt:`Fits \u00B7 \u2300${fmt(d)} \u00D7 ${fmt(L)} ${u()}`};
+    const o=[];if(dd<0)o.push(`\u2300 by ${fmt(-dd)} ${u()}`);if(dl<0)o.push(`length by ${fmt(-dl)} ${u()}`);return{c:'no',txt:'Over '+o.join(', ')}}
+  if(m.flat){const {x,y,th}=m.flat;const xy=xyFit(x,y,L,W);
+    if(xy>=0&&H<=th)return{c:'ok',txt:`Fits \u00B7 ${fmt(H)} ${u()} thick OK`};
+    const o=[];if(xy<0)o.push(`bed by ${fmt(-xy)} ${u()}`);if(H>th)o.push(`thickness by ${fmt(H-th)} ${u()}`);return{c:'no',txt:'Over '+o.join(', ')}}
+  if(m.edm){const X=m.edm.x/25.4,Y=m.edm.y/25.4;const xy=xyFit(X,Y,L,W);
+    return xy>=0?{c:'ok',txt:`Fits in X/Y \u00B7 ${fmt(xy)} ${u()} clearance`}:{c:'no',txt:`Over by ${fmt(-xy)} ${u()} in X/Y`}}
+}
+function capTxt(m){
+  if(m.t)return m.t.map(fmt).join(' \u00D7 ')+' '+u()+' <span style="color:var(--ti400)">X\u00B7Y\u00B7Z</span>';
+  if(m.lathe)return `\u2300${fmt(m.lathe.d)} \u00D7 ${fmt(m.lathe.l)} ${u()} \u00B7 bar \u2300${fmt(m.lathe.bar)}`;
+  if(m.flat)return `${fmt(m.flat.x)} \u00D7 ${fmt(m.flat.y)} ${u()} \u00B7 to ${fmt(m.flat.th)} ${u()} steel`;
+  if(m.edm)return unit==='mm'?`${m.edm.x} \u00D7 ${m.edm.y} mm`:`${(m.edm.x/25.4).toFixed(1)} \u00D7 ${(m.edm.y/25.4).toFixed(1)} in`;
+  return m.cap;
+}
+function renderFleet(){const p=dims();const tb=$('#fleetBody');let html='',last='';
+  FLEET.filter(m=>filt==='all'||m.g===filt).forEach(m=>{
+    if(filt==='all'&&m.g!==last){html+=`<tr class="grp"><td colspan="5">${GROUPS[m.g].replace('&','&amp;')} \u00B7 ${count(m.g)}</td></tr>`;last=m.g}
+    const f=fit(m,p);
+    html+=`<tr><td class="m-name"><b>${m.name}${m.qty>1?`<span class="qty">\u00D7${m.qty}</span>`:''}</b></td><td><span class="axes">${m.type}</span></td><td class="mono">${capTxt(m)}</td><td style="color:var(--ti300);font-size:14px">${m.note||'\u2014'}</td><td><span class="fit ${f.c}"><i></i>${f.txt}</span></td></tr>`});
+  tb.innerHTML=html}
+$('#chips').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;filt=c.dataset.f;$$('#chips .chip').forEach(x=>x.setAttribute('aria-pressed',x===c));renderFleet()});
+$('#fitForm').addEventListener('submit',e=>e.preventDefault());
+['pL','pW','pH'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{$('#fitEx').textContent='Your part';renderFleet()}));
+$$('.unit-toggle button').forEach(b=>b.onclick=()=>{if(b.dataset.u===unit)return;const k=b.dataset.u==='mm'?25.4:1/25.4;['pL','pW','pH'].forEach(id=>{const el=document.getElementById(id),v=parseFloat(el.value);if(v>0)el.value=+(v*k).toFixed(b.dataset.u==='mm'?0:3)});unit=b.dataset.u;$$('.unit-toggle button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderFleet()});
+$$('.cap[data-filter]').forEach(c=>c.addEventListener('click',()=>{const b=document.querySelector(`#chips .chip[data-f="${c.dataset.filter}"]`);if(b)b.click()}));
+renderFleet();
+
+/* industries */
+const IND=[['Aerospace',48],['Communications',24],['Research',11],['Automotive',5],['Sports',5],['Oil & gas',3],['Ergonomic',2],['Security',1]];
+$('#barRows').innerHTML=IND.map(([n,v],i)=>`<div class="bar-row${i===0?' top':''}"><span>${n.replace('&','&amp;')}</span><div class="track"><i style="--w:${v/50*100}%;--d:${i}"></i></div><b>${v}%</b></div>`).join('');
+reveal($('#bars'));
+
+/* gallery */
+const GAL=[
+ {f:'laser-head',g:'sheet',c:'Fiber laser cutting nested, part-marked blanks',cls:'w2 h2'},
+ {f:'lathe-turning',g:'mach',c:'Turning on a live-tool CNC lathe'},
+ {f:'vision-measure',g:'qa',c:'Vision measuring system checking a machined housing'},
+ {f:'weld-tig',g:'sheet',c:'TIG welding a box-section frame',cls:'w2'},
+ {f:'press-brake',g:'sheet',c:'Segmented press brake tooling'},
+ {f:'mill-spindle',g:'mach',c:'Face mill in a vertical machining center'},
+ {f:'caliper-tube',g:'qa',c:'Caliper check on formed stock'},
+ {f:'weld-spark',g:'sheet',c:'Tack welding hardware tabs on a frame',cls:'h2'},
+ {f:'micrometer',g:'qa',c:'Micrometer with calibration label'},
+ {f:'hardware-insertion',g:'sheet',c:'Pressing hardware into a formed bracket',cls:'w2'},
+ {f:'weld-frame',g:'sheet',c:'Welding studs on a frame assembly'},
+ {f:'vision-part',g:'qa',c:'Machined aluminum housing on the measuring stage'}
+];
+let gf='all',shown=[];
+function renderGal(){shown=GAL.filter(x=>gf==='all'||x.g===gf);$('#gal').innerHTML=shown.map((x,i)=>`<button type="button" class="${gf==='all'?(x.cls||''):''}" data-i="${i}" aria-label="View: ${x.c}"><img src="assets/photos/${x.f}.jpg" alt="${x.c}" loading="lazy" width="1600" height="900"><figcaption>${x.c}</figcaption></button>`).join('')}
+$('#galChips').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;gf=c.dataset.g;$$('#galChips .chip').forEach(x=>x.setAttribute('aria-pressed',x===c));renderGal()});
+renderGal();
+const lb=$('#lb');let li=0,lbFrom=null;
+function lbShow(i){li=(i+shown.length)%shown.length;const x=shown[li];$('#lbImg').src=`assets/photos/${x.f}.jpg`;$('#lbImg').alt=x.c;$('#lbCap').textContent=x.c;$('#lbCount').textContent=`${String(li+1).padStart(2,'0')} / ${String(shown.length).padStart(2,'0')}`}
+function lbOpen(i){lbFrom=document.activeElement;lbShow(i);lb.hidden=false;document.body.style.overflow='hidden';$('#lbClose').focus()}
+function lbClose(){lb.hidden=true;document.body.style.overflow='';lbFrom&&lbFrom.focus()}
+$('#gal').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lbOpen(+b.dataset.i)});
+$$('.tour-strip button').forEach(b=>b.onclick=()=>{gf='all';$$('#galChips .chip').forEach(x=>x.setAttribute('aria-pressed',x.dataset.g==='all'));renderGal();lbOpen(shown.findIndex(x=>x.f===b.dataset.gal))});
+$('#lbClose').onclick=lbClose;$('#lbPrev').onclick=()=>lbShow(li-1);$('#lbNext').onclick=()=>lbShow(li+1);
+lb.addEventListener('click',e=>{if(e.target===lb)lbClose()});
+lb.addEventListener('keydown',e=>{if(e.key==='ArrowRight')lbShow(li+1);if(e.key==='ArrowLeft')lbShow(li-1);trap(lb,e)});
+
+addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!lb.hidden)lbClose();else if(!drawer.hidden)closeCerts();else if(!sheet.hidden)setSheet(false);else if(!callPop.hidden){setPop(false);callBtn.focus()}});
+
+/* RFQ */
+const OK=['step','stp','iges','igs','sldprt','sldasm','x_t','dxf','dwg','pdf'],MODEL=['step','stp','iges','igs','sldprt','sldasm','x_t','dxf','dwg'];
+const files=[];const drop=$('#drop'),fi=$('#fileInput'),list=$('#fileList');
+$('#pick').onclick=()=>fi.click();fi.onchange=()=>{addFiles(fi.files);fi.value=''};
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop',e=>addFiles(e.dataTransfer.files));
+const sz=b=>b<1e6?(b/1e3).toFixed(0)+' KB':(b/1e6).toFixed(1)+' MB';
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function addFiles(fl){[...fl].forEach(f=>{if(files.length>=20)return;const ext=(f.name.split('.').pop()||'').toLowerCase();let err='';if(!OK.includes(ext))err=`Can't read .${ext}. Export as STEP or PDF.`;else if(f.size>250e6)err='Over 250 MB. Email us for a transfer link.';files.push({f,ext,err})});renderFiles()}
+function renderFiles(){list.innerHTML=files.map((x,i)=>`<li class="${x.err?'bad':''}"><span class="ext">${esc(x.ext.toUpperCase()||'?')}</span><span class="fname" title="${esc(x.f.name)}">${esc(x.f.name)}</span><span class="fsize">${x.err||sz(x.f.size)}</span><button type="button" aria-label="Remove ${esc(x.f.name)}" data-i="${i}">\u00D7</button></li>`).join('');list.querySelectorAll('button').forEach(b=>b.onclick=()=>{files.splice(+b.dataset.i,1);renderFiles()});updateMeter()}
+const free=/@(gmail|yahoo|hotmail|outlook|icloud|aol|proton(mail)?)\./i;
+$('#em').addEventListener('input',e=>{$('#emHint').textContent=free.test(e.target.value)?'A company email helps us route your quote faster.':'';updateMeter()});
+['mat','qty'].forEach(id=>document.getElementById(id).addEventListener('input',updateMeter));
+$('#procChecks').addEventListener('change',updateMeter);
+$$('.seg').forEach(s=>s.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;s.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b))}));
+const segVal=id=>($(`#${id} button[aria-pressed="true"]`)||{}).dataset?.v;
+function state(){const good=files.filter(x=>!x.err);return{model:good.some(x=>MODEL.includes(x.ext)),draw:good.some(x=>x.ext==='pdf'),proc:$$('#procChecks input:checked').length>0,mat:!!$('#mat').value,qty:/\d/.test($('#qty').value),em:/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($('#em').value)}}
+function updateMeter(){const s=state();$$('#meter li').forEach(li=>li.classList.toggle('done',!!s[li.dataset.k]));const v=$('#verdict');
+  if(!s.model&&!s.draw)v.innerHTML='Add files to start.';
+  else if((s.model||s.draw)&&s.draw&&s.mat&&s.qty)v.innerHTML='Ready for a <b>firm quote</b>.';
+  else if(s.model&&!s.draw)v.innerHTML='Model only: <b>budgetary quote</b>. Tolerances live on the drawing, so attach the PDF.';
+  else v.innerHTML='Add material and quantity for a <b>firm quote</b>.'}
+function showStatus(c,msg){const s=$('#rfqStatus');s.className='status '+c;s.textContent=msg;s.hidden=false}
+$('#rfqForm').addEventListener('submit',e=>{e.preventDefault();const s=state();
+  if(!files.some(x=>!x.err))return showStatus('err','Add at least one readable file: STEP, IGES, SLDPRT, X_T, DXF or PDF.');
+  if(!s.em){$('#em').focus();return showStatus('err','Enter a work email so we can send the quote.')}
+  const n=files.filter(x=>!x.err).length,procs=$$('#procChecks input:checked').map(x=>x.value);
+  showStatus('ok',`Request ready: ${n} file${n>1?'s':''}${procs.length?', '+procs.join(', '):''}, ship to ${segVal('shipto')}, reply in ${segVal('lang')==='ES'?'Spanish':'English'}. This is a design preview, so nothing was sent and your files stayed in your browser.`)});
+updateMeter();
+</script>
+
+
+<a href="../" data-sv-concept aria-label="Concept redesign by studiovektor, not affiliated with AMT Precision. Back to the portfolio"
+  style="position:fixed;left:16px;bottom:16px;z-index:2147483000;display:flex;align-items:center;gap:10px;
+  max-width:calc(100vw - 32px);padding:9px 14px 9px 12px;border-radius:999px;background:rgba(8,11,13,.9);
+  border:1px solid rgba(177,242,244,.3);box-shadow:0 10px 30px -10px rgba(0,0,0,.6);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);color:#eaf4f4;text-decoration:none;font:500 12.5px/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+  <span style="width:8px;height:8px;border-radius:50%;background:#b1f2f4;flex:none"></span>
+  <span><b style="font-weight:700">Concept redesign</b> by studiovektor <span style="color:#9daeb0">· not affiliated with AMT Precision</span></span>
+</a>
+</body></html>

@@ -1,0 +1,1073 @@
+<!doctype html><html><head><meta name="robots" content="noindex"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Biocom California</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap">
+<style>
+/* Layout concept: "the burst" — every page radiates from the logo's single origin point.
+   Warm-ink type on stone, amber used only where the brand's light falls. */
+:root{
+  --ink:#322620;          /* Biocom wordmark ink */
+  --ink-2:#5c4f47;        /* secondary text, warm */
+  --ink-3:#8a7d74;        /* captions */
+  --amber:#fdab00;        /* Biocom burst */
+  --amber-deep:#b97a00;   /* amber that can carry text on light */
+  --blue:#3f55e6;         /* Biocom periwinkle, link + focus */
+  --bg:#f6f4f1;           /* warm stone */
+  --surface:#fffdfa;      /* card paper */
+  --line:#e2dcd5;         /* hairlines */
+  --hero:#1c1512;         /* deep warm ink band */
+  --hero-fg:#f5eee6;
+  --hero-dim:#bfb2a6;
+  --on-amber:#322620;
+  --display:"Schibsted Grotesk","Matter","Helvetica Neue",Arial,sans-serif;
+  --serif:"Newsreader","GT Super Text",Georgia,serif;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:72px;--s9:112px;
+  --r:6px;
+  --max:1240px;
+  --gut-l:max(20px, env(safe-area-inset-left, 0px));
+  --gut-r:max(20px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ink:#f3ece4;--ink-2:#cdbfb3;--ink-3:#9c8e83;--amber:#fdab00;--amber-deep:#ffc24a;--blue:#9aa8ff;
+  --bg:#16110f;--surface:#211a16;--line:#3a302a;--hero:#0f0b09;--hero-fg:#f5eee6;--hero-dim:#b3a598;--on-amber:#211712;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ink:#f3ece4;--ink-2:#cdbfb3;--ink-3:#9c8e83;--amber:#fdab00;--amber-deep:#ffc24a;--blue:#9aa8ff;
+  --bg:#16110f;--surface:#211a16;--line:#3a302a;--hero:#0f0b09;--hero-fg:#f5eee6;--hero-dim:#b3a598;--on-amber:#211712;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--display);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:0;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.serif{font-family:var(--serif);font-weight:400;letter-spacing:-.01em}
+.lede{font-family:var(--serif);font-size:clamp(19px,2vw,22px);line-height:1.5;color:var(--ink-2);max-width:60ch}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 16px/1 var(--display);padding:15px 22px;border-radius:999px;border:1.5px solid currentColor;text-decoration:none;cursor:pointer;background:none;color:inherit;transition:transform .2s cubic-bezier(.2,.8,.2,1),background .2s,color .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-amber{background:var(--amber);border-color:var(--amber);color:var(--on-amber)}
+.btn-amber:hover{background:#ffbb26;border-color:#ffbb26}
+.btn-ink{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn .arr{transition:transform .2s}
+.btn:hover .arr{transform:translateX(3px)}
+.link{color:var(--blue);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.textlink{font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--amber);padding-bottom:2px}
+.textlink:hover{border-color:var(--ink)}
+
+/* ---------- header ---------- */
+.util{background:var(--hero);color:var(--hero-dim);font-size:13.5px}
+.util .wrap{display:flex;justify-content:space-between;gap:var(--s4);padding-block:8px;flex-wrap:wrap}
+.util nav{display:flex;gap:var(--s5);flex-wrap:wrap}
+.util a{text-decoration:none}
+.util a:hover{color:var(--hero-fg)}
+.util .ext::after{content:" ↗";font-size:11px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:var(--s6);height:72px}
+.brand{display:flex;align-items:center;flex:none}
+.brand svg{height:34px;width:auto;display:block}
+.logo .wm{fill:var(--ink)}
+.logo .ray{fill:var(--amber)}
+.mainnav{display:flex;gap:2px;margin-left:auto}
+.mainnav a{font-weight:600;font-size:15.5px;text-decoration:none;padding:10px 14px;border-radius:999px;color:var(--ink-2);transition:color .15s,background .15s}
+.mainnav a:hover{color:var(--ink);background:var(--surface)}
+.mainnav a[aria-current="page"]{color:var(--ink);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.top .btn{padding:12px 18px;font-size:15px}
+.menubtn{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:999px;padding:10px 14px;font:600 15px var(--display);color:var(--ink);cursor:pointer}
+@media (max-width:980px){
+  .mainnav{display:none}
+  .menubtn{display:inline-flex}
+  header.top .btn-join{display:none}
+  .mainnav.open{display:flex;position:absolute;left:0;right:0;top:72px;flex-direction:column;background:var(--bg);padding:var(--s4) var(--gut-r) var(--s5) var(--gut-l);border-bottom:1px solid var(--line)}
+  .mainnav.open a{font-size:20px;padding:12px 0}
+  .mainnav.open .btn{align-self:flex-start;margin-top:var(--s3);display:inline-flex}
+}
+.mainnav .btn{display:none}
+
+/* ---------- pages ---------- */
+main section{padding-block:var(--s9)}
+.page{animation:pagein .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes pagein{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sechead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:var(--s6) var(--s8);align-items:end;margin-bottom:var(--s7)}
+.sechead h2{font-size:clamp(34px,4.6vw,60px)}
+@media (max-width:820px){.sechead{grid-template-columns:1fr}}
+
+/* ---------- hero ---------- */
+.hero{background:var(--hero);color:var(--hero-fg);position:relative;overflow:hidden;padding-block:0!important}
+.hero .wrap{position:relative;z-index:2;padding-block:clamp(72px,10vw,140px) clamp(56px,7vw,96px)}
+.hero h1{font-size:clamp(46px,7.6vw,108px);font-weight:800;letter-spacing:-.045em;line-height:.93;max-width:12ch}
+.hero h1 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.03em;color:var(--amber)}
+.hero .lede{color:var(--hero-dim);margin-top:var(--s5)}
+.hero .ctas{display:flex;gap:var(--s3);flex-wrap:wrap;margin-top:var(--s6)}
+.hero .btn:not(.btn-amber){color:var(--hero-fg)}
+.burst-bg{position:absolute;inset:0;z-index:1;pointer-events:none}
+.burst-bg svg{position:absolute;right:-8%;top:50%;height:150%;width:auto;transform:translateY(-50%)}
+.burst-bg .ray{fill:var(--amber);transform-box:view-box;transform-origin:0 144.12px;animation:rayout 1.4s cubic-bezier(.16,1,.3,1) both}
+@keyframes rayout{from{transform:scale(0) rotate(-6deg);opacity:0}to{transform:none;opacity:1}}
+.burst-bg .glow{fill:url(#heroGlow)}
+@media (max-width:820px){.burst-bg svg{right:-55%;height:110%;opacity:.55}}
+.regions{display:flex;gap:6px;flex-wrap:wrap;margin-top:var(--s7);align-items:center}
+.regions span.lbl{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--hero-dim);margin-right:var(--s2)}
+.regions a{font-size:14px;text-decoration:none;color:var(--hero-fg);border:1px solid rgba(245,238,230,.22);border-radius:999px;padding:6px 12px;transition:border-color .2s,background .2s}
+.regions a:hover{border-color:var(--amber);background:rgba(253,171,0,.1)}
+
+/* sub-page hero (lighter) */
+.phero{padding-block:clamp(56px,8vw,112px) var(--s7)!important;position:relative;overflow:hidden}
+.phero h1{font-size:clamp(42px,6.4vw,88px);font-weight:800;letter-spacing:-.04em;line-height:.95;max-width:14ch}
+.phero h1 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--amber-deep)}
+.phero .lede{margin-top:var(--s5)}
+.phero .mini-burst{position:absolute;right:-60px;top:20px;width:min(420px,45vw);opacity:.9;pointer-events:none}
+.phero .mini-burst .ray{fill:var(--amber);transform-box:view-box;transform-origin:0 144.12px;animation:rayout 1.2s cubic-bezier(.16,1,.3,1) both}
+@media (max-width:820px){.phero .mini-burst{opacity:.25;right:-140px}}
+.crumbs{font-size:13.5px;color:var(--ink-3);margin-bottom:var(--s5)}
+.crumbs a{text-decoration:none}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
+.stat{padding:var(--s6) var(--s5) var(--s5) 0;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat+.stat{padding-left:var(--s5)}
+.stat b{display:block;font-size:clamp(44px,5.4vw,76px);font-weight:700;letter-spacing:-.045em;line-height:1}
+.stat b sup{font-size:.42em;letter-spacing:0;vertical-align:.95em;margin-left:2px;color:var(--amber-deep)}
+.stat span{display:block;margin-top:var(--s3);color:var(--ink-2);font-size:15px;max-width:22ch}
+.src{font-size:13px;color:var(--ink-3);margin-top:var(--s4)}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat:nth-child(2){border-right:0}.stat:nth-child(3){padding-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* ---------- ray explorer ---------- */
+.explorer{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--s7);align-items:center}
+.explorer svg{width:100%;height:auto;display:block;overflow:visible}
+.xray{cursor:pointer}
+.xray polygon{fill:var(--amber);opacity:.38;transition:opacity .25s,transform .35s cubic-bezier(.2,.8,.2,1);transform-box:view-box;transform-origin:0 144.12px}
+.xray .hit{fill:transparent;stroke:transparent;stroke-width:16;opacity:1}
+.xray text{font:600 9.6px var(--display);fill:var(--ink-2);transition:fill .2s}
+.xray:hover polygon,.xray:focus polygon{opacity:.7}
+.xray.on polygon{opacity:1;transform:scale(1.06)}
+.xray.on text{fill:var(--ink)}
+.xray:focus{outline:none}
+.xray:focus-visible text{text-decoration:underline}
+.origin{fill:var(--ink)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:var(--s6);min-height:340px;display:flex;flex-direction:column;gap:var(--s4)}
+.panel .count{font-size:13px;color:var(--ink-3);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.panel h3{font-size:clamp(28px,3vw,40px)}
+.panel p{color:var(--ink-2);font-size:17.5px}
+.panel .facts{display:flex;gap:var(--s5);flex-wrap:wrap;padding-top:var(--s4);border-top:1px solid var(--line);margin-top:auto}
+.panel .facts div b{display:block;font-size:30px;letter-spacing:-.03em}
+.panel .facts div span{font-size:13.5px;color:var(--ink-3)}
+.xlist{display:none;gap:6px;flex-wrap:wrap;margin-top:var(--s4)}
+.xlist button{font:600 14px var(--display);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 12px;cursor:pointer}
+.xlist button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--on-amber)}
+@media (max-width:820px){.explorer{grid-template-columns:1fr}.xray text{display:none}.xlist{display:flex}}
+
+/* ---------- cards / grids ---------- */
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s5)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s5)}
+@media (max-width:900px){.grid3,.grid2{grid-template-columns:1fr}}
+.seg{border-top:3px solid var(--ink);padding-top:var(--s5);display:flex;flex-direction:column;gap:var(--s3)}
+.seg .size{font-size:clamp(40px,4vw,56px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.seg .size small{font-size:.36em;font-weight:600;letter-spacing:.02em;color:var(--ink-3);margin-left:6px}
+.seg p{color:var(--ink-2)}
+.seg a{margin-top:auto;align-self:flex-start}
+
+.event{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:var(--s5);align-items:center;padding-block:var(--s5);border-top:1px solid var(--line)}
+.event:last-child{border-bottom:1px solid var(--line)}
+.event .when{font-weight:700;font-size:15px;line-height:1.25}
+.event .when small{display:block;font-weight:500;color:var(--ink-3);font-size:13px}
+.event h3{font-size:clamp(20px,2.2vw,28px);letter-spacing:-.02em}
+.event p{color:var(--ink-2);font-size:15.5px;margin-top:4px}
+.tag{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:color-mix(in srgb,var(--amber) 22%,transparent);color:var(--ink)}
+@media (max-width:700px){.event{grid-template-columns:1fr}}
+
+.quote{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1fr);gap:var(--s7);align-items:end}
+.quote blockquote{margin:0;font-family:var(--serif);font-size:clamp(26px,3.3vw,44px);line-height:1.22;letter-spacing:-.015em}
+.quote blockquote::before{content:"“";display:block;font-size:2.4em;line-height:.6;color:var(--amber);font-family:var(--serif)}
+.quote .who b{display:block;font-size:19px}
+.quote .who span{color:var(--ink-3);font-size:15px}
+@media (max-width:820px){.quote{grid-template-columns:1fr}}
+
+.feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--hero);color:var(--hero-fg);border-radius:var(--r);overflow:hidden}
+.feature .txt{padding:clamp(28px,4vw,56px);display:flex;flex-direction:column;gap:var(--s4)}
+.feature h3{font-size:clamp(30px,3.6vw,48px)}
+.feature p{color:var(--hero-dim)}
+.feature .eyebrow{color:var(--amber)}
+.feature .btn{align-self:flex-start;margin-top:var(--s3)}
+.feature .art{position:relative;min-height:280px;background:radial-gradient(120% 90% at 0% 50%,rgba(253,171,0,.22),transparent 60%)}
+.feature .art canvas{position:absolute;inset:0;width:100%;height:100%}
+@media (max-width:820px){.feature{grid-template-columns:1fr}.feature .art{min-height:200px}}
+
+.posts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s5)}
+.post{display:flex;flex-direction:column;gap:var(--s3);text-decoration:none;padding-top:var(--s4);border-top:1px solid var(--line)}
+.post .k{font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-deep)}
+.post h3{font-size:20px;line-height:1.2;letter-spacing:-.015em}
+.post:hover h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.post time{font-size:13.5px;color:var(--ink-3);margin-top:auto}
+@media (max-width:980px){.posts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.posts{grid-template-columns:1fr}}
+
+/* ---------- join band ---------- */
+.joinband{background:var(--amber);color:var(--on-amber)}
+.joinband .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--s7);align-items:center}
+.joinband h2{font-size:clamp(38px,5.2vw,72px);letter-spacing:-.04em}
+.joinband p{font-family:var(--serif);font-size:20px;margin-top:var(--s4);max-width:46ch}
+.quick{background:var(--surface);color:var(--ink);border-radius:var(--r);padding:var(--s6);display:flex;flex-direction:column;gap:var(--s4);box-shadow:0 30px 60px -30px rgba(50,38,32,.45)}
+@media (max-width:860px){.joinband .wrap{grid-template-columns:1fr}}
+
+/* ---------- forms ---------- */
+fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--s2)}
+legend,label{font-weight:600;font-size:14.5px;margin-bottom:6px;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips label{font-weight:600;font-size:14.5px;margin:0;border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;cursor:pointer;transition:border-color .15s,background .15s;background:var(--surface)}
+.chips label:hover{border-color:var(--ink-3)}
+.chips input:checked+label{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chips input:focus-visible+label{outline:2px solid var(--blue);outline-offset:2px}
+.field{display:flex;flex-direction:column}
+.field input,.field select,.field textarea{font:16px var(--display);color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r);padding:12px 14px;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue)}
+.field .err{color:#c2410c;font-size:13.5px;margin-top:4px}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s4)}
+.formgrid .full{grid-column:1/-1}
+@media (max-width:600px){.formgrid{grid-template-columns:1fr}}
+
+.joinlayout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:var(--s7);align-items:start}
+@media (max-width:900px){.joinlayout{grid-template-columns:1fr}}
+.steps{display:flex;gap:var(--s2);margin-bottom:var(--s5)}
+.steps span{flex:1;height:4px;border-radius:4px;background:var(--line);transition:background .3s}
+.steps span.on{background:var(--amber)}
+.formcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(20px,3vw,40px);display:flex;flex-direction:column;gap:var(--s5)}
+.formcard h2{font-size:clamp(26px,3vw,36px)}
+.rep{display:flex;gap:var(--s4);align-items:center;padding:var(--s4);border-radius:var(--r);background:var(--bg);border:1px solid var(--line)}
+.mono{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:17px;background:var(--ink);color:var(--bg);position:relative;overflow:hidden}
+.mono::after{content:"";position:absolute;left:-30%;top:50%;width:90%;height:3px;background:var(--amber);transform:rotate(-24deg);opacity:.9}
+.rep b{display:block}
+.rep span{font-size:14px;color:var(--ink-3)}
+.aside{display:flex;flex-direction:column;gap:var(--s5)}
+.aside .card{border-top:3px solid var(--ink);padding-top:var(--s4)}
+.aside ul{margin:var(--s3) 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:var(--s3)}
+.aside li{display:flex;gap:var(--s3);color:var(--ink-2)}
+.aside li::before{content:"";flex:none;width:14px;height:2px;background:var(--amber);margin-top:12px}
+.note{font-size:13.5px;color:var(--ink-3)}
+.done{display:flex;flex-direction:column;gap:var(--s4);align-items:flex-start}
+.done .check{width:56px;height:56px;border-radius:50%;background:var(--amber);display:grid;place-items:center}
+
+/* ---------- people ---------- */
+.toolbar{display:flex;gap:var(--s3);flex-wrap:wrap;align-items:center;margin-bottom:var(--s5)}
+.toolbar input{font:16px var(--display);padding:12px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);min-width:0;flex:1 1 260px;max-width:420px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tabs button{font:600 14.5px var(--display);background:none;border:1.5px solid var(--line);color:var(--ink-2);padding:9px 14px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.person{background:var(--surface);padding:var(--s4);display:flex;gap:var(--s3);align-items:flex-start;text-decoration:none;min-width:0;transition:background .15s}
+.person:hover{background:var(--bg)}
+.person .mono{width:44px;height:44px;font-size:15px}
+.person b{display:block;font-size:16px;line-height:1.25}
+.person span{display:block;font-size:13.5px;color:var(--ink-2);line-height:1.35;margin-top:2px}
+.person em{display:block;font-style:normal;font-size:12.5px;color:var(--ink-3);margin-top:4px}
+.person .role{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:2px}
+.empty{padding:var(--s6);text-align:center;color:var(--ink-3);background:var(--surface);grid-column:1/-1}
+.leaders{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--s4)}
+.leader{border-top:3px solid var(--ink);padding-top:var(--s4)}
+.leader b{display:block;font-size:19px;letter-spacing:-.01em}
+.leader span{display:block;font-size:14px;color:var(--ink-2);margin-top:4px}
+@media (max-width:1000px){.leaders{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- offices ---------- */
+.offices{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--s5)}
+.office{padding-top:var(--s4);border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.office h3{font-size:22px;display:flex;align-items:center;gap:var(--s2)}
+.office h3 .hq{font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:var(--amber);color:var(--on-amber);border-radius:999px;padding:3px 8px;font-weight:700}
+.office address{font-style:normal;color:var(--ink-2)}
+.office .tel{font-variant-numeric:tabular-nums;font-weight:600;user-select:all}
+.office .pending{color:var(--ink-3);font-style:italic;font-family:var(--serif)}
+
+/* ---------- programs ---------- */
+.prog{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr) minmax(0,1fr);gap:var(--s6);padding-block:var(--s6);border-top:1px solid var(--line);align-items:start}
+.prog:last-child{border-bottom:1px solid var(--line)}
+.prog h3{font-size:clamp(26px,2.8vw,36px)}
+.prog p{color:var(--ink-2)}
+.prog ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.prog li a{text-decoration:none;font-weight:600;font-size:15.5px;display:flex;justify-content:space-between;gap:var(--s3);border-bottom:1px solid var(--line);padding-bottom:8px}
+.prog li a:hover{color:var(--amber-deep)}
+@media (max-width:900px){.prog{grid-template-columns:1fr;gap:var(--s4)}}
+
+.tests{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s6)}
+.tests figure{margin:0;display:flex;flex-direction:column;gap:var(--s4)}
+.tests blockquote{margin:0;font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);line-height:1.3}
+.tests figcaption b{display:block}
+.tests figcaption span{color:var(--ink-3);font-size:15px}
+@media (max-width:820px){.tests{grid-template-columns:1fr}}
+
+/* ---------- footer ---------- */
+footer{background:var(--hero);color:var(--hero-dim);padding-block:var(--s8) var(--s6);font-size:15px}
+footer .grid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(4,minmax(0,1fr));gap:var(--s6)}
+footer h4{color:var(--hero-fg);font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:var(--s3)}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--hero-fg)}
+footer .logo .wm{fill:var(--hero-fg)}
+footer .base{display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;border-top:1px solid rgba(245,238,230,.12);margin-top:var(--s7);padding-top:var(--s5);font-size:13.5px}
+@media (max-width:900px){footer .grid{grid-template-columns:repeat(2,minmax(0,1fr))}footer .grid>div:first-child{grid-column:1/-1}}
+
+.proto{position:fixed;left:max(12px,env(safe-area-inset-left,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:70;background:var(--ink);color:var(--bg);font-size:12.5px;font-weight:600;padding:8px 12px;border-radius:999px;box-shadow:0 8px 24px -10px rgba(0,0,0,.4)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+
+<!-- shared SVG symbol: official Biocom logo (2025, no tagline) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="rays">
+      <polygon data-i="4" points="43.46 21.75 0 144.12 25.6 16.81 43.46 21.75"/>
+      <polygon data-i="3" points="101.17 10.34 0 144.12 85.8 0 101.17 10.34"/>
+      <polygon data-i="5" points="164.92 25.7 0 144.12 153.44 11.17 164.92 25.7"/>
+      <polygon data-i="1" points="177.8 86.81 0 144.12 171.25 69.48 177.8 86.81"/>
+      <polygon data-i="9" points="167.3 145.24 0 144.12 166.4 126.74 167.3 145.24"/>
+      <polygon data-i="8" points="202.36 204.61 0 144.12 206.88 186.65 202.36 204.61"/>
+      <polygon data-i="7" points="207.18 270.17 0 144.12 216.2 253.99 207.18 270.17"/>
+      <polygon data-i="6" points="155.83 303.22 0 144.12 168.51 289.72 155.83 303.22"/>
+      <polygon data-i="2" points="84.45 292.3 0 144.12 100.02 282.26 84.45 292.3"/>
+    </g>
+  </defs>
+</svg>
+
+<div class="util">
+  <div class="wrap">
+    <span>Life Science Association of California · 7 offices from San Diego to Tokyo</span>
+    <nav aria-label="Member tools">
+      <a class="ext" href="https://member.biocom.org/" target="_blank" rel="noopener">Member Login</a>
+      <a class="ext" href="https://careerhub.biocom.org/jobs" target="_blank" rel="noopener">Career Hub</a>
+      <a class="ext" href="https://venturehub.biocom.org/signin" target="_blank" rel="noopener">Venture Hub</a>
+      <a class="ext" href="https://news.biocom.org/" target="_blank" rel="noopener">Newsroom</a>
+    </nav>
+  </div>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Biocom home">
+      <svg class="logo" viewBox="0 0 1049.15 303.22" role="img" aria-label="Biocom">
+        <g class="wm">
+          <path d="M255.42,54.41h64.8c31.91,0,53.51,15.95,53.51,44.18,0,15.95-10.8,28.72-21.6,33.62,16.69,6.14,29.7,20.13,29.7,43.44,0,31.66-22.82,50.56-58.66,50.560h-67.74V54.41ZM318.5,122.89c18.41,0,27.74-7.85,27.740-22.34s-9.33-22.58-27.98-22.58h-34.61v44.92h34.85ZM319.73,200.93c23.07,0,34.11-9.08,34.11-26.51s-11.05-26.750-34.11-26.75h-36.08v53.26h36.08Z"/>
+          <path d="M428.7,82.14h-29.45v-29.7h29.45v29.7ZM400.47,102.51h26.75v123.7h-26.75v-123.7Z"/>
+          <path d="M446.12,164.36c0-37.06,26.51-63.81,63.81-63.81s63.81,26.75,63.81,63.81-26.75,63.81-63.81,63.81-63.81-26.75-63.81-63.81M546.75,164.36c0-23.810-14.97-40.5-36.82-40.5s-36.82,16.69-36.82,40.5,14.73,40.5,36.82,40.5,36.82-16.69,36.82-40.5"/>
+          <path d="M585.77,164.36c0-38.04,25.04-63.81,62.1-63.81,30.44,0,52.28,16.2,56.45,41.72l-26.01,5.15c-2.46-13.99-13.99-23.56-29.7-23.56-21.35,0-35.1,15.95-35.1,40.5s13.99,40.5,35.1,40.5c15.71,0,26.75-8.59,29.7-23.07l26.26,5.15c-5.15,25.77-26.51,41.23-56.7,41.23-37.06,0-62.1-25.77-62.1-63.81"/>
+          <path d="M716.1,164.36c0-37.06,26.51-63.81,63.81-63.81s63.81,26.75,63.81,63.81-26.75,63.81-63.81,63.81-63.81-26.75-63.81-63.81M816.72,164.36c0-23.81-14.97-40.5-36.81-40.5s-36.82,16.69-36.82,40.5,14.73,40.5,36.82,40.5,36.81-16.69,36.81-40.5"/>
+          <path d="M862.37,102.52h26.75v20.86c6.63-13.5,18.41-22.83,36.32-22.83,19.88,0,34.12,8.59,39.27,24.54,6.63-13.5,21.35-24.54,40.74-24.54,26.5,0,43.69,17.18,43.69,42.22v83.45h-26.75v-76.82c0-15.46-8.84-25.77-24.55-25.77-18.41,0-28.96,16.2-28.96,40.01v62.58h-26.51v-76.82c0-15.46-8.59-25.77-24.3-25.77-18.41,0-28.96,16.44-28.96,40.01v62.58h-26.75v-123.7Z"/>
+        </g>
+        <use href="#rays" class="ray"/>
+      </svg>
+    </a>
+    <nav class="mainnav" id="mainnav" aria-label="Main">
+      <a href="#membership">Membership</a>
+      <a href="#programs">Programs</a>
+      <a href="#events">Events</a>
+      <a href="#insights">Insights</a>
+      <a href="#about">About</a>
+      <a class="btn btn-amber" href="#join">Become a member</a>
+    </nav>
+    <a class="btn btn-amber btn-join" href="#join">Become a member <span class="arr">→</span></a>
+    <button class="menubtn" id="menubtn" aria-expanded="false" aria-controls="mainnav">Menu</button>
+  </div>
+</header>
+
+<main id="app">
+
+<!-- ============================ HOME ============================ -->
+<div class="page" data-page="home">
+  <section class="hero" aria-labelledby="h-home">
+    <div class="burst-bg" aria-hidden="true">
+      <svg viewBox="-40 -20 300 345">
+        <defs><radialGradient id="heroGlow" cx="0" cy="144" r="260" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fdab00" stop-opacity=".28"/><stop offset="1" stop-color="#fdab00" stop-opacity="0"/></radialGradient></defs>
+        <circle class="glow" cx="0" cy="144.12" r="260"/>
+        <g id="heroRays"></g>
+      </svg>
+    </div>
+    <div class="wrap">
+      <p class="eyebrow" style="color:var(--amber)">Biocom California</p>
+      <h1 id="h-home" style="margin-top:20px">Where life science <em>gathers</em> momentum.</h1>
+      <p class="lede">Biocom is the largest life science membership association. We bring innovators, investors, researchers and industry leaders together, and give them the connections, business solutions, funding and advocacy to grow faster.</p>
+      <div class="ctas">
+        <a class="btn btn-amber" href="#join">Become a member <span class="arr">→</span></a>
+        <a class="btn" href="#membership">See what members get</a>
+      </div>
+      <div class="regions" aria-label="Our offices">
+        <span class="lbl">Our offices</span>
+        <a href="#contact">San Diego</a><a href="#contact">Greater Los Angeles</a><a href="#contact">Bay Area</a><a href="#contact">Seattle</a><a href="#contact">Sacramento</a><a href="#contact">Washington, D.C.</a><a href="#contact">Tokyo</a>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-numbers" style="padding-block:var(--s8) var(--s7)">
+    <div class="wrap">
+      <h2 id="h-numbers" class="eyebrow" style="margin-bottom:var(--s4)">Membership by the numbers</h2>
+      <div class="stats num">
+        <div class="stat"><b>$376<sup>M</sup></b><span>saved by members each year through Group Purchasing</span></div>
+        <div class="stat"><b>33<sup>%</sup></b><span>average VC follow-up rate from Biocom partnering</span></div>
+        <div class="stat"><b>150<sup>+</sup></b><span>events and webinars hosted, supported or sponsored each year</span></div>
+        <div class="stat"><b>6.6<sup>K</sup></b><span>people attend Biocom events annually</span></div>
+      </div>
+      <p class="src">Figures as published by Biocom on biocom.org, October 2026.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-rays" style="padding-top:var(--s7)">
+    <div class="wrap">
+      <div class="sechead">
+        <div>
+          <p class="eyebrow">What membership covers</p>
+          <h2 id="h-rays" style="margin-top:14px">Nine rays.<br>Nine ways in.</h2>
+        </div>
+        <p class="lede">Each ray in the Biocom mark stands for one part of membership. Membership is held by the company, so every employee, from the lab bench to the C-suite, can use all nine. Choose a ray to see what it does for you.</p>
+      </div>
+      <div class="explorer">
+        <div>
+          <svg id="explorerSvg" viewBox="-20 -30 470 370" role="group" aria-label="Biocom membership benefits"></svg>
+          <div class="xlist" id="xlist" role="group" aria-label="Choose a benefit"></div>
+        </div>
+        <div class="panel" id="xpanel" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-size" style="background:var(--surface);border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sechead">
+        <div><p class="eyebrow">Built for every stage</p><h2 id="h-size" style="margin-top:14px">From first hire to global enterprise.</h2></div>
+        <p class="lede">Startups get the same benefits as the largest members. What changes is which ones matter most right now. Our membership team helps you find them.</p>
+      </div>
+      <div class="grid3">
+        <article class="seg">
+          <div class="size num">1–50<small>employees</small></div>
+          <p>C-level event invitations that build relationships early, negotiated Group Purchasing contracts, and help reaching financing resources.</p>
+          <a class="textlink" href="https://www.biocom.org/membership/member-benefits/1-50-employees/" target="_blank" rel="noopener">Early-stage benefits ↗</a>
+        </article>
+        <article class="seg">
+          <div class="size num">51–200<small>employees</small></div>
+          <p>The buying power of a much larger company through Group Purchasing, more visibility, courses to find and keep talent, and Biocom's advocacy work.</p>
+          <a class="textlink" href="https://www.biocom.org/membership/member-benefits/51-200-employees/" target="_blank" rel="noopener">Growth-stage benefits ↗</a>
+        </article>
+        <article class="seg">
+          <div class="size num">200+<small>employees</small></div>
+          <p>Work with Biocom staff on federal, state and local issues, fill your pipeline through strategic Partner Days, and reach the industry through our channels.</p>
+          <a class="textlink" href="https://www.biocom.org/membership/member-benefits/200-employees/" target="_blank" rel="noopener">Enterprise benefits ↗</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-events">
+    <div class="wrap">
+      <div class="sechead">
+        <div><p class="eyebrow">Coming up</p><h2 id="h-events" style="margin-top:14px">Where the industry meets next.</h2></div>
+        <p class="lede">Flagship forums for CEOs, investors and partners, plus regional programming every month. <a class="textlink" href="#events">All events</a></p>
+      </div>
+      <div id="homeEvents"></div>
+    </div>
+  </section>
+
+  <section aria-label="From our CEO" style="padding-top:0">
+    <div class="wrap quote">
+      <blockquote>The future of this industry will not be defined solely by market cycles or policy debates. It will be defined by our ability to remain focused on scientific excellence, foster collaboration, invest in talent and maintain an environment where innovation can thrive.</blockquote>
+      <div class="who"><b>Tim Scott</b><span>President &amp; CEO, Biocom</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-eir" style="padding-top:0">
+    <div class="wrap">
+      <div class="feature">
+        <div class="txt">
+          <p class="eyebrow">2026 Life Science Economic Impact Report</p>
+          <h3 id="h-eir">A new look at California's life science economy.</h3>
+          <p>Developed with UC San Diego and HSBC Innovation Banking, the report covers economic impact, investment trends and the policy challenges facing California's innovation ecosystem, with stories from companies building the next generation of therapies.</p>
+          <a class="btn btn-amber" href="https://www.biocom.org/news/eir/" target="_blank" rel="noopener">Read the report <span class="arr">↗</span></a>
+        </div>
+        <div class="art" aria-hidden="true"><canvas id="eirCanvas"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-ll" style="padding-top:0">
+    <div class="wrap">
+      <div class="sechead" style="margin-bottom:var(--s6)">
+        <div><p class="eyebrow">LifeLines</p><h2 id="h-ll" style="margin-top:14px">Latest from the community.</h2></div>
+        <p class="lede">Interviews, insights and innovations from Biocom members. <a class="textlink" href="#insights">More insights</a></p>
+      </div>
+      <div class="posts" id="homePosts"></div>
+    </div>
+  </section>
+
+  <section class="joinband" aria-labelledby="h-jb">
+    <div class="wrap">
+      <div>
+        <h2 id="h-jb">Bring your company into the network.</h2>
+        <p>Tell us two things and we'll connect you with the Biocom membership lead for your region.</p>
+      </div>
+      <form class="quick" id="quickForm" novalidate>
+        <fieldset>
+          <legend>Company size</legend>
+          <div class="chips">
+            <input type="radio" name="qsize" id="qs1" value="1–50"><label for="qs1">1–50</label>
+            <input type="radio" name="qsize" id="qs2" value="51–200"><label for="qs2">51–200</label>
+            <input type="radio" name="qsize" id="qs3" value="200+"><label for="qs3">200+</label>
+            <input type="radio" name="qsize" id="qs4" value="Service provider"><label for="qs4">Service provider</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Region</legend>
+          <div class="chips" id="qregions"></div>
+        </fieldset>
+        <button class="btn btn-ink" type="submit" style="align-self:flex-start">Continue <span class="arr">→</span></button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ MEMBERSHIP ============================ -->
+<div class="page" data-page="membership" hidden>
+  <section class="phero">
+    <svg class="mini-burst" viewBox="-10 -10 240 325" aria-hidden="true"><use href="#rays" class="ray"/></svg>
+    <div class="wrap">
+      <p class="crumbs"><a href="#home">Home</a> / Membership</p>
+      <h1>Your success is <em>our mission.</em></h1>
+      <p class="lede">Whether you're a startup or a global enterprise, membership gives your company funding opportunities, exclusive partnerships, regulatory support and guidance fitted to your business. Every employee can use it.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px">
+        <a class="btn btn-amber" href="#join">Inquire about membership <span class="arr">→</span></a>
+        <a class="btn" href="https://www.biocom.org/membership/member-benefits/" target="_blank" rel="noopener">Full benefits list ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:var(--s6)">
+    <div class="wrap">
+      <div class="stats num">
+        <div class="stat"><b>$376<sup>M</sup></b><span>annual member savings</span></div>
+        <div class="stat"><b>33<sup>%</sup></b><span>average VC follow-up rate</span></div>
+        <div class="stat"><b>6.6<sup>K</sup></b><span>annual event attendees</span></div>
+        <div class="stat"><b>30<sup>+</sup></b><span>member-vetted purchasing partnerships</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sechead"><div><p class="eyebrow">Who joins</p><h2 style="margin-top:14px">Membership is held by the company.</h2></div>
+      <p class="lede">Biotech, pharma, medical device, genomics and diagnostics companies of every size join Biocom, along with research universities, institutes, contract research organizations, investors and service providers.</p></div>
+      <div class="grid3">
+        <article class="seg"><div class="size" style="font-size:30px">Life science companies</div><p>From 1-person startups to multinationals. Benefits scale to your stage, from financing introductions to federal policy work.</p><a class="textlink" href="#join">Start an inquiry</a></article>
+        <article class="seg"><div class="size" style="font-size:30px">Service providers</div><p>Gain visibility with life science companies and save on the supplies you need to run your own business.</p><a class="textlink" href="https://www.biocom.org/membership/member-benefits/service-providers/" target="_blank" rel="noopener">Provider membership ↗</a></article>
+        <article class="seg"><div class="size" style="font-size:30px">Individuals</div><p>Membership is company-based, but anyone can browse jobs, register for public events, subscribe to newsletters and use workforce resources.</p><a class="textlink" href="#events">Public events</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--surface);border-block:1px solid var(--line)">
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:var(--s6)">In members' words</p>
+      <div class="tests">
+        <figure><blockquote>“Biocom has given me the chance to connect with many people I would not otherwise have had the opportunity of meeting.”</blockquote><figcaption><b>Katie Chamberlain</b><span>Operations Manager, Askgene Pharma</span></figcaption></figure>
+        <figure><blockquote>“We can’t fight this fight alone, to try to change the world, and Biocom and our partners play a role in us doing that.”</blockquote><figcaption><b>Michael Farrington</b><span>Vice President of Global Marketing, NuVasive</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sechead"><div><p class="eyebrow">Even more ways to engage</p><h2 style="margin-top:14px">Tools members use every week.</h2></div>
+      <p class="lede">Beyond the core benefits, members get direct routes into Biocom's networks and platforms.</p></div>
+      <div class="grid2">
+        <article class="seg"><h3 style="font-size:26px">Committees</h3><p>Leaders from specific sub-sectors meet to discuss emerging trends, share best practice and plan programming that shapes Biocom's strategy.</p><a class="textlink" href="https://www.biocom.org/committees/" target="_blank" rel="noopener">Browse committees ↗</a></article>
+        <article class="seg"><h3 style="font-size:26px">Concierge</h3><p>Biocom connects your needs with trusted fellow members across financial, laboratory, operations, professional and travel services.</p><a class="textlink" href="https://www.biocom.org/concierge/" target="_blank" rel="noopener">Use Concierge ↗</a></article>
+        <article class="seg"><h3 style="font-size:26px">Venture Hub</h3><p>The online platform that connects founders with investors, built to speed up deal flow and fundraising for life science companies.</p><a class="textlink" href="https://www.biocom.org/programs/funding-partnering/venture-hub/" target="_blank" rel="noopener">About Venture Hub ↗</a></article>
+        <article class="seg"><h3 style="font-size:26px">CRO Directory</h3><p>Biocom's contract research organization community: a directory of CROs, outsourcing resources, news and events.</p><a class="textlink" href="https://biocomcro.org/" target="_blank" rel="noopener">Open the directory ↗</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sechead"><div><p class="eyebrow">Your membership team</p><h2 style="margin-top:14px">Talk to someone in your region.</h2></div>
+      <p class="lede">Every inquiry goes to a named person on the membership team, not a general inbox.</p></div>
+      <div class="people" id="memberTeam"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ JOIN ============================ -->
+<div class="page" data-page="join" hidden>
+  <section class="phero" style="padding-bottom:var(--s6)!important">
+    <svg class="mini-burst" viewBox="-10 -10 240 325" aria-hidden="true"><use href="#rays" class="ray"/></svg>
+    <div class="wrap">
+      <p class="crumbs"><a href="#home">Home</a> / <a href="#membership">Membership</a> / Join</p>
+      <h1>More connections. <em>More opportunity.</em></h1>
+      <p class="lede">From startups to multinationals, Biocom helps life science companies move their business forward. Two short steps, and the right person on our team follows up.</p>
+    </div>
+  </section>
+  <section style="padding-top:var(--s5)">
+    <div class="wrap joinlayout">
+      <div class="formcard" id="joinCard">
+        <div class="steps" aria-hidden="true"><span id="st1" class="on"></span><span id="st2"></span></div>
+        <form id="joinForm" novalidate>
+          <div id="step1" style="display:flex;flex-direction:column;gap:24px">
+            <div><p class="eyebrow">Step 1 of 2</p><h2 style="margin-top:8px">About your organization</h2></div>
+            <fieldset>
+              <legend>What kind of organization?</legend>
+              <div class="chips">
+                <input type="radio" name="type" id="t1" value="Life science company" checked><label for="t1">Life science company</label>
+                <input type="radio" name="type" id="t2" value="Research institution or university"><label for="t2">Research institution</label>
+                <input type="radio" name="type" id="t3" value="Investor"><label for="t3">Investor</label>
+                <input type="radio" name="type" id="t4" value="Service provider"><label for="t4">Service provider</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Company size</legend>
+              <div class="chips">
+                <input type="radio" name="size" id="s1" value="1–50"><label for="s1">1–50</label>
+                <input type="radio" name="size" id="s2" value="51–200"><label for="s2">51–200</label>
+                <input type="radio" name="size" id="s3" value="200+"><label for="s3">200+</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Where are you based?</legend>
+              <div class="chips" id="jregions"></div>
+            </fieldset>
+            <fieldset>
+              <legend>What matters most right now? <span style="font-weight:400;color:var(--ink-3)">(optional, pick any)</span></legend>
+              <div class="chips" id="jinterests"></div>
+            </fieldset>
+            <p class="field err" id="err1" hidden>Choose a company size and a region to continue.</p>
+            <div id="repPreview"></div>
+            <button class="btn btn-amber" type="button" id="toStep2" style="align-self:flex-start">Continue <span class="arr">→</span></button>
+          </div>
+
+          <div id="step2" hidden style="display:flex;flex-direction:column;gap:24px">
+            <div><p class="eyebrow">Step 2 of 2</p><h2 style="margin-top:8px">How we reach you</h2></div>
+            <div class="formgrid">
+              <div class="field"><label for="fn">First name</label><input id="fn" autocomplete="given-name" required></div>
+              <div class="field"><label for="ln">Last name</label><input id="ln" autocomplete="family-name" required></div>
+              <div class="field full"><label for="co">Company or organization</label><input id="co" autocomplete="organization" required></div>
+              <div class="field"><label for="em">Company email</label><input id="em" type="email" autocomplete="email" required></div>
+              <div class="field"><label for="ph">Phone</label><input id="ph" type="tel" autocomplete="tel" required></div>
+              <div class="field"><label for="jf">Job function</label><select id="jf" required></select></div>
+              <div class="field"><label for="jl">Job level</label><select id="jl" required><option value="">Choose one</option><option>Staff</option><option>Manager</option><option>Director</option><option>VP</option><option>C-Level</option></select></div>
+              <div class="field full"><label for="hh">How did you hear about us?</label><select id="hh" required></select></div>
+              <div class="field full"><label for="msg">Anything we should know? <span style="font-weight:400;color:var(--ink-3)">(optional)</span></label><textarea id="msg" rows="3"></textarea></div>
+            </div>
+            <p class="field err" id="err2" hidden>Fill in every field above. Use your company email address.</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button class="btn" type="button" id="back1">← Back</button>
+              <button class="btn btn-amber" type="submit">Send inquiry <span class="arr">→</span></button>
+            </div>
+          </div>
+        </form>
+        <div class="done" id="joinDone" hidden></div>
+      </div>
+      <aside class="aside">
+        <div class="card">
+          <p class="eyebrow">What happens next</p>
+          <ul>
+            <li>Your regional membership lead reviews your answers.</li>
+            <li>They reach out to set up an introductory call.</li>
+            <li>Together you map the benefits that fit your company's stage and goals.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="eyebrow">Here as an individual?</p>
+          <p style="margin-top:12px;color:var(--ink-2)">Membership is company-based, but you can still explore jobs on Career Hub, register for public events and subscribe to newsletters.</p>
+          <p style="margin-top:12px;display:flex;gap:16px;flex-wrap:wrap"><a class="textlink" href="#events">Public events</a><a class="textlink" href="https://www.biocom.org/newsletters/" target="_blank" rel="noopener">Newsletters ↗</a></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ PROGRAMS ============================ -->
+<div class="page" data-page="programs" hidden>
+  <section class="phero">
+    <svg class="mini-burst" viewBox="-10 -10 240 325" aria-hidden="true"><use href="#rays" class="ray"/></svg>
+    <div class="wrap">
+      <p class="crumbs"><a href="#home">Home</a> / Programs</p>
+      <h1>Programs that <em>pay back.</em></h1>
+      <p class="lede">Six programs carry most of the value of membership. Each one is open to every employee of a member company.</p>
+    </div>
+  </section>
+  <section style="padding-top:var(--s5)">
+    <div class="wrap" id="programList"></div>
+  </section>
+</div>
+
+<!-- ============================ EVENTS ============================ -->
+<div class="page" data-page="events" hidden>
+  <section class="phero">
+    <svg class="mini-burst" viewBox="-10 -10 240 325" aria-hidden="true"><use href="#rays" class="ray"/></svg>
+    <div class="wrap">
+      <p class="crumbs"><a href="#home">Home</a> / Conferences &amp; Events</p>
+      <h1>Take your business <em>further, faster.</em></h1>
+      <p class="lede">Biocom hosts, supports and sponsors 150+ events and webinars every year, from CEO-only summits to regional networking.</p>
+    </div>
+  </section>
+  <section style="padding-top:var(--s5)">
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:var(--s4)">Upcoming</p>
+      <div id="allEvents"></div>
+    </div>
+  </section>
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sechead"><div><p class="eyebrow">Flagship conferences</p><h2 style="margin-top:14px">Four forums the industry plans around.</h2></div></div>
+      <div class="grid2" id="flagships"></div>
+      <p style="margin-top:var(--s6);display:flex;gap:24px;flex-wrap:wrap"><a class="textlink" href="https://www.biocom.org/events/get-involved/" target="_blank" rel="noopener">Sponsorship opportunities ↗</a><a class="textlink" href="https://www.biocom.org/events/?type=archived" target="_blank" rel="noopener">Past events and recordings ↗</a><a class="textlink" href="https://www.biocom.org/events/event-policies/" target="_blank" rel="noopener">Event policies ↗</a></p>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ INSIGHTS ============================ -->
+<div class="page" data-page="insights" hidden>
+  <section class="phero">
+    <svg class="mini-burst" viewBox="-10 -10 240 325" aria-hidden="true"><use href="#rays" class="ray"/></svg>
+    <div class="wrap">
+      <p class="crumbs"><a href="#home">Home</a> / Insights</p>
+      <h1>What's moving <em>life science.</em></h1>
+      <p class="lede">Member interviews, policy perspectives and innovation round-ups from LifeLines, plus Biocom's research and news.</p>
+    </div>
+  </section>
+  <section style="padding-top:var(--s5)">
+    <div class="wrap">
+      <div class="posts" id="allPosts"></div>
+    </div>
+  </section>
+  <section style="padding-top:0">
+    <div class="wrap grid3">
+      <article class="seg"><h3 style="font-size:26px">Economic Impact Report</h3><p>The 2026 report, with UC San Diego and HSBC Innovation Banking, plus regional fact sheets.</p><a class="textlink" href="https://www.biocom.org/news/eir/" target="_blank" rel="noopener">Read the report ↗</a></article>
+      <article class="seg"><h3 style="font-size:26px">Newsletters</h3><p>Choose only what's relevant: regional updates, policy and advocacy, Group Purchasing and the monthly LifeLines digest.</p><a class="textlink" href="https://www.biocom.org/newsletters/" target="_blank" rel="noopener">Choose your news ↗</a></article>
+      <article class="seg"><h3 style="font-size:26px">Newsroom</h3><p>News releases, media resources and Biocom in the news, plus CEO Updates from Tim Scott.</p><a class="textlink" href="https://news.biocom.org/" target="_blank" rel="noopener">Visit the newsroom ↗</a></article>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ ABOUT ============================ -->
+<div class="page" data-page="about" hidden>
+  <section class="phero">
+    <svg class="mini-burst" viewBox="-10 -10 240 325" aria-hidden="true"><use href="#rays" class="ray"/></svg>
+    <div class="wrap">
+      <p class="crumbs"><a href="#home">Home</a> / About</p>
+      <h1>Connecting and advancing the <em>life science ecosystem.</em></h1>
+      <p class="lede">For more than 25 years Biocom has worked for the life science industry from San Diego, and today from seven offices across California, Seattle, Washington, D.C. and Tokyo.</p>
+    </div>
+  </section>
+  <section style="padding-top:var(--s5)">
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:var(--s5)">Executive leadership</p>
+      <div class="leaders">
+        <div class="leader"><b>Tim Scott</b><span>President &amp; CEO</span></div>
+        <div class="leader"><b>Miguel Motta</b><span>Sr VP, Chief Operating Officer &amp; Executive Director, San Diego</span></div>
+        <div class="leader"><b>Francesco Sherod</b><span>Sr. VP &amp; Chief Financial Officer</span></div>
+        <div class="leader"><b>Jimmy Jackson</b><span>Sr VP &amp; Chief Policy Officer</span></div>
+        <div class="leader"><b>Joe Panetta</b><span>President Emeritus</span></div>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:0" id="people">
+    <div class="wrap">
+      <div class="sechead" style="margin-bottom:var(--s5)"><div><p class="eyebrow">People</p><h2 style="margin-top:14px">The team and the board.</h2></div></div>
+      <div class="toolbar">
+        <div class="tabs" role="tablist" id="ptabs"></div>
+        <input type="search" id="psearch" placeholder="Search by name, title or company" aria-label="Search people">
+      </div>
+      <div class="people" id="plist" role="tabpanel"></div>
+      <p class="src" id="pcount"></p>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ CONTACT ============================ -->
+<div class="page" data-page="contact" hidden>
+  <section class="phero">
+    <svg class="mini-burst" viewBox="-10 -10 240 325" aria-hidden="true"><use href="#rays" class="ray"/></svg>
+    <div class="wrap">
+      <p class="crumbs"><a href="#home">Home</a> / <a href="#about">About</a> / Locations &amp; contact</p>
+      <h1>Seven offices. <em>One network.</em></h1>
+      <p class="lede">Members interested in a benefit, a committee or getting more involved can reach the right team through any office. Not yet a member? <a class="textlink" href="#join">Start here</a>.</p>
+    </div>
+  </section>
+  <section style="padding-top:var(--s5)">
+    <div class="wrap offices" id="offices"></div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <svg class="logo" viewBox="0 0 1049.15 303.22" style="height:40px;width:auto" role="img" aria-label="Biocom"><use href="#rays" class="ray"/></svg>
+        <p style="margin-top:16px;max-width:34ch">The largest life science membership association, connecting California's innovators, investors, researchers and industry leaders.</p>
+        <a class="btn btn-amber" href="#join" style="margin-top:24px">Become a member <span class="arr">→</span></a>
+      </div>
+      <div><h4>Membership</h4><ul><li><a href="#membership">Why Biocom</a></li><li><a href="#join">Join</a></li><li><a href="https://www.biocom.org/members/" target="_blank" rel="noopener">Member directory</a></li><li><a href="https://www.biocom.org/your-story-is-our-story/" target="_blank" rel="noopener">Your Story is Our Story</a></li></ul></div>
+      <div><h4>Programs</h4><ul><li><a href="#programs">Funding &amp; Partnering</a></li><li><a href="#programs">Group Purchasing</a></li><li><a href="#programs">Policy &amp; Advocacy</a></li><li><a href="#programs">Workforce &amp; Talent</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="#events">Conferences &amp; Events</a></li><li><a href="#insights">Insights</a></li><li><a href="https://www.biocom.org/news/eir/" target="_blank" rel="noopener">Economic Impact Report</a></li><li><a href="https://www.biocom.org/newsletters/" target="_blank" rel="noopener">Newsletters</a></li></ul></div>
+      <div><h4>About</h4><ul><li><a href="#about">Team &amp; board</a></li><li><a href="#contact">Locations &amp; contact</a></li><li><a href="https://www.biocom.org/about/careers/" target="_blank" rel="noopener">Careers</a></li><li><a href="https://www.biocom.org/privacy-policy/" target="_blank" rel="noopener">Privacy policy</a></li></ul></div>
+    </div>
+    <div class="base"><span>© 2026 Biocom. All rights reserved.</span><span>Facebook · X · LinkedIn · LifeLines podcast</span></div>
+  </div>
+</footer>
+
+<div class="proto" aria-hidden="true">Redesign prototype · not live</div>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const initials = n => n.replace(/,.*$/,'').split(/\s+/).filter(w=>/^[A-Z]/.test(w)).map(w=>w[0]).slice(0,2).join('');
+
+/* footer logo needs wordmark too */
+const wm = document.querySelector('header .wm').cloneNode(true);
+document.querySelector('footer .logo').prepend(wm);
+
+/* ---------- data (all from biocom.org, Oct 2026) ---------- */
+const RAYS = [ // angle order, top to bottom; tip = outer end of polygon
+  {i:4,tip:[34.5,19.3],name:'Policy & Advocacy',body:'Discovery deserves a voice, from City Hall to Congress. Biocom runs federal, California and regional policy work in San Diego, Los Angeles and the Bay Area, with offices in Sacramento and Washington, D.C.',facts:[['5','policy arenas'],['D.C.','office on the Hill']],href:'https://www.biocom.org/policy-advocacy/'},
+  {i:3,tip:[93.5,5.2],name:'Funding & Partnering',body:'The Global Partnering & Investor Conference, Partnering & Investor Days, Pitch Studio and Venture Hub match innovation with investment.',facts:[['33%','average VC follow-up rate']],href:'https://www.biocom.org/programs/funding-partnering/'},
+  {i:5,tip:[159.2,18.4],name:'Group Purchasing',body:'Member-vetted, member-selected contracts with best-in-class suppliers across laboratory, operations, people, finance, technology and travel.',facts:[['$376M','annual member savings'],['30+','partnerships']],href:'https://www.biocom.org/group-purchasing/'},
+  {i:1,tip:[174.5,78.1],name:'Conferences & Events',body:'Connect with leaders and technologies at the speed of innovation, from CEO-only summits to regional networking every month.',facts:[['150+','events a year'],['6.6K','annual attendees']],href:'https://www.biocom.org/events/'},
+  {i:9,tip:[166.9,136],name:'Workforce Development',body:'Biocom Institute fellowships and professional development, the HR Biotech Group, Career Hub, and STEM outreach through Biocom Generation STEAM.',facts:[['4','talent programs']],href:'https://www.biocom.org/workforce-development/'},
+  {i:8,tip:[204.6,195.6],name:'Visibility',body:'Speaking slots, sponsorships and Biocom’s marketing channels put your company in front of the life science community.',facts:[],href:'https://www.biocom.org/membership/member-benefits/increase-your-visibility/'},
+  {i:7,tip:[211.7,262.1],name:'Committees',body:'Leaders from member companies discuss emerging trends, share best practice and plan the programming Biocom runs next.',facts:[],href:'https://www.biocom.org/committees/'},
+  {i:6,tip:[162.2,296.5],name:'Community Building',body:'Catalyst: Innovators Under 40, the CEO/Founder Network, Converge, MedTech and the Personal AI Health Alliance.',facts:[['5','communities']],href:'https://www.biocom.org/community-building/'},
+  {i:2,tip:[92.2,287.3],name:'International Connections',body:'Offices in Tokyo and Washington, D.C., Japan consulting, and partner networks in Germany, Korea and North America.',facts:[['Tokyo','office since BioJapan ties']],href:'https://www.biocom.org/community-building/international/'}
+];
+RAYS[8].facts=[['2','offices outside California']];
+RAYS[4].facts=[];
+RAYS[0].facts=[['3','regional policy teams']];
+
+const REGIONS = ['San Diego','Greater Los Angeles','Bay Area','Seattle','Sacramento','Washington, D.C.','Tokyo'];
+const REPS = {
+  'San Diego':['Jamie Lamorandier','Sales Manager, San Diego'],
+  'Bay Area':['Rudy Ramos','Sales Manager, Bay Area – East'],
+  'Seattle':['Bella Perez','Sales and Business Development Manager, Seattle'],
+  '_':['Kira Jenkins','Executive Director, Sales']
+};
+const repFor = r => REPS[r] || REPS._;
+
+const EVENTS = [
+  {when:'Oct 19',sub:'2026 · Boston',tag:'This week',title:'Biocom evening at The MedTech Conference',body:'An exclusive evening of connection and collaboration during The MedTech Conference in Boston.',href:'https://www.biocom.org/events/'},
+  {when:'October',sub:'2026 · SD, Bay Area, LA',tag:'This month',title:'CEO Summit series',body:'Designed by life science CEOs, exclusively for industry CEOs, held in San Diego, the Bay Area and Greater Los Angeles.',href:'https://www.biocom.org/conferences/ceo-summit/'},
+  {when:'Feb 23–25',sub:'2027 · La Jolla',tag:'Apply by Nov 13',title:'Global Life Science Partnering & Investor Conference',body:'The partnering and investor forum for the global life science community. Applications to present are open until November 13.',href:'https://www.biocom.org/conferences/global-partnering-conference/'}
+];
+const FLAGSHIPS = [
+  ['Global Partnering & Investor Conference','An exclusive global partnering forum for senior executives, bankers, venture capitalists and business development leaders from pharma and biotech.','https://www.biocom.org/conferences/global-partnering-conference/'],
+  ['CEO Summit','Created by life science CEOs exclusively for life science CEOs, in San Diego, the Bay Area and Greater Los Angeles.','https://www.biocom.org/conferences/ceo-summit/'],
+  ['Converge Summit','Life science meets technology: the brightest minds exchange ideas, break down barriers and spark innovation.','https://www.biocom.org/conferences/converge-summit/'],
+  ['HR Conference for Life Science','For HR professionals working in the life science industry across California.','https://biocomhr.org/']
+];
+const POSTS = [
+  {k:'Innovations',t:'From Bespoke to Scalable: How Companies Are Reinventing Cell Therapy',d:'September 22, 2026'},
+  {k:'Insights',t:'Proposed Most Favored Nation Pricing Models Put Oncology Innovation at Risk',d:'September 22, 2026'},
+  {k:'Interviews',t:'Member Spotlight: GeneFab',d:'September 22, 2026'},
+  {k:'Involvement',t:'Maravai LifeSciences in the Community',d:'September 23, 2026'},
+  {k:'Insights',t:'A New Era for the SBIR/STTR Programs',d:'August 18, 2026'},
+  {k:'Interviews',t:'Member Spotlight: Direct Biologics',d:'July 29, 2026'},
+  {k:'Interviews',t:'Member Spotlight: GATC Health',d:'May 27, 2026'},
+  {k:'Interviews',t:'Member Spotlight: BrainChild Bio',d:'March 26, 2026'}
+];
+const PROGRAMS = [
+  ['Funding & Partnering','Partnering opportunities that match innovation with investment, with an average VC follow-up rate of 33%.',[['Global Partnering & Investor Conference','https://www.biocom.org/conferences/global-partnering-conference/'],['Partnering & Investor Days','https://www.biocom.org/programs/funding-partnering/biocom-showcase/'],['Pitch Studio','https://www.biocom.org/programs/funding-partnering/pitch-studio/'],['Venture Hub','https://www.biocom.org/programs/funding-partnering/venture-hub/'],['CEO/Founder Network','https://www.biocom.org/ceo-founder-network/']]],
+  ['Group Purchasing','30+ member-vetted partnerships with best-in-class suppliers. Members save $376M a year.',[['Laboratory','https://www.biocom.org/group-purchasing/savings-portfolio/?query=true&suite=laboratory'],['Operations','https://www.biocom.org/group-purchasing/savings-portfolio/?query=true&suite=operations'],['People & HR benefits','https://www.biocom.org/hr-benefits/'],['Finance, Technology, Travel','https://www.biocom.org/group-purchasing/savings-portfolio/'],['Request a consultation','https://www.biocom.org/group-purchasing/request-a-consultation/']]],
+  ['Policy & Advocacy','A respected voice for industry-friendly policy, from local permitting to federal R&D tax treatment.',[['Federal','https://www.biocom.org/policy-advocacy/federal-policy-advocacy/'],['California','https://www.biocom.org/policy-advocacy/california-policy-advocacy/'],['San Diego · Los Angeles · Bay Area','https://www.biocom.org/policy-advocacy/'],['Regulatory policy','https://www.biocom.org/policy-advocacy/regulatory-policy/'],['Action Center','https://www.biocom.org/policy-advocacy/take-action/action-center/']]],
+  ['Workforce & Talent','Build a future on talent, from early STEM outreach to modern professional development.',[['Career Hub','https://careerhub.biocom.org/jobs'],['Biocom Institute','https://www.biocom.org/programs/biocom-institute/'],['Fellowship programs','https://www.biocom.org/programs/biocom-institute/fellowship-programs/'],['HR Biotech Group','https://www.biocom.org/programs/biocom-institute/hr-biotech-group/'],['Biocom Generation STEAM','https://www.biocom.org/generation-steam/']]],
+  ['Community & Committees','Peer groups and awards that connect people across companies and career stages.',[['Committees','https://www.biocom.org/committees/'],['Catalyst: Innovators Under 40','https://www.biocom.org/community-building/catalyst-awards/'],['Converge: Life Science x Technology','https://www.biocom.org/programs/converge/'],['MedTech','https://www.biocom.org/membership/member-benefits/medtech/'],['Personal AI Health Alliance','https://www.biocom.org/paiha-partnership/']]],
+  ['International','Building bridges to Japan and beyond for investment, advocacy, talent and innovation.',[['Tokyo office','https://www.biocom.org/about/our-locations/tokyo/'],['Japan consulting','https://www.biocom.org/about/our-locations/tokyo/japan-consulting/'],['International connections','https://www.biocom.org/community-building/international/']]]
+];
+
+const STAFF = [["David Amesse","Lead Systems Administrator","Biocom"],["Lawreen Asuncion","Patient Advocacy & Regional Marketing","Biocom"],["Don Basanes","Member Success Manager, Bay Area – West","Biocom"],["George Bonaros","Sr Director, Member Success","Biocom"],["Rachel Bontempi","Sr Manager, Growth Marketing","Biocom"],["Katy Burgess","Events Marketing Manager","Biocom"],["Brenda Buso","Associate Manager, Administrative Office","Biocom"],["Madison Callahan","Program Coordinator","Generation STEAM"],["Alexander Carrillo","Marketing Coordinator","Biocom"],["Emily Cassel","Government Affairs Events & Projects Manager","Biocom"],["Laure Clark","Sr Director, Federal Policy & Government Affairs","Biocom"],["Melanie Cohn","Sr Director, Regional Policy & Government Affairs","Biocom"],["Claire Conlon","Sr Director, State Government Affairs","Biocom"],["Valerie Cournoyer","Senior Manager, Education","Biocom"],["Danielle de Jong","Product Marketing Manager","Biocom"],["Shaye Exner","Vice President, Events & Sponsorships","Biocom"],["Ashleigh Farver","Sr Director, Events","Biocom"],["Dolores Flores","Manager, Marketing & Events","Biocom Generation STEAM"],["Paulina Fonville","Program Manager, Fellowships","Biocom Institute"],["Mary Fromson","Sr Executive Assistant & Board Administrator","Biocom"],["Aileen Gipson","Executive Director, People & Culture","Biocom"],["Dan Gober","Executive Director, Greater Los Angeles","Biocom"],["Jimmy Jackson","Sr VP & Chief Policy Officer","Biocom"],["Kira Jenkins","Executive Director, Sales","Biocom"],["Brandon Jenkins","Sr Program Manager","Biocom"],["Megan Kastner","Federal Advocacy Manager","Biocom"],["Patrick Keeley","Financial Planning Manager","Biocom"],["Tara Kent","Sr Manager, Sales Operations & Engagement","Biocom"],["Zoe Kosmidis","Sr Regulatory Policy Manager","Biocom"],["Jamie Lamorandier","Sales Manager, San Diego","Biocom"],["Gilbert Lara","Manager, State Government Affairs","Biocom"],["Helena Lauchli","Sr Accountant","Biocom"],["Brandon Leck","Director","Biocom Generation STEAM"],["Eduardo Lever","Sr Data Analyst","Biocom"],["Jimmy Long","Business Intelligence Manager","Biocom"],["Melissa Lucas","Director, Supplier Portfolio","Biocom"],["Kia Macpherson","Director, Strategic Programming","Biocom"],["Maurice Moore","Event Manager","Biocom"],["Tyler Morris","Director, Funding & Partnering","Biocom"],["Miguel Motta","Sr VP, Chief Operating Officer & Executive Director, San Diego","Biocom"],["Michelle Nemits","Executive Director, Bay Area","Biocom"],["Casey O’Neill","Workforce & Partnerships Manager","Biocom"],["Mikayla Ortega-Donahoo","Interim Director, Biocom Institute","Biocom Institute"],["Sara Pagano","Executive Director","Biocom Generation STEAM"],["Sylwia Palczewska","Program Manager, Workforce & Talent","Biocom Institute"],["Lauren Panetta","Director of Digital Marketing","Biocom"],["Joe Panetta","President Emeritus","Biocom"],["Raquel Papike","Sr Graphic Designer","Biocom"],["Bella Perez","Sales and Business Development Manager, Seattle","Biocom"],["Rudy Ramos","Sales Manager, Bay Area – East","Biocom"],["Angela Rivera","Sr Manager, Business Development","Biocom"],["Kristen Rossi","Events and Sponsorship Associate","Biocom"],["Susana Savage","People Operations Manager","Biocom"],["Julian Schalk","Science Education & Lab Coordinator","Generation STEAM"],["Tim Scott","President & CEO","Biocom"],["Francesco Sherod","Sr. VP & Chief Financial Officer","Biocom"],["Christy Shirilla","Policy Manager","Biocom"],["Linda Ta","Project Coordinator","Biocom Institute"],["Reilly Waltz","Member Success Manager, San Diego","Biocom"],["Annie Warner","Manager, Community Relations","Biocom Generation STEAM"],["Tatiana Wasbin","Sales Operation Associate","Biocom"],["Jackiee Williamson","Project Manager","Biocom"],["Jessica Wright","Sr Manager, Marketing","Biocom"]];
+const DIRECTORS = [["Sabrina Martucci Johnson","President and CEO","Daré Biosciences","Chair"],["Matthew Bresnahan, J.D.","Partner","Goodwin Proctor","Vice Chair"],["Susan Krumplitsch","Partner","Womble Bond Dickinson US LLP","Secretary"],["Kelly Hayes","Assurance Partner","Ernst & Young","Treasurer"],["Nancy Whiting, Pharm.D.","President and CEO","Recludix Pharma","Chair-Elect"],["Aliza Apple, Ph.D.","Vice President, Catalyze360 AI/ML","Eli Lilly"],["Ranjeet Banerjee","CEO","Cold Chain Technologies"],["Dan Burgess","Chairman","Nabriva Therapeutics, PLC"],["Aaron K. Cohen","VP, Government Affairs and Public Policy","Neurocrine Biosciences"],["Jennifer Giottonini Cayer","Chief Business Officer","Pulmocide"],["Thierry Diagana, Ph.D.","Head of Global Health & California Sites Head","Novartis Biomedical Research"],["Joydeep Ganguly","SVP, Global Operations, Chief Operations and Quality Officer","Agilent"],["Stephen Hatke","",""],["Jeffrey Hessekiel","EVP, Chief Legal and Administrative Officer","Cytokinetics"],["Paul Mola","CEO","Armida Labs"],["Carolyn Ng, Ph.D.","Business Unit Partner","TPG Life Sciences Innovations"],["Bernard Parker","Managing Director","Caligen Bio"],["Ken Rollins","Partner","Cooley"],["Christophe Schilling, Ph.D.","Co-Founder","Geno"],["Tim Scott","President & CEO","Biocom"],["John Sos","SVP & Group President Life Sciences Solutions Group","Thermo Fisher Scientific"],["Nick Tait","Principal","Marsh & McLennan Agency"],["Bradley Wolff","Senior Managing Director","Evercore"]];
+const GOVERNORS = [["Connor Bates","VP/General Manager, Infusion Medication Management","BD"],["Neil Bence, Ph.D.","VP, Head of Oncology Discovery","Bristol Myers Squibb"],["Michael Boss","Sr. Vice President","Alexandria Real Estate Equities"],["Thomas Briggs","Partner","Jones Day"],["Mark Cafferty","President & CEO","SD Regional Economic Development Corp."],["Sunita Cooke, Ph.D.","Superintendent/President","Mira Costa College"],["David Crean, Ph.D.","Managing General Partner","Coast Bioventures LLC"],["Bassil Dahiyat, Ph.D.","President & CEO","Xencor"],["Emad Fareed","Partner","KPMG, Inc"],["Gregory Frost, Ph.D.","Chairman & CEO","EXUMA Biotech"],["Ronnie Hanecak, Ph.D.","Senior Director, Licensing","UCI Beall Applied Innovation"],["Richard Heyman, Ph.D.","Venture Partner","ARCH Ventures"],["Ted Jacobs","Vice Chairman","CBRE"],["Cheston Larson, J.D.","Partner & Co-Chair, Life Sciences Industry Group","Latham & Watkins LLP"],["Adam Lenain","Member","Mintz Levin"],["Kathryn Lowell","Group VP, Global Government Affairs","BioMarin Pharmaceutical Inc."],["James Mackay, Ph.D.","Co-Founder, President & CEO","Crystalys Therapeutics"],["Hala Madanat, Ph.D.","VP for Research & Innovation","SDSU"],["Trevor Martin, Ph.D.","Co-Founder & CEO","Mammoth Biosciences"],["Damien McDevitt, Ph.D.","CEO","Aspen Neuroscience"],["Juli Moran","San Diego Office Managing Partner & Managing Director","Deloitte Consulting LLP"],["Corinne Peek-Asa, Ph.D.","Vice Chancellor, Research","UCSD"],["Bob Ramos, J.D.","Partner","Procopio"],["Tina Self","Senior VP/Biologics Manufacturing Capability Cluster Leader & Berkeley Site Head","Bayer"],["Diane Simeone, MD","Director, Moores Cancer Center","UCSD"],["Tsuneo Takahashi","President","NF Corporation"],["Olivier Toury","Co-Founder & CEO","Neuroservices-Alliance"],["Kevin Tremblay","Sr. Director, SD Market Leader","Biomed Realty"]];
+const EMERITUS = [["Kennon Baldwin","",""],["Carin Canale-Theakston","",""],["John Dunn","General Counsel","Calcimedica"],["Stephen Ferruolo, J.D., Ph.D.","Professor","USD School of Law"],["Wain Fishburn","Chair","Critical Path Institute"],["Lisa Haile","Partner & Global Life Science Sector Chair","DLA Piper"],["David Hale","Chairman","Hale BioPharma Ventures"],["Guy Iannuzzi","CEO","Mentus"],["Brent Jacobs","",""],["Paul Laikind, Ph.D.","Principal","GVM BioBusiness"],["Jack Lief","Director","CeleCor"],["Magda Marquet, Ph.D.","Co-Founder & Co-CEO","ALMA Life Sciences, LLC"],["James McGraw","In memoriam",""],["Steve Mento, Ph.D.","President & CEO","Histogen, Inc."],["Tina Nova, Ph.D.","President and CEO","Decipher Biosciences"],["Joe Panetta","President Emeritus","Biocom"],["Trindl Reeves","Chief Sales Officer","Marsh & McLennan Agency"],["Duane Roth","In memoriam",""],["Larry Stambaugh","",""],["David Webb, Ph.D.","CEO","Rev-Therapeutics"]];
+const OFFICES = [
+  ['San Diego','Headquarters','10996 Torreyana Road, Suite 200<br>San Diego, CA 92121','(858) 455-0300'],
+  ['Greater Los Angeles','','15260 Ventura Blvd., Suite 725<br>Sherman Oaks, CA 91403','(213) 943-2920'],
+  ['Bay Area','','1 Tower Place, Suite 150<br>South San Francisco, CA 94080','(415) 943-9375'],
+  ['Sacramento','','1111 L Street<br>Sacramento, CA 95814','(415) 943-9376'],
+  ['Washington, D.C.','','601 Pennsylvania Ave NW, Suite 900<br>Washington, D.C. 20004','(202) 747-5064'],
+  ['Tokyo','','3-1-13 8fl, Nishi-Ikebukuro<br>Toshima-ku, Tokyo 171-0021, Japan','011-81-90-6048-3506'],
+  ['Seattle','','',''],
+];
+const FUNCTIONS = ['Administrative','Business Development','CEO/President','CFO','CIO/CTO','Client Services/Support','COO','CSO/CMO','Engineering','Education','Finance','Human Resources','Information Technology','Laboratory','Legal','Marketing','Media and Communications','Operations','Policy','Product Management','Purchasing/Procurement','Quality Assurance','Regulatory/Compliance','Research and Development','Sales','Veteran','Other'];
+const HEARD = ['Referral (member, incubator, Group Purchasing partner)','Biocom email or newsletter','Direct outreach from a Biocom representative','Biocom conference or event','Advertisement','Social media','Web search','Media / press','Prior awareness','Other'];
+
+/* ---------- hero rays (animated) ---------- */
+const NS='http://www.w3.org/2000/svg';
+const heroG = $('#heroRays');
+$$('#rays polygon').forEach((p,k) => {
+  const c = p.cloneNode(); c.setAttribute('class','ray'); c.style.animationDelay = (120 + k*70)+'ms';
+  heroG.appendChild(c);
+});
+$$('.mini-burst').forEach(svg => {}); // uses <use>, animates as one
+
+/* ---------- ray explorer ---------- */
+const X = $('#explorerSvg'), panel = $('#xpanel'), xlist = $('#xlist');
+const polyByI = {}; $$('#rays polygon').forEach(p => polyByI[p.dataset.i] = p.getAttribute('points'));
+let cur = 1, autoplay = !RM, timer;
+RAYS.forEach((r,k) => {
+  const g = document.createElementNS(NS,'g'); g.setAttribute('class','xray'); g.setAttribute('tabindex','0'); g.setAttribute('role','button'); g.setAttribute('aria-label',r.name); g.dataset.k=k;
+  const pts = polyByI[r.i];
+  g.innerHTML = `<polygon points="${pts}"/><polygon class="hit" points="${pts}"/>`;
+  const [tx,ty] = r.tip, ang = Math.atan2(ty-144.12, tx), dx = Math.cos(ang)*12, dy = Math.sin(ang)*12;
+  const t = document.createElementNS(NS,'text'); t.setAttribute('x',(tx+dx).toFixed(1)); t.setAttribute('y',(ty+dy+3).toFixed(1));
+  t.textContent = r.name; g.appendChild(t);
+  X.appendChild(g);
+  const b = document.createElement('button'); b.type='button'; b.textContent=r.name; b.dataset.k=k; xlist.appendChild(b);
+});
+const o = document.createElementNS(NS,'circle'); o.setAttribute('cx',0); o.setAttribute('cy',144.12); o.setAttribute('r',4.5); o.setAttribute('class','origin'); X.appendChild(o);
+function pick(k, user){
+  cur = k; if(user){autoplay=false;clearInterval(timer)}
+  $$('.xray').forEach(g => g.classList.toggle('on', +g.dataset.k===k));
+  $$('#xlist button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.k===k));
+  const r = RAYS[k];
+  panel.innerHTML = `<span class="count num">Benefit ${k+1} of 9</span><h3>${esc(r.name)}</h3><p>${esc(r.body)}</p>`+
+    (r.facts.length?`<div class="facts num">${r.facts.map(f=>`<div><b>${esc(f[0])}</b><span>${esc(f[1])}</span></div>`).join('')}</div>`:'')+
+    `<a class="textlink" style="align-self:flex-start;${r.facts.length?'':'margin-top:auto'}" href="${r.href}" target="_blank" rel="noopener">Explore ${esc(r.name)} ↗</a>`;
+}
+X.addEventListener('click', e => { const g = e.target.closest('.xray'); if(g) pick(+g.dataset.k,true) });
+X.addEventListener('keydown', e => { const g = e.target.closest('.xray'); if(g && (e.key==='Enter'||e.key===' ')){e.preventDefault();pick(+g.dataset.k,true)} });
+X.addEventListener('mouseover', e => { const g = e.target.closest('.xray'); if(g && !autoplay) pick(+g.dataset.k,false) });
+xlist.addEventListener('click', e => { const b = e.target.closest('button'); if(b) pick(+b.dataset.k,true) });
+pick(1,false);
+if(autoplay) timer = setInterval(() => { if(document.hidden||!autoplay) return; pick((cur+1)%9,false) }, 4200);
+
+/* ---------- events / posts ---------- */
+const evHTML = e => `<article class="event"><div class="when num">${esc(e.when)}<small>${esc(e.sub)}</small></div><div><span class="tag">${esc(e.tag)}</span><h3 style="margin-top:8px">${esc(e.title)}</h3><p>${esc(e.body)}</p></div><a class="btn" href="${e.href}" target="_blank" rel="noopener">Details ↗</a></article>`;
+$('#homeEvents').innerHTML = EVENTS.map(evHTML).join('');
+$('#allEvents').innerHTML = EVENTS.map(evHTML).join('');
+$('#flagships').innerHTML = FLAGSHIPS.map(f=>`<article class="seg"><h3 style="font-size:26px">${esc(f[0])}</h3><p>${esc(f[1])}</p><a class="textlink" href="${f[2]}" target="_blank" rel="noopener">Learn more ↗</a></article>`).join('');
+const postHTML = p => `<a class="post" href="https://www.biocom.org/lifelines/${p.k.toLowerCase()}/" target="_blank" rel="noopener"><span class="k">${esc(p.k)}</span><h3>${esc(p.t)}</h3><time>${esc(p.d)}</time></a>`;
+$('#homePosts').innerHTML = POSTS.slice(0,4).map(postHTML).join('');
+$('#allPosts').innerHTML = POSTS.map(postHTML).join('');
+$('#programList').innerHTML = PROGRAMS.map(p=>`<article class="prog"><h3>${esc(p[0])}</h3><p class="lede" style="font-size:19px">${esc(p[1])}</p><ul>${p[2].map(l=>`<li><a href="${l[1]}" target="_blank" rel="noopener"><span>${esc(l[0])}</span><span aria-hidden="true">↗</span></a></li>`).join('')}</ul></article>`).join('');
+$('#offices').innerHTML = OFFICES.map(o=>`<div class="office"><h3>${esc(o[0])}${o[1]?` <span class="hq">HQ</span>`:''}</h3>${o[2]?`<address>${o[2]}</address><span class="tel">${o[3]}</span>`:`<p class="pending">Regional team in place. Address coming soon.</p>`}</div>`).join('');
+
+/* ---------- people ---------- */
+const personHTML = (p, role) => `<div class="person"><span class="mono" aria-hidden="true">${initials(p[0])}</span><div style="min-width:0">${role?`<span class="role">${esc(role)}</span>`:''}<b>${esc(p[0])}</b>${p[1]?`<span>${esc(p[1])}</span>`:''}${p[2]?`<em>${esc(p[2])}</em>`:''}</div></div>`;
+const SETS = {staff:['Staff',STAFF],directors:['Board of Directors',DIRECTORS],governors:['Board of Governors',GOVERNORS],emeritus:['Emeritus',EMERITUS]};
+let pset='staff';
+$('#ptabs').innerHTML = Object.entries(SETS).map(([k,v])=>`<button role="tab" data-set="${k}" aria-selected="${k===pset}">${v[0]} <span class="num" style="opacity:.6">${v[1].length}</span></button>`).join('');
+function renderPeople(){
+  const q = $('#psearch').value.trim().toLowerCase();
+  const rows = SETS[pset][1].filter(p => !q || p.join(' ').toLowerCase().includes(q));
+  $('#plist').innerHTML = rows.length ? rows.map(p=>personHTML(p, p[3])).join('') : `<div class="empty">No one matches “${esc(q)}”. Try a first name, a title or a company.</div>`;
+  $('#pcount').textContent = `Showing ${rows.length} of ${SETS[pset][1].length} · ${SETS[pset][0]}`;
+}
+$('#ptabs').addEventListener('click', e => { const b=e.target.closest('button'); if(!b) return; pset=b.dataset.set; $$('#ptabs button').forEach(x=>x.setAttribute('aria-selected',x===b)); renderPeople() });
+$('#psearch').addEventListener('input', renderPeople);
+renderPeople();
+const TEAM = ['Kira Jenkins','George Bonaros','Jamie Lamorandier','Reilly Waltz','Rudy Ramos','Don Basanes','Bella Perez'];
+$('#memberTeam').innerHTML = TEAM.map(n=>personHTML(STAFF.find(s=>s[0]===n))).join('');
+
+/* ---------- forms ---------- */
+const chip = (name,id,v) => `<input type="radio" name="${name}" id="${id}" value="${esc(v)}"><label for="${id}">${esc(v)}</label>`;
+$('#qregions').innerHTML = REGIONS.map((r,i)=>chip('qreg','qr'+i,r)).join('');
+$('#jregions').innerHTML = REGIONS.map((r,i)=>chip('region','jr'+i,r)).join('');
+$('#jinterests').innerHTML = RAYS.slice(0,5).map((r,i)=>`<input type="checkbox" name="interest" id="ji${i}" value="${esc(r.name)}"><label for="ji${i}">${esc(r.name)}</label>`).join('');
+$('#jf').innerHTML = '<option value="">Choose one</option>'+FUNCTIONS.map(f=>`<option>${esc(f)}</option>`).join('');
+$('#hh').innerHTML = '<option value="">Choose one</option>'+HEARD.map(f=>`<option>${esc(f)}</option>`).join('');
+
+const repCard = (r, lead) => { const [n,t]=repFor(r); return `<div class="rep"><span class="mono" aria-hidden="true">${initials(n)}</span><div><span>${lead}</span><b>${esc(n)}</b><span>${esc(t)}</span></div></div>` };
+function updateRep(){ const r = ($('input[name=region]:checked')||{}).value; $('#repPreview').innerHTML = r ? repCard(r,'Your membership lead') : '' }
+$('#jregions').addEventListener('change', updateRep);
+
+$('#quickForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const s = ($('input[name=qsize]:checked')||{}).value, r = ($('input[name=qreg]:checked')||{}).value;
+  if(s==='Service provider'){ $('#t4').checked=true } else if(s){ const m={'1–50':'s1','51–200':'s2','200+':'s3'}[s]; $('#'+m).checked=true }
+  if(r){ $('#jr'+REGIONS.indexOf(r)).checked=true; updateRep() }
+  location.hash='join';
+});
+function showStep(n){ $('#step1').hidden = n!==1; $('#step2').hidden = n!==2; $('#st2').classList.toggle('on', n===2); $('#joinCard').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'}) }
+$('#toStep2').addEventListener('click', () => {
+  const ok = $('input[name=size]:checked') && $('input[name=region]:checked');
+  $('#err1').hidden = !!ok; if(ok) showStep(2);
+});
+$('#back1').addEventListener('click', () => showStep(1));
+$('#joinForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const req = ['fn','ln','co','em','ph','jf','jl','hh'].map(id=>$('#'+id));
+  const bad = req.filter(el => !el.value.trim() || (el.type==='email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value)));
+  req.forEach(el => el.setAttribute('aria-invalid', bad.includes(el)));
+  $('#err2').hidden = !bad.length; if(bad.length){ bad[0].focus(); return }
+  const r = $('input[name=region]:checked').value;
+  $('#joinForm').hidden = true; $('.steps').hidden = true;
+  const d = $('#joinDone'); d.hidden = false;
+  d.innerHTML = `<span class="check" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#322620" stroke-width="2.5"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+    <h2>Thanks, ${esc($('#fn').value.trim())}. You're in the queue.</h2>
+    <p style="color:var(--ink-2);max-width:52ch">Your inquiry for ${esc($('#co').value.trim())} is routed to the ${esc(r)} membership lead below, who will contact you at ${esc($('#em').value.trim())}.</p>
+    ${repCard(r,'Following up')}
+    <p class="note">Prototype: in production this form posts to Biocom's membership CRM. Nothing was sent from this preview.</p>
+    <a class="btn" href="#membership">Keep exploring membership</a>`;
+  d.querySelector('h2').setAttribute('tabindex','-1'); d.querySelector('h2').focus();
+});
+
+/* ---------- EIR canvas: radiating growth lines ---------- */
+function eir(){
+  const c = $('#eirCanvas'); if(!c) return; const ctx = c.getContext('2d');
+  const dpr = Math.min(2, devicePixelRatio||1);
+  const w = c.clientWidth, h = c.clientHeight; if(!w||!h) return;
+  c.width = w*dpr; c.height = h*dpr; ctx.scale(dpr,dpr);
+  let t0 = performance.now();
+  const N = 46;
+  function frame(now){
+    const t = RM ? 1 : Math.min(1,(now-t0)/1800);
+    ctx.clearRect(0,0,w,h);
+    for(let i=0;i<N;i++){
+      const a = -1.15 + (2.3*i/(N-1));
+      const len = (0.35 + 0.65*Math.abs(Math.sin(i*1.7)))*Math.max(w,h)*0.95;
+      const e = 1-Math.pow(1-Math.min(1,Math.max(0,t*1.6 - i/N*0.6)),3);
+      ctx.strokeStyle = `rgba(253,171,0,${0.18+0.5*(i%5===0)})`;
+      ctx.lineWidth = i%5===0 ? 2 : 1;
+      ctx.beginPath(); ctx.moveTo(0,h/2); ctx.lineTo(Math.cos(a)*len*e, h/2+Math.sin(a)*len*e); ctx.stroke();
+    }
+    ctx.fillStyle = '#fdab00'; ctx.beginPath(); ctx.arc(0,h/2,5,0,7); ctx.fill();
+    if(t<1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- router ---------- */
+const PAGES = $$('.page').map(p=>p.dataset.page);
+function route(){
+  let id = location.hash.slice(1) || 'home';
+  if(!PAGES.includes(id)) id = 'home';
+  $$('.page').forEach(p => p.hidden = p.dataset.page !== id);
+  $$('.mainnav a').forEach(a => a.getAttribute('href')==='#'+id ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
+  $('#mainnav').classList.remove('open'); $('#menubtn').setAttribute('aria-expanded','false');
+  window.scrollTo(0,0);
+  document.title = id==='home' ? 'Biocom California' : 'Biocom · ' + ({membership:'Membership',join:'Join',programs:'Programs',events:'Conferences & Events',insights:'Insights',about:'About',contact:'Locations & contact'}[id]);
+  if(id==='home') requestAnimationFrame(eir);
+}
+addEventListener('hashchange', route);
+$('#menubtn').addEventListener('click', () => { const o = $('#mainnav').classList.toggle('open'); $('#menubtn').setAttribute('aria-expanded', o) });
+route();
+addEventListener('resize', () => { if(location.hash.slice(1)==='home'||!location.hash) eir() });
+})();
+</script>
+
+
+<a href="../" data-sv-concept aria-label="Concept redesign by studiovektor, not affiliated with Biocom California. Back to the portfolio"
+  style="position:fixed;left:16px;bottom:16px;z-index:2147483000;display:flex;align-items:center;gap:10px;
+  max-width:calc(100vw - 32px);padding:9px 14px 9px 12px;border-radius:999px;background:rgba(8,11,13,.9);
+  border:1px solid rgba(177,242,244,.3);box-shadow:0 10px 30px -10px rgba(0,0,0,.6);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);color:#eaf4f4;text-decoration:none;font:500 12.5px/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+  <span style="width:8px;height:8px;border-radius:50%;background:#b1f2f4;flex:none"></span>
+  <span><b style="font-weight:700">Concept redesign</b> by studiovektor <span style="color:#9daeb0">· not affiliated with Biocom California</span></span>
+</a>
+</body></html>

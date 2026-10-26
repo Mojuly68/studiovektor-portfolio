@@ -1,0 +1,1068 @@
+<!doctype html><html><head><meta name="robots" content="noindex"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<title>Precision Manufacturing Company</title>
+<meta name="description" content="Contract CNC machining in Roseville, CA. 5-axis Matsuura and Haas pallet cells, Zeiss scanning CMM inspection. ITAR registered, ISO 9001 and ISO 13485.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://pmccnc.com/#org","name":"Precision Manufacturing Company","alternateName":"PMC","url":"https://pmccnc.com/","telephone":"+1-916-603-8023","email":"Kelly@pmccnc.com","address":{"@type":"PostalAddress","streetAddress":"301 Derek Place","addressLocality":"Roseville","addressRegion":"CA","postalCode":"95678","addressCountry":"US"},"founder":{"@type":"Person","name":"Kelly Johnson"},"naics":"332710","identifier":[{"@type":"PropertyValue","propertyID":"CAGE","value":"9R7F1"},{"@type":"PropertyValue","propertyID":"UEI","value":"SVK9MSUSDB81"}],"knowsAbout":["5-axis CNC milling","CNC turning","GD&T","CMM inspection","AS9102 first article inspection"]}
+</script>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/* Layout: instrument-panel grid. 12 columns, 1440 max, technical grid ground, one amber action + one cyan "measured" signal. */
+:root{
+  --g950:#0B0D10; --g900:#12161B; --s800:#1B2129; --s700:#262E38; --s600:#36404C;
+  --ti100:#E9ECEF; --ti200:#D3D8DE; --ti300:#AEB6C0; --ti400:#8B95A2; --ti500:#6B7684;
+  --amber:#FFB020; --amber6:#E09200; --cyan:#3EC6E0; --ok:#34C77B; --caution:#F97316; --crit:#EF4444;
+  --glass:rgba(18,22,27,.62); --glass-line:rgba(174,182,192,.18);
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.2,0,0,1); --ease-out:cubic-bezier(.4,0,1,1);
+  --max:1440px; --gut:clamp(16px,4.4vw,64px);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{margin:0;background:var(--g950);color:var(--ti200);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}
+h1,h2,h3,h4{color:var(--ti100);font-weight:700;margin:0;text-wrap:balance}
+p{margin:0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums slashed-zero;font-feature-settings:"tnum","zero"}
+.label{font:500 12px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400)}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* technical grid ground */
+.grid-bg{background-image:
+  linear-gradient(rgba(107,118,132,.09) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(107,118,132,.09) 1px,transparent 1px),
+  linear-gradient(rgba(107,118,132,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(107,118,132,.035) 1px,transparent 1px);
+  background-size:64px 64px,64px 64px,8px 8px,8px 8px;background-position:-1px -1px}
+.xhair{position:absolute;width:12px;height:12px;pointer-events:none}
+.xhair::before,.xhair::after{content:"";position:absolute;background:var(--ti500)}
+.xhair::before{left:5.5px;top:0;width:1px;height:12px}.xhair::after{top:5.5px;left:0;height:1px;width:12px}
+
+/* buttons */
+.btn{--h:48px;display:inline-flex;align-items:center;gap:10px;height:var(--h);padding:0 22px;border:0;cursor:pointer;font:700 15px/1 var(--sans);text-decoration:none;transition:background .12s var(--ease),color .12s var(--ease),border-color .12s var(--ease);white-space:nowrap}
+.btn-primary{background:var(--amber);color:var(--g950);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+.btn-primary:hover{background:var(--amber6)}
+.btn-ghost{background:transparent;color:var(--ti100);box-shadow:inset 0 0 0 1px var(--s600);border-radius:2px}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1px var(--ti400)}
+.btn-sm{--h:36px;padding:0 14px;font-size:14px}
+.btn svg{width:16px;height:16px;flex:none}
+
+/* H0 utility bar */
+.util{background:var(--g950);border-bottom:1px solid var(--s800);font:500 11.5px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ti400)}
+.util .wrap{display:flex;align-items:center;gap:18px;min-height:36px;justify-content:space-between}
+.util-list{display:flex;gap:0;align-items:center;flex-wrap:wrap;min-width:0}
+.util-list span{padding:0 14px;border-left:1px solid var(--s700)}
+.util-list span:first-child{padding-left:0;border:0}
+.util-actions{display:flex;gap:16px;align-items:center;flex:none}
+.util button{all:unset;cursor:pointer;color:var(--ti200);display:inline-flex;gap:6px;align-items:center}
+.util button:hover{color:var(--amber)}
+.util button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.util-phone{color:var(--ti300);user-select:all}
+@media (max-width:1100px){.util-list span:nth-child(n+4){display:none}}
+@media (max-width:640px){.util-list{flex-wrap:nowrap;white-space:nowrap}.util-list span:nth-child(n+3){display:none}.util-phone{display:none}}
+@media (max-width:440px){.util-list span:nth-child(n+2){display:none}}
+
+/* H1 nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(11,13,16,.72);backdrop-filter:blur(14px) saturate(120%);-webkit-backdrop-filter:blur(14px) saturate(120%);border-bottom:1px solid transparent;transition:border-color .2s var(--ease),background .2s var(--ease)}
+.nav.scrolled{background:rgba(18,22,27,.94);border-bottom-color:var(--s700)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:80px}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ti100);flex:none}
+.logo-mark{width:44px;height:44px}
+.logo-word{display:flex;flex-direction:column;line-height:1}
+.logo-word b{font:700 26px/1 var(--sans);letter-spacing:.01em}
+.logo-word small{font:500 11.5px/1 var(--mono);letter-spacing:.14em;color:var(--ti300);margin-top:7px;text-transform:uppercase}
+.flag-badge{display:flex;align-items:center;gap:10px;padding-left:20px;margin-left:-4px;border-left:1px solid var(--s700);height:36px;flex:none}
+.flag{width:28px;height:auto;aspect-ratio:19/10;flex:none;box-shadow:0 0 0 1px rgba(174,182,192,.25);border-radius:1px}
+.flag-txt{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ti300)}
+@media (max-width:1240px) and (min-width:1061px){.flag-txt{display:none}}
+@media (max-width:480px){.flag-txt{display:none}.flag-badge{padding-left:14px}.nav .wrap{height:68px}.logo{gap:10px}.logo-mark{width:34px;height:34px}.logo-word b{font-size:21px}.logo-word small{font-size:9.5px;margin-top:5px}}
+.nav-links{display:flex;gap:4px;margin-left:auto;list-style:none;padding:0;margin-block:0}
+.nav-links a{display:block;padding:8px 12px;text-decoration:none;font-size:14.5px;color:var(--ti300);border-radius:2px;transition:color .12s var(--ease)}
+.nav-links a:hover{color:var(--ti100)}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--s600);color:var(--ti100);height:36px;padding:0 12px;font:500 13px var(--mono);letter-spacing:.06em;cursor:pointer;border-radius:2px}
+@media (max-width:1060px){.nav-links{display:none}.menu-btn{display:inline-flex;align-items:center}.nav .btn-primary{display:none}}
+.sheet{position:fixed;inset:0;z-index:60;background:rgba(11,13,16,.96);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 20px) 24px 24px}
+.sheet a{display:block;padding:16px 0;border-bottom:1px solid var(--s700);text-decoration:none;font-size:22px;color:var(--ti100)}
+.sheet .close{align-self:flex-end;background:none;border:1px solid var(--s600);color:var(--ti100);height:36px;padding:0 12px;font:500 13px var(--mono);cursor:pointer}
+
+/* mobile bottom bar */
+.bottom-cta{display:none}
+@media (max-width:1060px){
+  .bottom-cta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:45;gap:8px;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(18,22,27,.96);border-top:1px solid var(--s700)}
+  .bottom-cta .btn{flex:1;justify-content:center}
+  body{padding-bottom:72px}
+}
+
+/* H2 hero */
+.hero{position:relative;border-bottom:1px solid var(--s800)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,64px);align-items:center;padding-block:clamp(40px,6vw,88px) 32px}
+.hero-copy{display:flex;flex-direction:column;gap:24px;min-width:0}
+.hero h1{font-size:clamp(44px,5.6vw,76px);line-height:1;letter-spacing:-.035em;font-weight:700}
+.hero h1 em{font-style:normal;color:var(--ti400)}
+.hero .lead{font-size:clamp(17px,1.4vw,20px);line-height:1.5;color:var(--ti300);max-width:34em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero-micro{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--ti400);max-width:36em;line-height:1.5}
+.hero-micro svg{flex:none;width:16px;height:16px;margin-top:2px;color:var(--ti300)}
+.formats{display:flex;flex-wrap:wrap;gap:6px}
+.formats span{font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--ti300);border:1px solid var(--s600);padding:5px 7px;border-radius:2px}
+
+.viewport{position:relative;aspect-ratio:7/6;min-height:340px;max-height:640px;width:100%;border:1px solid var(--s700);background:radial-gradient(ellipse 70% 60% at 55% 55%,rgba(62,198,224,.06),transparent 70%),var(--g900);overflow:hidden}
+.viewport canvas{position:absolute;inset:0;width:100%!important;height:100%!important;cursor:grab;touch-action:pan-y}
+.viewport canvas:active{cursor:grabbing}
+.vp-fallback{position:absolute;inset:0;display:grid;place-items:center}
+.vp-fallback svg{width:78%;height:auto}
+.vp-head{position:absolute;left:28px;right:28px;top:18px;display:flex;justify-content:space-between;gap:12px;z-index:3;pointer-events:none}
+.vp-foot{position:absolute;left:28px;right:28px;bottom:16px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;z-index:3}
+.vp-foot .label{pointer-events:none}
+.vp-load{pointer-events:auto}
+.vp .xhair{z-index:2}
+.callouts{position:absolute;inset:0;pointer-events:none;z-index:2}
+.callout{position:absolute;left:0;top:0;display:flex;align-items:flex-start;gap:0;will-change:transform;opacity:0;transition:opacity .3s var(--ease)}
+.callout.on{opacity:1}
+.callout .dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 3px rgba(62,198,224,.22);transform:translate(-50%,-50%);flex:none}
+.callout .lead-line{width:28px;height:1px;background:var(--cyan);opacity:.7;margin-top:-.5px;flex:none}
+.callout .card{margin-top:-14px;background:var(--glass);backdrop-filter:blur(12px) saturate(120%);-webkit-backdrop-filter:blur(12px) saturate(120%);border:1px solid var(--glass-line);padding:7px 10px 8px;border-radius:3px;font:500 12px/1.35 var(--mono);color:var(--ti100);white-space:nowrap}
+.callout .card small{display:block;font-size:10.5px;color:var(--ti400);letter-spacing:.06em;text-transform:uppercase}
+.callout.flip{flex-direction:row-reverse}
+.callout.flip .dot{transform:translate(50%,-50%)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.callout .card,.nav{background:var(--s800)}}
+
+.readout{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--s800)}
+.readout div{padding:16px 20px 18px;border-left:1px solid var(--s800);display:flex;flex-direction:column;gap:6px;min-width:0}
+.readout div:first-child{border-left:0;padding-left:0}
+.readout b{font:500 14px/1.3 var(--mono);color:var(--ti100);font-variant-numeric:tabular-nums}
+@media (max-width:980px){.hero-grid{grid-template-columns:1fr}.readout{grid-template-columns:repeat(2,minmax(0,1fr))}.readout div:nth-child(3){border-left:0;padding-left:0}.readout div:nth-child(n+3){border-top:1px solid var(--s800)}}
+@media (max-width:520px){.readout{grid-template-columns:1fr}.readout div{border-left:0;padding-left:0;border-top:1px solid var(--s800)}.readout div:first-child{border-top:0}.viewport{aspect-ratio:1/1;min-height:0}}
+
+/* sections */
+section{position:relative}
+.sec{padding-block:clamp(64px,9vw,128px)}
+.sec-head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(32px,4vw,56px)}
+.sec-head .eyebrow{margin-bottom:16px;display:block}
+.sec-head h2{font-size:clamp(32px,3.6vw,52px);line-height:1.05;letter-spacing:-.022em}
+.sec-head p{color:var(--ti300);font-size:17px;max-width:38em}
+@media (max-width:860px){.sec-head{grid-template-columns:1fr}}
+.band{background:var(--g900);border-block:1px solid var(--s800)}
+
+/* H3 proof strip */
+.proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--s800)}
+.proof div{padding:28px 24px 30px;border-left:1px solid var(--s800);min-width:0}
+.proof div:first-child{border-left:0;padding-left:0}
+.proof b{display:block;font:500 clamp(36px,3.6vw,52px)/1 var(--mono);color:var(--ti100);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.proof b sub{font-size:.42em;vertical-align:baseline;color:var(--ti400);letter-spacing:0;margin-left:4px}
+.proof span{display:block;margin-top:12px;font-size:14px;color:var(--ti400);max-width:20em}
+@media (max-width:860px){.proof{grid-template-columns:repeat(2,minmax(0,1fr))}.proof div:nth-child(3){border-left:0;padding-left:0}.proof div:nth-child(n+3){border-top:1px solid var(--s800)}}
+
+/* H4 capability cards */
+.caps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.cap{grid-column:span 2;position:relative;display:flex;flex-direction:column;background:var(--s800);border:1px solid var(--s600);border-radius:4px;text-decoration:none;min-width:0;transition:border-color .2s var(--ease),background .2s var(--ease)}
+.cap:nth-child(4),.cap:nth-child(5){grid-column:span 3}
+.cap-media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--g900);border-bottom:1px solid var(--s600)}
+.cap-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.cap-media svg{position:absolute;inset:0;width:100%;height:100%}
+.cap-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.cap h3{font-size:21px;font-weight:700;letter-spacing:-.01em}
+.cap p{font-size:15px;color:var(--ti300)}
+.cap .spec{margin-top:auto;padding-top:14px;display:flex;align-items:center;gap:10px;font:500 12.5px/1.2 var(--mono);color:var(--cyan)}
+.cap .spec::before{content:"";width:22px;height:9px;flex:none;border-left:1px solid currentColor;border-right:1px solid currentColor;background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat;opacity:.8}
+.cap .cb{position:absolute;width:0;height:0;border:0 solid var(--amber);transition:width .16s var(--ease),height .16s var(--ease);pointer-events:none}
+.cap .cb.tl{top:-1px;left:-1px;border-top-width:1.5px;border-left-width:1.5px}
+.cap .cb.tr{top:-1px;right:-1px;border-top-width:1.5px;border-right-width:1.5px}
+.cap .cb.bl{bottom:-1px;left:-1px;border-bottom-width:1.5px;border-left-width:1.5px}
+.cap .cb.br{bottom:-1px;right:-1px;border-bottom-width:1.5px;border-right-width:1.5px}
+@media (hover:hover){.cap:hover{border-color:var(--s600);background:var(--s700)}.cap:hover .cb{width:14px;height:14px}.cap:hover .cap-media img{transform:scale(1.03)}}
+@media (max-width:980px){.caps{grid-template-columns:repeat(2,minmax(0,1fr))}.cap,.cap:nth-child(4),.cap:nth-child(5){grid-column:span 1}.cap:nth-child(5){grid-column:1/-1}}
+@media (max-width:600px){.caps{grid-template-columns:1fr}.cap:nth-child(5){grid-column:auto}}
+
+/* H5 sequence */
+.seq{position:relative}
+.seq-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0}
+.seq-track{position:absolute;left:0;right:0;top:27px;height:2px;pointer-events:none}
+.seq-track svg{width:100%;height:12px;overflow:visible;position:absolute;top:-5px}
+.seq-track path{stroke:var(--cyan);stroke-width:1.5;fill:none;stroke-dasharray:1;stroke-dashoffset:0}
+.js .seq-track path{stroke-dashoffset:1;transition:stroke-dashoffset 1.2s var(--ease)}
+.js .seq.in .seq-track path{stroke-dashoffset:0}
+.step{position:relative;padding:0 18px 0 0;min-width:0}
+.step-node{position:relative;width:56px;height:56px;border:1px solid var(--s600);background:var(--g950);display:grid;place-items:center;font:500 13px var(--mono);color:var(--ti100);z-index:1;transition:border-color .3s var(--ease)}
+.seq.in .step-node{border-color:var(--cyan)}
+.step h3{margin-top:22px;font-size:18px;font-weight:700}
+.step p{margin-top:8px;font-size:14.5px;color:var(--ti300)}
+.step .artifact{margin-top:14px;display:inline-block;font:500 11.5px/1.35 var(--mono);color:var(--cyan);border-top:1px solid var(--s600);padding-top:10px;letter-spacing:.02em}
+@media (max-width:1100px){.seq-list{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:48px}.seq-track{display:none}}
+@media (max-width:640px){.seq-list{grid-template-columns:1fr;row-gap:32px}.step{display:grid;grid-template-columns:56px 1fr;column-gap:18px;padding:0}.step h3{margin-top:4px}.step-node{grid-row:span 3}}
+
+/* H6 fleet */
+.fleet-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 32px;align-items:end;margin-bottom:20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:transparent;border:1px solid var(--s600);color:var(--ti300);height:34px;padding:0 13px;border-radius:2px;font:500 13px var(--sans);cursor:pointer;transition:all .12s var(--ease)}
+.chip:hover{color:var(--ti100);border-color:var(--ti500)}
+.chip[aria-pressed="true"]{background:rgba(255,176,32,.12);border-color:var(--amber);color:var(--ti100)}
+.fitbox{display:flex;flex-wrap:wrap;align-items:end;gap:10px;padding:14px 16px;background:var(--s800);border:1px solid var(--s600);border-radius:4px}
+.fitbox .label{width:100%;margin-bottom:2px;display:flex;justify-content:space-between;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400)}
+.num{width:84px;height:38px;background:var(--g950);border:1px solid var(--s600);color:var(--ti100);font:500 15px var(--mono);padding:0 10px;border-radius:2px;font-variant-numeric:tabular-nums}
+.num:focus{outline:none;border-color:var(--amber)}
+.unit-toggle{display:flex;border:1px solid var(--s600);border-radius:2px;height:38px}
+.unit-toggle button{background:none;border:0;color:var(--ti400);font:500 12px var(--mono);padding:0 10px;cursor:pointer;letter-spacing:.06em}
+.unit-toggle button[aria-pressed="true"]{background:var(--s700);color:var(--ti100)}
+@media (max-width:980px){.fleet-tools{grid-template-columns:1fr}}
+.table-wrap{overflow-x:auto;border:1px solid var(--s600);border-radius:4px;background:var(--s800)}
+table{width:100%;border-collapse:collapse;min-width:820px}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--s700);vertical-align:middle}
+th{font:500 11.5px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400);background:var(--g900);position:sticky;top:0}
+td{font-size:15px;color:var(--ti200)}
+td.mono,td .mono{font:450 14px/1.3 var(--mono);color:var(--ti100)}
+tbody tr{transition:background .12s var(--ease)}
+tbody tr:hover{background:var(--s700)}
+tbody tr:last-child td{border-bottom:0}
+.m-name b{display:block;color:var(--ti100);font-weight:500}
+.m-name small{color:var(--ti400);font-size:13px}
+.axes{display:inline-block;font:500 12px/1 var(--mono);padding:5px 7px;border:1px solid var(--s600);border-radius:2px;color:var(--ti200)}
+.axes.five{border-color:var(--cyan);color:var(--cyan)}
+.fit{display:inline-flex;align-items:center;gap:8px;font:500 13px/1.3 var(--mono)}
+.fit i{width:8px;height:8px;border-radius:50%;flex:none}
+.fit.ok{color:var(--ok)}.fit.ok i{background:var(--ok)}
+.fit.no{color:var(--crit)}.fit.no i{background:var(--crit)}
+.fit.na{color:var(--ti400)}.fit.na i{background:var(--ti500)}
+.fleet-note{margin-top:14px;font-size:13.5px;color:var(--ti400);max-width:62em}
+.fleet-empty{padding:24px 16px;color:var(--ti300)}
+
+/* H7 split */
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.path{position:relative;padding:clamp(28px,3.4vw,48px);border:1px solid var(--s600);border-radius:4px;background:var(--s800);display:flex;flex-direction:column;gap:22px;min-width:0}
+.path .label{color:var(--cyan)}
+.path h3{font-size:clamp(26px,2.4vw,34px);letter-spacing:-.015em;line-height:1.1}
+.path ul{list-style:none;padding:0;margin:0;border-top:1px solid var(--s600)}
+.path li a{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--s700);text-decoration:none;color:var(--ti200);transition:color .12s var(--ease),padding .16s var(--ease)}
+.path li a:hover{color:var(--ti100);padding-left:6px}
+.path li a span:last-child{font-family:var(--mono);color:var(--ti400)}
+.path .btn{align-self:flex-start}
+@media (max-width:760px){.split{grid-template-columns:1fr}}
+
+/* H8 industries */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--s600);overflow-x:auto;scrollbar-width:none}
+.tab{background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;color:var(--ti400);padding:14px 20px;font:500 15px var(--sans);cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--ti200)}
+.tab[aria-selected="true"]{color:var(--ti100);border-bottom-color:var(--amber)}
+.panel{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,64px);padding-top:40px}
+.panel h3{font-size:28px;letter-spacing:-.015em;line-height:1.15}
+.panel > div:first-child p{margin-top:16px;color:var(--ti300)}
+.controls{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--s600)}
+.controls li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;padding:18px 0;border-bottom:1px solid var(--s700)}
+.controls li b{font:500 12px/1.5 var(--mono);color:var(--cyan);letter-spacing:.04em;text-transform:uppercase}
+.controls li span{color:var(--ti200)}
+.verify{font:500 10.5px/1 var(--mono);color:var(--caution);border:1px solid rgba(249,115,22,.5);padding:3px 5px;border-radius:2px;letter-spacing:.06em;margin-left:6px;vertical-align:2px;white-space:nowrap}
+@media (max-width:860px){.panel{grid-template-columns:1fr}.controls li{grid-template-columns:1fr;gap:4px}}
+
+/* H9 metrology */
+.metro{position:relative;overflow:hidden;border-block:1px solid var(--s800)}
+.metro-bg{position:absolute;inset:0;background:url(assets/zeiss-contura-duo.jpg) right center/cover no-repeat}
+.metro-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--g950) 0%,rgba(11,13,16,.92) 38%,rgba(11,13,16,.5) 70%,rgba(11,13,16,.35) 100%)}
+.metro .wrap{position:relative;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,64px);align-items:center}
+.metro h2{font-size:clamp(32px,3.6vw,52px);line-height:1.05;letter-spacing:-.022em}
+.metro .mcopy{display:flex;flex-direction:column;gap:22px}
+.metro .mcopy p{color:var(--ti300);font-size:17px}
+.equip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--s600);border:1px solid var(--s600);border-radius:4px;overflow:hidden}
+.equip div{background:var(--g900);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.equip b{font:500 14px/1.3 var(--mono);color:var(--ti100)}
+.equip span{font-size:13px;color:var(--ti400)}
+.inspect{background:var(--glass);backdrop-filter:blur(14px) saturate(120%);-webkit-backdrop-filter:blur(14px) saturate(120%);border:1px solid var(--glass-line);border-radius:4px;padding:20px 22px 18px;min-width:0}
+.inspect-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap;margin-bottom:12px}
+.inspect-head b{font:500 14px/1.3 var(--mono);color:var(--ti100)}
+.inspect svg{width:100%;height:auto;display:block}
+.inspect-foot{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:10px;font:500 12px/1.4 var(--mono);color:var(--ti300)}
+.inspect-foot i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.example-tag{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--caution)}
+@media (max-width:980px){.metro .wrap{grid-template-columns:1fr}.metro-bg::after{background:linear-gradient(180deg,rgba(11,13,16,.75),var(--g950) 75%)}}
+
+/* H10 founder */
+.founder{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(24px,4vw,64px);align-items:center}
+.frame{position:relative;border:1px solid var(--s600);padding:10px;background:var(--g900)}
+.frame img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.frame .xhair.a{top:-6px;left:-6px}.frame .xhair.b{top:-6px;right:-6px}.frame .xhair.c{bottom:-6px;left:-6px}.frame .xhair.d{bottom:-6px;right:-6px}
+.frame figcaption{display:flex;justify-content:space-between;gap:12px;padding:10px 2px 0;font:500 11.5px/1.3 var(--mono);color:var(--ti400);letter-spacing:.04em}
+.founder-copy{display:flex;flex-direction:column;gap:20px}
+.founder-copy h2{font-size:clamp(32px,3.6vw,52px);line-height:1.05;letter-spacing:-.022em}
+.founder-copy p{color:var(--ti300);font-size:17px;max-width:34em}
+.owner{display:flex;align-items:center;gap:18px;padding:14px 0 6px}
+.owner-photo{position:relative;flex:none;width:112px;height:112px;border:1px solid var(--s600);padding:5px;background:var(--g900)}
+.owner-photo img{width:100%;height:100%;object-fit:cover}
+.owner-photo .xhair{width:10px;height:10px}
+.owner-photo .xhair::before{left:4.5px;height:10px}.owner-photo .xhair::after{top:4.5px;width:10px}
+.owner-photo .xhair.a{top:-5px;left:-5px}.owner-photo .xhair.d{bottom:-5px;right:-5px}
+.owner b{display:block;font:700 20px/1.2 var(--sans);color:var(--ti100)}
+.owner span{display:block;margin-top:6px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--s600);margin-top:8px}
+.facts div{padding:14px 0;border-bottom:1px solid var(--s700);display:flex;flex-direction:column;gap:4px}
+.facts div:nth-child(odd){padding-right:16px}
+.facts b{font:500 14px/1.3 var(--mono);color:var(--ti100);user-select:all}
+@media (max-width:860px){.founder{grid-template-columns:1fr}}
+
+/* H11 RFQ */
+.rfq{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(24px,3vw,40px)}
+.rfq-main{display:flex;flex-direction:column;gap:20px;min-width:0}
+.q{border:1px solid var(--s600);border-radius:4px;background:var(--s800);padding:18px 20px}
+.q legend{float:left;width:100%;padding:0;margin-bottom:12px;font:500 15px/1.4 var(--sans);color:var(--ti100)}
+.q legend small{display:block;color:var(--ti400);font-size:13.5px;font-weight:400;margin-top:2px}
+.radios{clear:both;display:flex;flex-wrap:wrap;gap:8px}
+.radio{position:relative}
+.radio input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.radio span{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border:1px solid var(--s600);border-radius:2px;color:var(--ti300);font-size:14.5px;transition:all .12s var(--ease)}
+.radio span::before{content:"";width:12px;height:12px;border-radius:50%;border:1px solid var(--ti500)}
+.radio input:checked + span{border-color:var(--amber);color:var(--ti100);background:rgba(255,176,32,.08)}
+.radio input:checked + span::before{border:4px solid var(--amber)}
+.radio input:focus-visible + span{outline:2px solid var(--amber);outline-offset:2px}
+.drop{position:relative;border:1.5px dashed var(--s600);border-radius:4px;padding:clamp(28px,4vw,48px) 24px;text-align:center;background:repeating-linear-gradient(-45deg,transparent 0 10px,rgba(107,118,132,.035) 10px 11px),var(--g900);transition:border-color .15s var(--ease),background-color .15s var(--ease);display:flex;flex-direction:column;align-items:center;gap:14px}
+.drop.over{border-color:var(--amber);background-color:rgba(255,176,32,.05)}
+.drop.locked{opacity:.55}
+.drop svg.ico{width:40px;height:40px;color:var(--ti300)}
+.drop h3{font-size:22px;font-weight:700}
+.drop p{color:var(--ti400);font-size:14px}
+.files{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.files li{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--s600);background:var(--s800);border-radius:2px;font:450 13.5px/1.3 var(--mono)}
+.files li .ext{font-size:11px;padding:3px 6px;border:1px solid var(--cyan);color:var(--cyan);border-radius:2px}
+.files li .fname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ti100)}
+.files li .fsize{color:var(--ti400)}
+.files li.bad .ext{border-color:var(--crit);color:var(--crit)}
+.files li.bad .fsize{color:var(--crit)}
+.files li button{background:none;border:0;color:var(--ti400);cursor:pointer;font:500 18px/1 var(--mono);padding:2px 4px}
+.files li button:hover{color:var(--ti100)}
+.row2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.inp{display:flex;flex-direction:column;gap:6px;min-width:0}
+.inp label{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400)}
+.inp input,.inp select{height:42px;background:var(--g950);border:1px solid var(--s600);color:var(--ti100);padding:0 12px;font:400 15px var(--sans);border-radius:2px;width:100%}
+.inp input:focus,.inp select:focus{outline:none;border-color:var(--amber)}
+.inp .hint{font-size:12.5px;color:var(--caution);min-height:0}
+@media (max-width:760px){.row2{grid-template-columns:1fr}}
+.toggle{display:flex;align-items:center;gap:12px;cursor:pointer;color:var(--ti200);font-size:14.5px}
+.toggle input{appearance:none;width:38px;height:22px;border-radius:11px;background:var(--s600);position:relative;cursor:pointer;flex:none;margin:0;transition:background .12s var(--ease)}
+.toggle input::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--ti100);transition:transform .12s var(--ease)}
+.toggle input:checked{background:var(--amber)}
+.toggle input:checked::after{transform:translateX(16px);background:var(--g950)}
+.rfq-side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.secure{border:1px solid var(--s600);border-radius:4px;padding:20px;background:var(--g900)}
+.secure h4{font-size:15px;font-weight:700;display:flex;gap:10px;align-items:center}
+.secure h4 svg{width:18px;height:18px;color:var(--ok)}
+.secure ul{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.secure li{font-size:14px;color:var(--ti300);padding-left:18px;position:relative;line-height:1.5}
+.secure li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border:1px solid var(--cyan)}
+.meter{border:1px solid var(--s600);border-radius:4px;padding:18px 20px;background:var(--s800)}
+.meter ol{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.meter li{display:flex;align-items:center;gap:10px;font:500 13px/1.3 var(--mono);color:var(--ti400)}
+.meter li i{width:14px;height:14px;border:1px solid var(--ti500);border-radius:2px;flex:none;display:grid;place-items:center}
+.meter li.done{color:var(--ti100)}
+.meter li.done i{border-color:var(--ok);background:var(--ok)}
+.meter li.done i::after{content:"";width:6px;height:3px;border-left:1.5px solid var(--g950);border-bottom:1.5px solid var(--g950);transform:rotate(-45deg) translate(1px,-1px)}
+.meter .verdict{margin-top:14px;padding-top:12px;border-top:1px solid var(--s600);font:500 13px/1.4 var(--mono);color:var(--ti200)}
+.meter .verdict b{color:var(--amber)}
+.status{padding:14px 16px;border-radius:2px;border:1px solid var(--s600);font-size:14px;color:var(--ti200);background:var(--g900)}
+.status.ok{border-color:rgba(52,199,123,.5)}
+.status.err{border-color:rgba(239,68,68,.6)}
+@media (max-width:980px){.rfq{grid-template-columns:1fr}}
+
+/* footer */
+footer{border-top:1px solid var(--s800);background:var(--g950);padding-block:56px 40px;font-size:14px;color:var(--ti400)}
+.foot{display:grid;grid-template-columns:minmax(0,4fr) repeat(3,minmax(0,2fr));gap:32px}
+.foot h4{font:500 11.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti300);margin-bottom:14px}
+.foot ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+.foot a{text-decoration:none}.foot a:hover{color:var(--ti100)}
+.foot address{font-style:normal;line-height:1.7}
+.foot-ids{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font:500 12px/1.4 var(--mono);color:var(--ti300)}
+.foot-base{margin-top:48px;padding-top:20px;border-top:1px solid var(--s800);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font:500 12px/1.4 var(--mono)}
+@media (max-width:860px){.foot{grid-template-columns:1fr 1fr}.foot > div:first-child{grid-column:1/-1}}
+
+/* cert drawer */
+.scrim{position:fixed;inset:0;background:rgba(5,6,8,.6);z-index:70;opacity:0;transition:opacity .32s var(--ease)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);z-index:71;background:var(--s700);border-left:1px solid var(--s600);box-shadow:0 24px 48px rgba(0,0,0,.5);transform:translateX(100%);transition:transform .32s var(--ease);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.drawer.open{transform:none}.scrim.open{opacity:1}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--s600)}
+.drawer-head h2{font-size:20px;font-weight:700}
+.drawer-body{overflow-y:auto;padding:8px 24px 32px;flex:1}
+.drawer h3{margin:24px 0 12px;font:500 11.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ti400)}
+.cert{border:1px solid var(--s600);background:var(--s800);border-radius:4px;padding:16px;margin-bottom:10px;display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px}
+.cert-mark{width:56px;height:56px;border:1px solid var(--s600);display:grid;place-items:center;font:600 11px/1.1 var(--mono);color:var(--ti200);text-align:center;letter-spacing:.02em}
+.cert b{color:var(--ti100);font-weight:700;display:block}
+.cert dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;margin:10px 0 0;font-size:13px}
+.cert dt{color:var(--ti400);font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;padding-top:1px}
+.cert dd{margin:0;color:var(--ti200)}
+.cert-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;font:500 12px/1 var(--mono);padding:5px 8px;border-radius:2px}
+.pill i{width:7px;height:7px;border-radius:50%}
+.pill.pending{color:var(--caution);border:1px solid rgba(249,115,22,.45)}.pill.pending i{background:var(--caution)}
+.pill.okp{color:var(--ok);border:1px solid rgba(52,199,123,.45)}.pill.okp i{background:var(--ok)}
+.idrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--s600)}
+.idrow span{font-size:13px;color:var(--ti400)}
+.idrow b{font:500 15px/1.2 var(--mono);color:var(--ti100);user-select:all}
+.copybtn{background:none;border:1px solid var(--s600);color:var(--ti200);font:500 12px var(--mono);height:30px;padding:0 10px;border-radius:2px;cursor:pointer}
+.copybtn:hover{border-color:var(--ti400)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}.js .seq-track path{stroke-dashoffset:0}}
+</style>
+
+<div class="util" role="region" aria-label="Compliance and identifiers">
+  <div class="wrap">
+    <div class="util-list">
+      <span>ITAR Registered</span><span>ISO 9001:2015</span><span>ISO 13485:2016</span><span>NIST SP 800-171</span><span>CAGE 9R7F1</span><span>UEI SVK9MSUSDB81</span>
+    </div>
+    <div class="util-actions">
+      <button type="button" data-open-certs><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5.5L12.5 4.5V14.5H4z"/><path d="M9.5 1.5v3h3M6 8h4.5M6 10.5h4.5"/></svg>Certificates</button>
+      <span class="util-phone">916.603.8023</span>
+    </div>
+  </div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Precision Manufacturing Company, home">
+      <svg class="logo-mark" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x=".75" y=".75" width="28.5" height="28.5" stroke="#AEB6C0" stroke-width="1.5"/><path d="M7 22V8h7.5a4 4 0 0 1 0 8H7" stroke="#E9ECEF" stroke-width="2"/><circle cx="21.5" cy="21.5" r="2.25" fill="#FFB020"/></svg>
+      <span class="logo-word"><b>PMC</b><small>Precision Manufacturing</small></span>
+    </a>
+    <span class="flag-badge"><svg class="flag" viewBox="0 0 190 100" role="img" aria-label="United States flag"><rect width="190" height="100" fill="#FFFFFF"/><rect y="0.000" width="190" height="7.692" fill="#B22234"/><rect y="15.385" width="190" height="7.692" fill="#B22234"/><rect y="30.769" width="190" height="7.692" fill="#B22234"/><rect y="46.154" width="190" height="7.692" fill="#B22234"/><rect y="61.538" width="190" height="7.692" fill="#B22234"/><rect y="76.923" width="190" height="7.692" fill="#B22234"/><rect y="92.308" width="190" height="7.692" fill="#B22234"/><rect width="76" height="53.85" fill="#3C3B6E"/><g fill="#FFFFFF"><circle cx="6.33" cy="5.38" r="1.9"/><circle cx="19.00" cy="5.38" r="1.9"/><circle cx="31.67" cy="5.38" r="1.9"/><circle cx="44.34" cy="5.38" r="1.9"/><circle cx="57.01" cy="5.38" r="1.9"/><circle cx="69.68" cy="5.38" r="1.9"/><circle cx="12.66" cy="10.76" r="1.9"/><circle cx="25.33" cy="10.76" r="1.9"/><circle cx="38.00" cy="10.76" r="1.9"/><circle cx="50.67" cy="10.76" r="1.9"/><circle cx="63.34" cy="10.76" r="1.9"/><circle cx="6.33" cy="16.14" r="1.9"/><circle cx="19.00" cy="16.14" r="1.9"/><circle cx="31.67" cy="16.14" r="1.9"/><circle cx="44.34" cy="16.14" r="1.9"/><circle cx="57.01" cy="16.14" r="1.9"/><circle cx="69.68" cy="16.14" r="1.9"/><circle cx="12.66" cy="21.52" r="1.9"/><circle cx="25.33" cy="21.52" r="1.9"/><circle cx="38.00" cy="21.52" r="1.9"/><circle cx="50.67" cy="21.52" r="1.9"/><circle cx="63.34" cy="21.52" r="1.9"/><circle cx="6.33" cy="26.90" r="1.9"/><circle cx="19.00" cy="26.90" r="1.9"/><circle cx="31.67" cy="26.90" r="1.9"/><circle cx="44.34" cy="26.90" r="1.9"/><circle cx="57.01" cy="26.90" r="1.9"/><circle cx="69.68" cy="26.90" r="1.9"/><circle cx="12.66" cy="32.28" r="1.9"/><circle cx="25.33" cy="32.28" r="1.9"/><circle cx="38.00" cy="32.28" r="1.9"/><circle cx="50.67" cy="32.28" r="1.9"/><circle cx="63.34" cy="32.28" r="1.9"/><circle cx="6.33" cy="37.66" r="1.9"/><circle cx="19.00" cy="37.66" r="1.9"/><circle cx="31.67" cy="37.66" r="1.9"/><circle cx="44.34" cy="37.66" r="1.9"/><circle cx="57.01" cy="37.66" r="1.9"/><circle cx="69.68" cy="37.66" r="1.9"/><circle cx="12.66" cy="43.04" r="1.9"/><circle cx="25.33" cy="43.04" r="1.9"/><circle cx="38.00" cy="43.04" r="1.9"/><circle cx="50.67" cy="43.04" r="1.9"/><circle cx="63.34" cy="43.04" r="1.9"/><circle cx="6.33" cy="48.42" r="1.9"/><circle cx="19.00" cy="48.42" r="1.9"/><circle cx="31.67" cy="48.42" r="1.9"/><circle cx="44.34" cy="48.42" r="1.9"/><circle cx="57.01" cy="48.42" r="1.9"/><circle cx="69.68" cy="48.42" r="1.9"/></g></svg><span class="flag-txt">Made in USA</span></span>
+    <ul class="nav-links">
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#fleet">Fleet</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#quality">Quality</a></li>
+      <li><a href="#industries">Industries</a></li>
+      <li><a href="#company">Company</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm" href="#rfq"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 11V2.5M4.5 6 8 2.5 11.5 6M2.5 11v2.5h11V11"/></svg>Upload CAD</a>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="sheet">MENU</button>
+  </div>
+</header>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-label="Site menu">
+  <button class="close" type="button" id="sheetClose">CLOSE</button>
+  <nav>
+    <a href="#capabilities">Capabilities</a><a href="#fleet">Fleet</a><a href="#process">Process</a><a href="#quality">Quality</a><a href="#industries">Industries</a><a href="#company">Company</a><a href="#rfq">Upload CAD for a quote</a>
+  </nav>
+</div>
+
+<main id="top">
+
+<!-- H2 HERO -->
+<section class="hero grid-bg" aria-labelledby="hero-h">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="label">Contract CNC machining · Roseville, CA</span>
+        <h1 id="hero-h">Five-axis parts, <em>inspected to the print.</em></h1>
+        <p class="lead">Medical, defense and aerospace components machined on Matsuura 5-axis and Haas pallet cells, then verified on a Zeiss scanning CMM. One ITAR-registered shop, one point of accountability.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#rfq"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 11V2.5M4.5 6 8 2.5 11.5 6M2.5 11v2.5h11V11"/></svg>Upload CAD for a quote</a>
+          <a class="btn btn-ghost" href="#fleet">Check the machine envelopes</a>
+        </div>
+        <div class="formats" aria-label="Accepted file formats"><span>STEP</span><span>IGES</span><span>SLDPRT</span><span>X_T</span><span>PDF DRAWINGS</span></div>
+        <p class="hero-micro"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="10" height="7.5" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>Encrypted in transit and at rest. Files you flag as ITAR-controlled are stored in a US-only environment that only US persons at PMC can open.</p>
+      </div>
+
+      <div class="viewport vp" id="viewport" aria-label="Rotating model of a sample 5-axis machined bracket with inspection callouts">
+        <span class="xhair" style="top:8px;left:8px"></span><span class="xhair" style="top:8px;right:8px"></span><span class="xhair" style="bottom:8px;left:8px"></span><span class="xhair" style="bottom:8px;right:8px"></span>
+        <div class="vp-head"><span class="label">Sample part · 6061-T651</span><span class="label" id="vpMode">Drag to rotate</span></div>
+        <div class="vp-fallback" id="vpFallback" aria-hidden="true">
+          <svg viewBox="0 0 400 300" fill="none" stroke-linejoin="round">
+            <g stroke="#3EC6E0" stroke-opacity=".55" stroke-width="1.2">
+              <path d="M60 170 200 100 340 170 200 240Z" fill="#1B2129"/>
+              <path d="M60 170v26l140 70v-26M340 170v26L200 266" />
+              <ellipse cx="200" cy="170" rx="46" ry="23" fill="#12161B"/>
+              <path d="M154 170V112M246 170V112"/>
+              <ellipse cx="200" cy="112" rx="46" ry="23" fill="#262E38"/>
+              <ellipse cx="200" cy="112" rx="30" ry="15" fill="#0B0D10"/>
+              <ellipse cx="108" cy="170" rx="9" ry="4.5"/><ellipse cx="292" cy="170" rx="9" ry="4.5"/><ellipse cx="200" cy="124" rx="9" ry="4.5"/><ellipse cx="200" cy="216" rx="9" ry="4.5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="callouts" id="callouts">
+          <div class="callout" data-i="0"><span class="dot"></span><span class="lead-line"></span><span class="card"><small>Bore</small>⌀ 1.1000 +.0010/−.0000</span></div>
+          <div class="callout flip" data-i="1"><span class="dot"></span><span class="lead-line"></span><span class="card"><small>4× thru</small>⌖ ⌀.005 Ⓜ │ A │ B │ C</span></div>
+          <div class="callout" data-i="2"><span class="dot"></span><span class="lead-line"></span><span class="card"><small>Angled face</small>⌓ .002 │ A │ B · Ra 32 µin</span></div>
+        </div>
+        <div class="vp-foot"><span class="label">Illustrative callouts</span><button class="btn btn-ghost btn-sm vp-load" id="vpLoad" type="button" hidden>Rotate part</button></div>
+      </div>
+    </div>
+
+    <div class="readout" aria-label="Fleet highlights">
+      <div><span class="label">5-axis</span><b>MX-520 PC4 · 24.8 × 22.04 × 20.07 in</b></div>
+      <div><span class="label">Horizontal</span><b>EC-400 · 6-pallet pool</b></div>
+      <div><span class="label">Max milling travel</span><b>VF7 · 84 in X</b></div>
+      <div><span class="label">Inspection</span><b>Zeiss Contura scanning CMM</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- H3 PROOF -->
+<section aria-label="By the numbers">
+  <div class="wrap">
+    <div class="proof">
+      <div><b>40<sub>+ yrs</sub></b><span>Founder Kelly Johnson's time on the shop floor</span></div>
+      <div><b>10</b><span>CNC machining and turning centers, all with in-process probing</span></div>
+      <div><b>84<sub>in</sub></b><span>Maximum X travel, for long plates and frames</span></div>
+      <div><b>2</b><span>CMMs, including a Zeiss Contura scanning system</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- H4 CAPABILITIES -->
+<section class="sec" id="capabilities" aria-labelledby="cap-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">Capabilities</span><h2 id="cap-h">Processes matched to the machines that run them.</h2></div>
+      <p>Every capability below maps to equipment on our floor. If a part needs a process we don't run in-house, we say so on the quote.</p>
+    </div>
+    <div class="caps">
+      <a class="cap" href="#fleet" data-filter="5">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media"><img src="assets/matsuura-mx520.jpg" alt="Matsuura MX-520 5-axis machining center on the PMC floor" loading="lazy" width="640" height="360"></div>
+        <div class="cap-body"><span class="label">01 · Milling</span><h3>5-axis simultaneous</h3><p>Complex prismatic parts in one setup. Fewer re-clamps means fewer datum shifts between features.</p><span class="spec">24.8 × 22.04 × 20.07 in · 4 pallets</span></div>
+      </a>
+      <a class="cap" href="#fleet" data-filter="h">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media"><img src="assets/haas-ec400.jpg" alt="Haas EC-400 horizontal machining center with Pallet Pool and staged fixtures" loading="lazy" width="1280" height="606"></div>
+        <div class="cap-body"><span class="label">02 · Milling</span><h3>Horizontal pallet production</h3><p>Six pallets keep the spindle cutting through setups and unattended shifts. Built for repeat production.</p><span class="spec">22 × 25 × 22 in · 6 pallets</span></div>
+      </a>
+      <a class="cap" href="#fleet" data-filter="v">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media"><img src="assets/haas-vf2-row.jpg" alt="Row of Haas vertical machining centers" loading="lazy" width="1090" height="960" style="object-position:50% 60%"></div>
+        <div class="cap-body"><span class="label">03 · Milling</span><h3>Vertical, 3 and 4-axis</h3><p>Plates to 84 in, with spindle probing and through-spindle coolant on every machine.</p><span class="spec">84 × 32 in max · 6 VMCs</span></div>
+      </a>
+      <a class="cap" href="#fleet" data-filter="t">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media"><img src="assets/haas-st20.jpg" alt="Haas ST-20 CNC turning center with bar feeder" loading="lazy" width="1080" height="608"></div>
+        <div class="cap-body"><span class="label">04 · Turning</span><h3>CNC turning and live tooling</h3><p>Haas ST-20 with bar loader, plus a Hwacheon dual-spindle live-tool lathe for complete parts off the bar.</p><span class="spec">⌀8 × 8 in · ⌀2 × 12 in long</span></div>
+      </a>
+      <a class="cap" href="#company">
+        <span class="cb tl"></span><span class="cb tr"></span><span class="cb bl"></span><span class="cb br"></span>
+        <div class="cap-media">
+          <svg viewBox="0 0 480 270" fill="none" aria-hidden="true"><rect width="480" height="270" fill="#12161B"/>
+            <g stroke="#3EC6E0" stroke-width="1.3" stroke-opacity=".8"><path d="M140 170 240 120l100 50-100 50z" fill="#1B2129"/><path d="M140 170v14l100 50 100-50v-14"/><path d="M200 140v-40l40-20 40 20v40" fill="#262E38"/><path d="M240 80v40"/></g>
+            <g stroke="#AEB6C0" stroke-dasharray="3 3"><path d="M240 60V30M200 100l-30-15M280 100l30-15"/></g>
+            <g fill="#8B95A2" font-size="12" font-family="Geist Mono,monospace"><text x="248" y="40">1</text><text x="150" y="80">2</text><text x="316" y="80">3</text></g>
+          </svg>
+        </div>
+        <div class="cap-body"><span class="label">05 · Integration</span><h3>Assembly and heat treat</h3><p>Machined components delivered as sub-assemblies under one certificate of conformance. Heat treating per your callout.</p><span class="spec">Kitting · assembly · heat treat <span class="verify">CONFIRM SCOPE</span></span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- H5 PROCESS -->
+<section class="sec band" id="process" aria-labelledby="proc-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">From model to CoC</span><h2 id="proc-h">Every stage leaves a record you can ask for.</h2></div>
+      <p>New suppliers are a risk because you can't see their process. Here is ours, with the document each step produces.</p>
+    </div>
+    <div class="seq" id="seq">
+      <div class="seq-track" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 100 12"><path pathLength="1" d="M0 6H100"/></svg></div>
+      <ol class="seq-list">
+      <li class="step"><span class="step-node">01</span><h3>DFM review</h3><p>We check the model and print against our tooling, workholding and inspection before quoting.</p><span class="artifact">Marked-up model, risks flagged</span></li>
+      <li class="step"><span class="step-node">02</span><h3>CAM and fixturing</h3><p>Toolpaths simulated, workholding chosen: vacuum, vise or a dedicated fixture.</p><span class="artifact">Proven program, setup sheet</span></li>
+      <li class="step"><span class="step-node">03</span><h3>Machining</h3><p>Spindle probes locate datums and check critical features between operations.</p><span class="artifact">In-process probe checks</span></li>
+      <li class="step"><span class="step-node">04</span><h3>CMM inspection</h3><p>Critical characteristics measured against the model on the Zeiss Contura.</p><span class="artifact">CMM report, PDF and CSV</span></li>
+      <li class="step"><span class="step-node">05</span><h3>First article</h3><p>Ballooned drawing and characteristic accountability when your contract calls for it.</p><span class="artifact">AS9102 forms 1–3</span></li>
+      <li class="step"><span class="step-node">06</span><h3>Ship</h3><p>Parts leave with the paperwork that traces them back to the heat lot.</p><span class="artifact">CoC · MTRs · inspection data</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- H6 FLEET -->
+<section class="sec" id="fleet" aria-labelledby="fleet-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">Equipment fleet</span><h2 id="fleet-h">Check your part against the envelope before you call us.</h2></div>
+      <p>Enter your part's bounding box. Each machine shows whether it fits within travel and by how much.</p>
+    </div>
+    <div class="fleet-tools">
+      <div class="chips" role="group" aria-label="Filter by machine class">
+        <button class="chip" type="button" data-f="all" aria-pressed="true">All machines</button>
+        <button class="chip" type="button" data-f="5" aria-pressed="false">5-axis</button>
+        <button class="chip" type="button" data-f="h" aria-pressed="false">Horizontal</button>
+        <button class="chip" type="button" data-f="v" aria-pressed="false">Vertical</button>
+        <button class="chip" type="button" data-f="t" aria-pressed="false">Turning</button>
+      </div>
+      <form class="fitbox" id="fitForm" onsubmit="return false" aria-label="Part envelope">
+        <span class="label"><span>Part envelope</span><span id="fitEx" style="color:var(--ti500)">Example part</span></span>
+        <div class="field"><label for="pL">L</label><input class="num" id="pL" inputmode="decimal" value="18"></div>
+        <div class="field"><label for="pW">W</label><input class="num" id="pW" inputmode="decimal" value="12"></div>
+        <div class="field"><label for="pH">H</label><input class="num" id="pH" inputmode="decimal" value="6"></div>
+        <div class="unit-toggle" role="group" aria-label="Units"><button type="button" data-u="in" aria-pressed="true">IN</button><button type="button" data-u="mm" aria-pressed="false">MM</button></div>
+      </form>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Machine</th><th scope="col">Axes</th><th scope="col">Travel X × Y × Z</th><th scope="col">Automation</th><th scope="col">Your part</th></tr></thead>
+        <tbody id="fleetBody"></tbody>
+      </table>
+    </div>
+    <p class="fleet-note">Travel is not the same as usable part size: tool length, workholding and rotary tables all take room, most of all in Z. A "fits" result means the part is inside travel; we confirm the real setup during DFM review. Oversize parts still get quoted.</p>
+  </div>
+</section>
+
+<!-- H7 SPLIT -->
+<section class="sec band" aria-label="Choose your path">
+  <div class="wrap">
+    <div class="split">
+      <div class="path">
+        <span class="label">For engineers</span>
+        <h3>Engineering the part?</h3>
+        <ul>
+          <li><a href="#fleet"><span>Machine envelopes and fit check</span><span>→</span></a></li>
+          <li><a href="#process"><span>DFM review and inspection steps</span><span>→</span></a></li>
+          <li><a href="#quality"><span>Metrology equipment</span><span>→</span></a></li>
+        </ul>
+        <a class="btn btn-primary" href="#rfq">Upload CAD</a>
+      </div>
+      <div class="path">
+        <span class="label">For procurement</span>
+        <h3>Qualifying a supplier?</h3>
+        <ul>
+          <li><a href="#" data-open-certs><span>Certificates, one click</span><span>→</span></a></li>
+          <li><a href="#company"><span>CAGE, UEI and NAICS</span><span>→</span></a></li>
+          <li><a href="#quality"><span>Quality system and traceability</span><span>→</span></a></li>
+        </ul>
+        <button class="btn btn-ghost" type="button" data-open-certs>Open the qualification pack</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- H8 INDUSTRIES -->
+<section class="sec" id="industries" aria-labelledby="ind-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">Industries</span><h2 id="ind-h">Controls specific to your sector, not a logo wall.</h2></div>
+      <p>Each industry brings its own audit questions. These are the answers we build into the traveler.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Industries">
+      <button class="tab" role="tab" id="t-med" aria-controls="p-med" aria-selected="true">Medical devices</button>
+      <button class="tab" role="tab" id="t-def" aria-controls="p-def" aria-selected="false" tabindex="-1">Defense</button>
+      <button class="tab" role="tab" id="t-aero" aria-controls="p-aero" aria-selected="false" tabindex="-1">Aerospace</button>
+      <button class="tab" role="tab" id="t-semi" aria-controls="p-semi" aria-selected="false" tabindex="-1">Semiconductor and high-tech</button>
+    </div>
+    <div class="panel" role="tabpanel" id="p-med" aria-labelledby="t-med">
+      <div><h3>Implant-grade materials, lot-level traceability.</h3><p>Our quality system is certified to ISO 13485, the standard medical OEMs audit their machining suppliers against.</p></div>
+      <ul class="controls">
+        <li><b>System</b><span>ISO 13485:2016 quality management, registered by IAPMO R&amp;T</span></li>
+        <li><b>Traceability</b><span>Lot traced from bar stock heat number to shipped part</span></li>
+        <li><b>Specs</b><span>Passivation and cleanliness requirements called out on the traveler, not left to memory</span></li>
+      </ul>
+    </div>
+    <div class="panel" role="tabpanel" id="p-def" aria-labelledby="t-def" hidden>
+      <div><h3>Controlled data stays with US persons.</h3><p>Registered with the State Department's DDTC under ITAR, with NIST SP 800-171 controls on controlled unclassified information.</p></div>
+      <ul class="controls">
+        <li><b>Export</b><span>ITAR registered. Controlled drawings handled by US persons only</span></li>
+        <li><b>Cyber</b><span>NIST SP 800-171 controls on CUI</span></li>
+        <li><b>Identity</b><span>CAGE 9R7F1 · UEI SVK9MSUSDB81, active in SAM</span></li>
+        <li><b>Material</b><span>DFARS specialty metals sourcing <span class="verify">CONFIRM</span></span></li>
+      </ul>
+    </div>
+    <div class="panel" role="tabpanel" id="p-aero" aria-labelledby="t-aero" hidden>
+      <div><h3>First articles with the paperwork attached.</h3><p>5-axis machining keeps compound-angle features in one setup, and our CMM output supports full AS9102 packages.</p></div>
+      <ul class="controls">
+        <li><b>FAI</b><span>AS9102 forms 1–3 with ballooned drawing when required</span></li>
+        <li><b>Material</b><span>Mill test reports on file and shipped with the parts</span></li>
+        <li><b>System</b><span>ISO 9001:2015 quality management <span class="verify">AS9100 STATUS?</span></span></li>
+      </ul>
+    </div>
+    <div class="panel" role="tabpanel" id="p-semi" aria-labelledby="t-semi" hidden>
+      <div><h3>Fast prototypes, then pallet production.</h3><p>Prototype on a vertical, move to the EC-400 pallet pool when volume arrives, without re-qualifying the part.</p></div>
+      <ul class="controls">
+        <li><b>Scale</b><span>Six-pallet horizontal and four-pallet 5-axis for unattended runs</span></li>
+        <li><b>Size</b><span>Frames and plates up to 84 in on the VF7</span></li>
+        <li><b>Workholding</b><span>Vacuum fixturing for thin plates and flat parts</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- H9 METROLOGY -->
+<section class="metro sec" id="quality" aria-labelledby="q-h">
+  <div class="metro-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="mcopy">
+      <span class="label">Quality and metrology</span>
+      <h2 id="q-h">Every critical feature has a measured value, not a checkmark.</h2>
+      <p>Spindle probing in process, a Zeiss scanning CMM at final, and AS9102 first-article packages when your contract calls for them.</p>
+      <div class="equip">
+        <div><b>Zeiss Contura 7/10/6</b><span>Scanning CNC CMM · 2019</span></div>
+        <div><b>Mitutoyo B504B</b><span>CNC CMM</span></div>
+        <div><b>Spindle probes</b><span>Every Haas machining center</span></div>
+        <div><b>Reports</b><span>CMM · FAI · CoC · MTR</span></div>
+      </div>
+      <div><button class="btn btn-ghost" type="button" data-open-certs>View certificates</button></div>
+    </div>
+    <figure class="inspect" style="margin:0">
+      <div class="inspect-head"><b>Bore ⌀1.1000 +.0010/−.0000 · 12 parts</b><span class="example-tag">Example data</span></div>
+      <svg id="tolChart" viewBox="0 0 640 300" role="img" aria-label="Tolerance band chart: 12 measured bore diameters, all inside the 1.1000 to 1.1010 inch band"></svg>
+      <figcaption class="inspect-foot">
+        <span><i style="background:rgba(62,198,224,.2);border:1px solid rgba(62,198,224,.6)"></i>Tolerance band</span>
+        <span><i style="background:var(--cyan);border-radius:50%"></i>Measured</span>
+        <span id="cpk">Cpk —</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- H10 FOUNDER -->
+<section class="sec" id="company" aria-labelledby="co-h">
+  <div class="wrap founder">
+    <figure class="frame" style="margin:0">
+      <span class="xhair a"></span><span class="xhair b"></span><span class="xhair c"></span><span class="xhair d"></span>
+      <img src="assets/haas-vf2-row.jpg" alt="The PMC machining floor in Roseville: a row of Haas vertical machining centers" loading="lazy" width="1090" height="960">
+      <figcaption><span>PMC floor · Roseville, CA</span><span>301 Derek Place</span></figcaption>
+    </figure>
+    <div class="founder-copy">
+      <span class="label">Company</span>
+      <h2 id="co-h">Run by a machinist.</h2>
+      <div class="owner">
+        <div class="owner-photo"><span class="xhair a"></span><span class="xhair d"></span><img src="assets/kelly-johnson.jpg" alt="Kelly Johnson, founder and owner of Precision Manufacturing Company" width="320" height="320" loading="lazy"></div>
+        <div><b>Kelly Johnson</b><span class="label">Founder and owner · 40+ years machining</span></div>
+      </div>
+      <p>Kelly Johnson has spent four decades cutting metal. PMC invests in pallet automation, probing and inspection so the process holds the tolerance, not the operator's luck.</p>
+      <p>We're in Roseville, in the Sacramento region, a short drive from the Bay Area. Come see the floor.</p>
+      <div class="facts">
+        <div><span class="label">CAGE</span><b>9R7F1</b></div>
+        <div><span class="label">UEI</span><b>SVK9MSUSDB81</b></div>
+        <div><span class="label">NAICS</span><b>332710</b></div>
+        <div><span class="label">Hours</span><b>Mon–Fri 08:00–17:00 PT</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- H11 RFQ -->
+<section class="sec band" id="rfq" aria-labelledby="rfq-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label eyebrow">Request for quote</span><h2 id="rfq-h">Send the model. Get a quote with DFM notes.</h2></div>
+      <p>Files and a work email are enough to start. A drawing, material and quantity get you a firm quote instead of a budgetary one.</p>
+    </div>
+    <form class="rfq" id="rfqForm" novalidate>
+      <div class="rfq-main">
+        <fieldset class="q" style="margin:0">
+          <legend>Does this package contain ITAR- or EAR-controlled technical data?<small>We ask first because it decides where your files are stored. "Not sure" is handled as controlled.</small></legend>
+          <div class="radios">
+            <label class="radio"><input type="radio" name="ctl" id="ctlYes" value="yes"><span>Yes, controlled</span></label>
+            <label class="radio"><input type="radio" name="ctl" id="ctlNo" value="no"><span>No</span></label>
+            <label class="radio"><input type="radio" name="ctl" id="ctlUnsure" value="unsure"><span>Not sure</span></label>
+          </div>
+        </fieldset>
+
+        <div class="drop locked" id="drop">
+          <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M20 4 34 12v16L20 36 6 28V12z"/><path d="M6 12l14 8 14-8M20 20v16"/><path d="M20 4v6" stroke="#FFB020"/></svg>
+          <h3 id="dropTitle">Answer the control question to unlock upload</h3>
+          <p>STEP · IGES · SLDPRT · SLDASM · X_T · DXF · PDF · up to 20 files, 250 MB each</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+            <button class="btn btn-primary btn-sm" type="button" id="pick" disabled>Choose files</button>
+          </div>
+          <input type="file" id="fileInput" multiple hidden accept=".step,.stp,.iges,.igs,.sldprt,.sldasm,.x_t,.dxf,.pdf">
+        </div>
+        <ul class="files" id="fileList" aria-live="polite"></ul>
+
+        <div class="row2">
+          <div class="inp"><label for="mat">Material</label><select id="mat"><option value="">Select or leave for DFM</option><option>Aluminum 6061-T651</option><option>Aluminum 7075-T651</option><option>Stainless 17-4 PH</option><option>Stainless 316L</option><option>Titanium Ti-6Al-4V</option><option>Inconel 718</option><option>PEEK</option><option>Acetal (Delrin)</option><option>Other, on drawing</option></select></div>
+          <div class="inp"><label for="qty">Quantity</label><input id="qty" inputmode="numeric" placeholder="e.g. 10, 50, 250"></div>
+          <div class="inp"><label for="need">Need by</label><input id="need" type="date"></div>
+        </div>
+        <div class="row2">
+          <div class="inp"><label for="nm">Name</label><input id="nm" autocomplete="name"></div>
+          <div class="inp"><label for="em">Work email *</label><input id="em" type="email" autocomplete="email" required><span class="hint" id="emHint"></span></div>
+          <div class="inp"><label for="co">Company</label><input id="co" autocomplete="organization"></div>
+        </div>
+        <label class="toggle"><input type="checkbox" id="nda" role="switch">Hold my files until an NDA is signed</label>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-primary" type="submit">Review request</button>
+          <span style="font-size:14px;color:var(--ti400)">Prefer email? <span style="user-select:all;color:var(--ti200)">Kelly@pmccnc.com</span></span>
+        </div>
+        <div class="status" id="rfqStatus" hidden role="status"></div>
+      </div>
+
+      <aside class="rfq-side">
+        <div class="meter" aria-live="polite">
+          <span class="label">Quote readiness</span>
+          <ol id="meter">
+            <li data-k="ctl"><i></i>Control class</li>
+            <li data-k="model"><i></i>3D model</li>
+            <li data-k="draw"><i></i>Drawing (PDF)</li>
+            <li data-k="mat"><i></i>Material</li>
+            <li data-k="qty"><i></i>Quantity</li>
+            <li data-k="em"><i></i>Work email</li>
+          </ol>
+          <p class="verdict" id="verdict">Add files to start.</p>
+        </div>
+        <div class="secure">
+          <h4><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 1.5 15 4v4.5c0 4-2.6 6.9-6 8-3.4-1.1-6-4-6-8V4z"/><path d="m6 9 2 2 4-4"/></svg>How your files are handled</h4>
+          <ul>
+            <li>Encrypted in transit (TLS 1.2+) and at rest (AES-256).</li>
+            <li>Controlled packages go to a US-only environment; only US persons at PMC can open them.</li>
+            <li>Your files are never run through third-party or AI quoting tools.</li>
+            <li>Files from declined quotes are deleted on request.</li>
+          </ul>
+        </div>
+      </aside>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="logo" href="#top"><svg class="logo-mark" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x=".75" y=".75" width="28.5" height="28.5" stroke="#AEB6C0" stroke-width="1.5"/><path d="M7 22V8h7.5a4 4 0 0 1 0 8H7" stroke="#E9ECEF" stroke-width="2"/><circle cx="21.5" cy="21.5" r="2.25" fill="#FFB020"/></svg><span class="logo-word"><b>PMC</b><small>Precision Manufacturing</small></span></a>
+        <address style="margin-top:20px">301 Derek Place<br>Roseville, California 95678<br><span style="user-select:all;color:var(--ti200)">916.603.8023</span> · <span style="user-select:all;color:var(--ti200)">Kelly@pmccnc.com</span></address>
+        <div class="foot-ids"><span>CAGE 9R7F1</span><span>UEI SVK9MSUSDB81</span><span>NAICS 332710</span></div>
+      </div>
+      <div><h4>Capabilities</h4><ul><li><a href="#capabilities">5-axis milling</a></li><li><a href="#capabilities">Horizontal pallets</a></li><li><a href="#capabilities">Vertical milling</a></li><li><a href="#capabilities">Turning</a></li></ul></div>
+      <div><h4>Quality</h4><ul><li><a href="#quality">Metrology</a></li><li><a href="#process">Inspection process</a></li><li><a href="#" data-open-certs>Certificates</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#company">About</a></li><li><a href="#industries">Industries</a></li><li><a href="#rfq">Request a quote</a></li><li><a href="https://www.linkedin.com/company/precision-manufacturing-company301/" rel="noopener">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="foot-base"><span>© 2026 Precision Manufacturing Company</span><span>ITAR Registered · ISO 9001:2015 · ISO 13485:2016</span></div>
+  </div>
+</footer>
+
+<div class="bottom-cta"><a class="btn btn-primary" href="#rfq">Upload CAD</a><button class="btn btn-ghost" type="button" data-open-certs>Certificates</button></div>
+
+<!-- CERT DRAWER -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dr-h" hidden>
+  <div class="drawer-head"><h2 id="dr-h">Certificates and registrations</h2><button class="copybtn" type="button" id="drClose">CLOSE</button></div>
+  <div class="drawer-body">
+    <h3>Quality system certificates</h3>
+    <div class="cert">
+      <div class="cert-mark">ISO<br>9001</div>
+      <div><b>ISO 9001:2015</b><span style="font-size:13px;color:var(--ti400)">Quality management systems</span>
+        <dl><dt>Registrar</dt><dd>IAPMO R&amp;T · ANAB accredited</dd><dt>Cert no.</dt><dd class="mono">Pending from PMC</dd><dt>Valid</dt><dd class="mono">Pending</dd></dl></div>
+      <div class="cert-actions"><span class="pill pending"><i></i>Certificate file needed</span><button class="btn btn-ghost btn-sm" type="button" disabled>Download PDF</button></div>
+    </div>
+    <div class="cert">
+      <div class="cert-mark">ISO<br>13485</div>
+      <div><b>ISO 13485:2016</b><span style="font-size:13px;color:var(--ti400)">Medical devices quality management</span>
+        <dl><dt>Registrar</dt><dd>IAPMO R&amp;T · ANAB accredited</dd><dt>Cert no.</dt><dd class="mono">Pending from PMC</dd><dt>Valid</dt><dd class="mono">Pending</dd></dl></div>
+      <div class="cert-actions"><span class="pill pending"><i></i>Certificate file needed</span><button class="btn btn-ghost btn-sm" type="button" disabled>Download PDF</button></div>
+    </div>
+    <h3>Registrations</h3>
+    <div class="cert">
+      <div class="cert-mark">ITAR</div>
+      <div><b>ITAR · DDTC registration</b><span style="font-size:13px;color:var(--ti400)">US Department of State</span><dl><dt>Status</dt><dd>Registered · letter available on request</dd></dl></div>
+    </div>
+    <div class="cert">
+      <div class="cert-mark">800<br>-171</div>
+      <div><b>NIST SP 800-171</b><span style="font-size:13px;color:var(--ti400)">Controls on CUI · self-assessment</span><dl><dt>SPRS score</dt><dd>Shared under NDA on request</dd></dl></div>
+    </div>
+    <h3>Supplier identifiers</h3>
+    <div class="idrow"><div><span>CAGE code</span><br><b>9R7F1</b></div><button class="copybtn" type="button" data-copy="9R7F1">Copy</button></div>
+    <div class="idrow"><div><span>UEI (SAM.gov)</span><br><b>SVK9MSUSDB81</b></div><button class="copybtn" type="button" data-copy="SVK9MSUSDB81">Copy</button></div>
+    <div class="idrow"><div><span>NAICS</span><br><b>332710 · Machine shops</b></div><button class="copybtn" type="button" data-copy="332710">Copy</button></div>
+    <div class="idrow"><div><span>D-U-N-S</span><br><b>Registered</b></div><span class="pill pending"><i></i>Number needed</span></div>
+    <p style="margin-top:24px;font-size:13.5px;color:var(--ti400)">W-9, certificate of insurance and SPRS score are sent on request to a verified work email.</p>
+  </div>
+</aside>
+
+<script>
+/* ---------- nav, sheet ---------- */
+const nav=document.getElementById('nav');
+const onScroll=()=>nav.classList.toggle('scrolled',scrollY>80);addEventListener('scroll',onScroll,{passive:true});onScroll();
+const sheet=document.getElementById('sheet'),menuBtn=document.getElementById('menuBtn');
+const setSheet=o=>{sheet.hidden=!o;menuBtn.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';if(o)document.getElementById('sheetClose').focus();else menuBtn.focus()};
+menuBtn.onclick=()=>setSheet(true);document.getElementById('sheetClose').onclick=()=>setSheet(false);
+sheet.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setSheet(false)));
+
+/* ---------- cert drawer ---------- */
+const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');let lastFocus=null;
+function openCerts(e){if(e)e.preventDefault();lastFocus=document.activeElement;drawer.hidden=false;scrim.hidden=false;requestAnimationFrame(()=>{drawer.classList.add('open');scrim.classList.add('open')});document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('drClose').focus(),50)}
+function closeCerts(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';setTimeout(()=>{drawer.hidden=true;scrim.hidden=true},320);if(lastFocus)lastFocus.focus()}
+document.querySelectorAll('[data-open-certs]').forEach(b=>b.addEventListener('click',openCerts));
+document.getElementById('drClose').onclick=closeCerts;scrim.onclick=closeCerts;
+addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!drawer.hidden)closeCerts();else if(!sheet.hidden)setSheet(false)});
+drawer.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const f=[...drawer.querySelectorAll('button:not([disabled]),a[href]')];const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}});
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.copy;const done=()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1400)};try{navigator.clipboard.writeText(t).then(done,()=>{selectText(b.previousElementSibling.querySelector('b'))})}catch(_){selectText(b.previousElementSibling.querySelector('b'))}}));
+function selectText(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
+
+/* ---------- process sequence reveal ---------- */
+const seq=document.getElementById('seq');
+if('IntersectionObserver' in window){new IntersectionObserver((en,o)=>{en.forEach(x=>{if(x.isIntersecting){seq.classList.add('in');o.disconnect()}})},{threshold:.35}).observe(seq)}else seq.classList.add('in');
+
+/* ---------- fleet ---------- */
+// Travels from pmccnc.com equipment list; Z for VF series from Haas standard specs.
+const FLEET=[
+ {name:'Matsuura MX-520 PC4',yr:'2019',cls:'5',axes:'5-axis sim.',five:true,t:[24.8,22.04,20.07],auto:'4-pallet changer'},
+ {name:'Haas EC-400',yr:'2021',cls:'h',axes:'4-axis',t:[22,25,22],auto:'6-pallet pool'},
+ {name:'Haas VF-7',yr:'2021',cls:'v',axes:'3-axis',t:[84,32,30],auto:'Probing · TSC'},
+ {name:'Haas VF-4SS',yr:'2022 · 2017',qty:2,cls:'v',axes:'4-axis',t:[50,20,25],auto:'Rotary · probing · TSC'},
+ {name:'Haas VF-2SS',yr:'2018',cls:'5',axes:'3+2',t:[30,16,20],auto:'Trunnion · probing · TSC'},
+ {name:'Haas VF-2SS',yr:'2015',qty:2,cls:'v',axes:'4-axis',t:[30,16,20],auto:'Rotary · probing · TSC'},
+ {name:'Haas ST-20',yr:'2015',cls:'t',axes:'Turning',turn:'⌀8 × 8 in · ⌀2 × 12 in',auto:'Bar loader · parts catcher'},
+ {name:'Hwacheon dual-spindle',yr:'New',cls:'t',axes:'Turn-mill',turn:'Specs on request',auto:'Live tooling · sub-spindle'}
+];
+let filt='all',unit='in';
+const fmt=v=>unit==='in'?v.toFixed(2):(v*25.4).toFixed(0);
+const uLbl=()=>unit==='in'?'in':'mm';
+function partDims(){const k=unit==='in'?1:1/25.4;return['pL','pW','pH'].map(id=>parseFloat(document.getElementById(id).value)*k)}
+function fit(m,p){
+  if(!m.t)return{c:'na',txt:'Turned part: check ⌀ and length'};
+  if(p.some(v=>!(v>0)))return{c:'na',txt:'Enter L, W, H'};
+  const [X,Y,Z]=m.t,[L,W,H]=p;
+  const opts=[[L,W],[W,L]].map(([a,b])=>Math.min(X-a,Y-b));const xy=Math.max(...opts);const z=Z-H;
+  if(xy>=0&&z>=0){const mm=Math.min(xy,z);return{c:'ok',txt:`Fits · ${fmt(mm)} ${uLbl()} min. clearance`}}
+  const over=[];if(xy<0)over.push(`${fmt(-xy)} ${uLbl()} in X/Y`);if(z<0)over.push(`${fmt(-z)} ${uLbl()} in Z`);
+  return{c:'no',txt:'Exceeds by '+over.join(', ')};
+}
+function renderFleet(){
+  const p=partDims();const rows=FLEET.filter(m=>filt==='all'||m.cls===filt);const tb=document.getElementById('fleetBody');
+  if(!rows.length){tb.innerHTML='<tr><td colspan="5" class="fleet-empty">No machines in this class.</td></tr>';return}
+  tb.innerHTML=rows.map(m=>{const f=fit(m,p);const trav=m.t?m.t.map(fmt).join(' × ')+' '+uLbl():m.turn;
+    return `<tr><td class="m-name"><b>${m.name}${m.qty?` <span class="mono" style="color:var(--ti400);font-size:13px">×${m.qty}</span>`:''}</b><small>${m.yr}</small></td><td><span class="axes${m.five?' five':''}">${m.axes}</span></td><td class="mono">${trav}</td><td style="color:var(--ti300);font-size:14px">${m.auto}</td><td><span class="fit ${f.c}"><i></i>${f.txt}</span></td></tr>`}).join('');
+}
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{filt=c.dataset.f;document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===c));renderFleet()});
+['pL','pW','pH'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{document.getElementById('fitEx').textContent='Your part';renderFleet()}));
+document.querySelectorAll('.unit-toggle button').forEach(b=>b.onclick=()=>{if(b.dataset.u===unit)return;const k=b.dataset.u==='mm'?25.4:1/25.4;['pL','pW','pH'].forEach(id=>{const el=document.getElementById(id),v=parseFloat(el.value);if(v>0)el.value=+(v*k).toFixed(b.dataset.u==='mm'?0:2)});unit=b.dataset.u;document.querySelectorAll('.unit-toggle button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderFleet()});
+document.querySelectorAll('.cap[data-filter]').forEach(c=>c.addEventListener('click',()=>{const b=document.querySelector(`.chip[data-f="${c.dataset.filter}"]`);if(b)b.click()}));
+renderFleet();
+
+/* ---------- industries tabs ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selTab(t){tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;document.getElementById(x.getAttribute('aria-controls')).hidden=!on})}
+tabs.forEach((t,i)=>{t.onclick=()=>selTab(t);t.onkeydown=e=>{let j=null;if(e.key==='ArrowRight')j=(i+1)%tabs.length;if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;if(j!==null){e.preventDefault();selTab(tabs[j]);tabs[j].focus()}}});
+
+/* ---------- tolerance band chart (example data) ---------- */
+(function(){
+  const svg=document.getElementById('tolChart'),NS='http://www.w3.org/2000/svg';
+  const nom=1.1000,lo=1.1000,hi=1.1010,data=[1.10046,1.10052,1.10031,1.10063,1.10049,1.10055,1.10071,1.10044,1.10051,1.10028,1.10060,1.10050];
+  const W=640,H=300,m={l:76,r:20,t:16,b:40},y0=1.0995,y1=1.1015;
+  const X=i=>m.l+(i+.5)*(W-m.l-m.r)/data.length,Y=v=>m.t+(y1-v)/(y1-y0)*(H-m.t-m.b);
+  const el=(n,a,txt)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e};
+  for(let v=1.0995;v<=1.10151;v+=.0005){el('line',{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),stroke:'#36404C','stroke-width':1});el('text',{x:m.l-10,y:Y(v)+4,'text-anchor':'end',fill:'#8B95A2','font-size':12,'font-family':'Geist Mono,monospace'},v.toFixed(4))}
+  el('rect',{x:m.l,y:Y(hi),width:W-m.l-m.r,height:Y(lo)-Y(hi),fill:'rgba(62,198,224,.12)',stroke:'rgba(62,198,224,.55)','stroke-width':1});
+  el('text',{x:W-m.r-6,y:Y(hi)-6,'text-anchor':'end',fill:'#3EC6E0','font-size':11.5,'font-family':'Geist Mono,monospace'},'USL 1.1010');
+  el('text',{x:W-m.r-6,y:Y(lo)+15,'text-anchor':'end',fill:'#3EC6E0','font-size':11.5,'font-family':'Geist Mono,monospace'},'LSL 1.1000');
+  const pts=data.map((v,i)=>`${X(i)},${Y(v)}`).join(' ');
+  el('polyline',{points:pts,fill:'none',stroke:'#AEB6C0','stroke-width':1,'stroke-opacity':.5});
+  data.forEach((v,i)=>{const ok=v>=lo&&v<=hi;el('circle',{cx:X(i),cy:Y(v),r:4.5,fill:ok?'#3EC6E0':'#EF4444',stroke:'#12161B','stroke-width':1.5});el('text',{x:X(i),y:H-m.b+20,'text-anchor':'middle',fill:'#6B7684','font-size':11,'font-family':'Geist Mono,monospace'},String(i+1).padStart(2,'0'))});
+  el('text',{x:m.l,y:H-4,fill:'#8B95A2','font-size':11,'font-family':'Geist Mono,monospace'},'PART');
+  el('text',{x:14,y:m.t+8,fill:'#8B95A2','font-size':11,'font-family':'Geist Mono,monospace',transform:`rotate(-90 14 ${m.t+8})`,'text-anchor':'end'},'⌀ IN');
+  const mean=data.reduce((a,b)=>a+b)/data.length,sd=Math.sqrt(data.reduce((a,b)=>a+(b-mean)**2,0)/(data.length-1));
+  const cpk=Math.min(hi-mean,mean-lo)/(3*sd);
+  document.getElementById('cpk').textContent=`Mean ${mean.toFixed(5)} · Cpk ${cpk.toFixed(2)}`;
+})();
+
+/* ---------- RFQ ---------- */
+const OK=['step','stp','iges','igs','sldprt','sldasm','x_t','dxf','pdf'],MODEL=['step','stp','iges','igs','sldprt','sldasm','x_t'];
+const files=[];const drop=document.getElementById('drop'),pick=document.getElementById('pick'),fi=document.getElementById('fileInput'),list=document.getElementById('fileList');
+const ctlVal=()=>(document.querySelector('input[name=ctl]:checked')||{}).value;
+document.querySelectorAll('input[name=ctl]').forEach(r=>r.addEventListener('change',()=>{drop.classList.remove('locked');pick.disabled=false;const v=ctlVal();document.getElementById('dropTitle').textContent=v==='no'?'Drop STEP, IGES or SLDPRT files':'Drop files · they will go to US-only storage';updateMeter()}));
+pick.onclick=()=>fi.click();fi.onchange=()=>{addFiles(fi.files);fi.value=''};
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();if(!pick.disabled)drop.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop',e=>{if(pick.disabled){showStatus('err','Answer the control question first. It decides where your files are stored.');return}addFiles(e.dataTransfer.files)});
+const sz=b=>b<1e6?(b/1e3).toFixed(0)+' KB':(b/1e6).toFixed(1)+' MB';
+function addFiles(fl){[...fl].forEach(f=>{if(files.length>=20)return;const ext=(f.name.split('.').pop()||'').toLowerCase();let err='';if(!OK.includes(ext))err=`Can't read .${ext}. Export as STEP AP214 or AP242.`;else if(f.size>250e6)err='Over 250 MB. Split the assembly or email for a transfer link.';files.push({f,ext,err})});renderFiles()}
+function renderFiles(){list.innerHTML=files.map((x,i)=>`<li class="${x.err?'bad':''}"><span class="ext">${x.ext.toUpperCase()||'?'}</span><span class="fname" title="${x.f.name.replace(/"/g,'&quot;')}">${x.f.name.replace(/</g,'&lt;')}</span><span class="fsize">${x.err||sz(x.f.size)}</span><button type="button" aria-label="Remove ${x.f.name.replace(/"/g,'')}" data-i="${i}">×</button></li>`).join('');list.querySelectorAll('button').forEach(b=>b.onclick=()=>{files.splice(+b.dataset.i,1);renderFiles()});updateMeter()}
+const free=/@(gmail|yahoo|hotmail|outlook|icloud|aol|proton(mail)?)\./i;
+document.getElementById('em').addEventListener('input',e=>{document.getElementById('emHint').textContent=free.test(e.target.value)?'A company email helps us verify export eligibility.':'';updateMeter()});
+['mat','qty'].forEach(id=>document.getElementById(id).addEventListener('input',updateMeter));
+function state(){const good=files.filter(x=>!x.err);return{ctl:!!ctlVal(),model:good.some(x=>MODEL.includes(x.ext)),draw:good.some(x=>x.ext==='pdf'),mat:!!document.getElementById('mat').value,qty:/\d/.test(document.getElementById('qty').value),em:/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(document.getElementById('em').value)}}
+function updateMeter(){const s=state();document.querySelectorAll('#meter li').forEach(li=>li.classList.toggle('done',!!s[li.dataset.k]));const v=document.getElementById('verdict');
+  if(!s.model&&!s.draw)v.innerHTML='Add files to start.';
+  else if(s.model&&s.draw&&s.mat&&s.qty)v.innerHTML='Ready for a <b>firm quote</b>.';
+  else if(s.model&&!s.draw)v.innerHTML='Model only: <b>budgetary quote</b>. Tolerances live on the drawing, so attach the PDF.';
+  else v.innerHTML='Add material and quantity for a <b>firm quote</b>.';}
+function showStatus(c,msg){const s=document.getElementById('rfqStatus');s.className='status '+c;s.textContent=msg;s.hidden=false}
+document.getElementById('rfqForm').addEventListener('submit',e=>{e.preventDefault();const s=state();
+  if(!s.ctl)return showStatus('err','Answer the control question first.');
+  if(!files.some(x=>!x.err))return showStatus('err','Add at least one readable file: STEP, IGES, SLDPRT, X_T, DXF or PDF.');
+  if(!s.em){document.getElementById('em').focus();return showStatus('err','Enter a work email so we can send the quote.')}
+  const n=files.filter(x=>!x.err).length;showStatus('ok',`Request ready: ${n} file${n>1?'s':''}, ${ctlVal()==='no'?'standard':'controlled'} storage${document.getElementById('nda').checked?', held for NDA':''}. This is a design preview, so nothing was sent and your files stayed in your browser.`)});
+updateMeter();
+</script>
+
+<!-- 3D hero -->
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+const vp=document.getElementById('viewport'),loadBtn=document.getElementById('vpLoad');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let started=false;
+function hasGL(){try{const c=document.createElement('canvas');return !!(c.getContext('webgl2')||c.getContext('webgl'))}catch(_){return false}}
+async function start(){
+  if(started)return;started=true;loadBtn.hidden=true;
+  let THREE,Orbit,Room;
+  try{THREE=await import('three');({OrbitControls:Orbit}=await import('three/addons/controls/OrbitControls.js'));({RoomEnvironment:Room}=await import('three/addons/environments/RoomEnvironment.js'))}catch(e){started=false;return}
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
+  r.setPixelRatio(Math.min(devicePixelRatio,2));r.outputColorSpace=THREE.SRGBColorSpace;r.toneMapping=THREE.ACESFilmicToneMapping;r.toneMappingExposure=1.05;
+  vp.prepend(r.domElement);
+  const scene=new THREE.Scene();const pm=new THREE.PMREMGenerator(r);scene.environment=pm.fromScene(new Room(),.04).texture;
+  const cam=new THREE.PerspectiveCamera(28,1,.1,100);cam.position.set(6.2,4.6,7.4);
+  const ctl=new Orbit(cam,r.domElement);ctl.target.set(0,.75,0);ctl.enableZoom=false;ctl.enablePan=false;ctl.enableDamping=true;ctl.autoRotate=!reduce;ctl.autoRotateSpeed=.7;ctl.minPolarAngle=.35;ctl.maxPolarAngle=1.45;
+  const metal=new THREE.MeshStandardMaterial({color:0xb8c0c9,metalness:.92,roughness:.3});
+  const dark=new THREE.MeshStandardMaterial({color:0x7d8794,metalness:.85,roughness:.45,side:THREE.DoubleSide});
+  const edgeMat=new THREE.LineBasicMaterial({color:0x3EC6E0,transparent:true,opacity:.32});
+  const part=new THREE.Group();scene.add(part);
+  const add=(g,mat=metal)=>{const m=new THREE.Mesh(g,mat);part.add(m);const e=new THREE.LineSegments(new THREE.EdgesGeometry(g,25),edgeMat);m.add(e);return m};
+  const rr=(w,h,rad)=>{const s=new THREE.Shape(),x=-w/2,y=-h/2;s.moveTo(x+rad,y);s.lineTo(x+w-rad,y);s.quadraticCurveTo(x+w,y,x+w,y+rad);s.lineTo(x+w,y+h-rad);s.quadraticCurveTo(x+w,y+h,x+w-rad,y+h);s.lineTo(x+rad,y+h);s.quadraticCurveTo(x,y+h,x,y+h-rad);s.lineTo(x,y+rad);s.quadraticCurveTo(x,y,x+rad,y);return s};
+  const hole=(cx,cy,r)=>{const p=new THREE.Path();p.absarc(cx,cy,r,0,Math.PI*2,true);return p};
+  // base plate with 4 corner holes + center bore
+  const base=rr(4.2,2.8,.35);[[-1.65,-.95],[1.65,-.95],[-1.65,.95],[1.65,.95]].forEach(([x,y])=>base.holes.push(hole(x,y,.16)));base.holes.push(hole(0,0,.55));
+  const bg=new THREE.ExtrudeGeometry(base,{depth:.5,bevelEnabled:true,bevelSize:.03,bevelThickness:.03,bevelSegments:2,curveSegments:40});bg.rotateX(-Math.PI/2);add(bg);
+  // hollow boss (lathe profile)
+  const prof=[[.55,.5],[.86,.5],[.86,1.52],[.8,1.6],[.55,1.6],[.55,.5]].map(([x,y])=>new THREE.Vector2(x,y));
+  add(new THREE.LatheGeometry(prof,72));
+  // pocket floor visual: counterbores on holes
+  // compound-angle ear: block + angled tab
+  const blk=new THREE.BoxGeometry(.9,.8,1.5);blk.translate(1.55,.92,0);add(blk);
+  const tab=rr(1.2,1.0,.22);tab.holes.push(hole(0,0,.2));const tg=new THREE.ExtrudeGeometry(tab,{depth:.22,bevelEnabled:true,bevelSize:.02,bevelThickness:.02,bevelSegments:2,curveSegments:32});
+  tg.rotateX(-Math.PI/2);tg.rotateZ(-.42);tg.rotateY(.3);tg.translate(1.72,1.42,0);add(tg);
+  // slot on left
+  const slot=new THREE.BoxGeometry(.5,.36,1.6);slot.translate(-1.55,.68,0);add(slot,dark);
+  // datum ground shadow
+  const sh=new THREE.Mesh(new THREE.CircleGeometry(3.4,64),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.35}));sh.rotation.x=-Math.PI/2;sh.position.y=-.04;scene.add(sh);
+  const grid=new THREE.GridHelper(8,16,0x36404C,0x262E38);grid.position.y=-.035;grid.material.transparent=true;grid.material.opacity=.6;scene.add(grid);
+  // toolpath: helical interpolation down the bore
+  const tp=[];const turns=7,N=700;for(let i=0;i<=40;i++)tp.push(new THREE.Vector3(1.6-i*.0263,1.95,0));
+  for(let i=0;i<=N;i++){const a=i/N*turns*Math.PI*2;tp.push(new THREE.Vector3(Math.cos(a)*.5,1.95-i/N*1.55,Math.sin(a)*.5))}
+  const tpg=new THREE.BufferGeometry().setFromPoints(tp);const tpl=new THREE.Line(tpg,new THREE.LineBasicMaterial({color:0x3EC6E0,transparent:true,opacity:.9}));part.add(tpl);
+  let tpN=reduce?tp.length:0;tpg.setDrawRange(0,tpN);
+  const light=new THREE.DirectionalLight(0xffffff,1.4);light.position.set(4,8,5);scene.add(light);
+  // callout anchors (part-local)
+  const anchors=[new THREE.Vector3(-.4,1.6,.38),new THREE.Vector3(-1.65,.53,.95),new THREE.Vector3(1.95,1.62,.2)];
+  const cos=[...document.querySelectorAll('#callouts .callout')];
+  document.getElementById('vpFallback').hidden=true;document.getElementById('vpMode').textContent=reduce?'Drag to rotate':'Drag to rotate · auto-turntable';
+  const size=()=>{const w=vp.clientWidth,h=vp.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();const s=Math.min(1,w/620);cam.position.setLength(11.8/Math.max(.62,s))};
+  new ResizeObserver(size).observe(vp);size();
+  let vis=true;new IntersectionObserver(e=>{vis=e[0].isIntersecting},{threshold:0}).observe(vp);
+  const v=new THREE.Vector3();const t0=performance.now();
+  setTimeout(()=>cos.forEach(c=>c.classList.add('on')),reduce?0:900);
+  (function loop(){requestAnimationFrame(loop);if(!vis)return;
+    if(tpN<tp.length){tpN=Math.min(tp.length,Math.floor((performance.now()-t0-400)/1600*tp.length));if(tpN>0)tpg.setDrawRange(0,tpN)}
+    ctl.update();r.render(scene,cam);
+    const w=vp.clientWidth,h=vp.clientHeight;
+    anchors.forEach((a,i)=>{v.copy(a).applyMatrix4(part.matrixWorld).project(cam);let x=(v.x+1)/2*w,y=(1-v.y)/2*h;const c=cos[i],cw=c.offsetWidth;
+      const flip=c.classList.contains('flip');let tx=flip?x-cw:x;tx=Math.max(12,Math.min(w-cw-12,tx));y=Math.max(40,Math.min(h-44,y));c.style.transform=`translate(${tx}px,${y}px)`});
+  })();
+}
+if(!hasGL()){/* keep SVG fallback */}
+else if(matchMedia('(min-width: 721px)').matches)start();
+else{loadBtn.hidden=false;loadBtn.onclick=start;document.getElementById('vpMode').textContent='Preview'}
+</script>
+
+
+<a href="../" data-sv-concept aria-label="Concept redesign by studiovektor, not affiliated with Precision Manufacturing Company. Back to the portfolio"
+  style="position:fixed;left:16px;bottom:16px;z-index:2147483000;display:flex;align-items:center;gap:10px;
+  max-width:calc(100vw - 32px);padding:9px 14px 9px 12px;border-radius:999px;background:rgba(8,11,13,.9);
+  border:1px solid rgba(177,242,244,.3);box-shadow:0 10px 30px -10px rgba(0,0,0,.6);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);color:#eaf4f4;text-decoration:none;font:500 12.5px/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+  <span style="width:8px;height:8px;border-radius:50%;background:#b1f2f4;flex:none"></span>
+  <span><b style="font-weight:700">Concept redesign</b> by studiovektor <span style="color:#9daeb0">· not affiliated with Precision Manufacturing Company</span></span>
+</a>
+</body></html>
